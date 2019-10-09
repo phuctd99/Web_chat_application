@@ -4,13 +4,13 @@ Let's chat
  Let's chat là một ứng dụng trên Web dành cho người muốn trò chuyện online.
 
 Các tính năng nổi bật bao gồm:
-- Giúp user có thể trò chuyện online với nhau.
+- Giúp người dùng có thể trò chuyện online với nhau trong thời gian thực.
 
 
 Đối tượng hiện tại hướng tới tất cả người dùng
 
 ## II. Mô tả chức năng
-Awesome chat  cung cấp những chức năng chính được mô tả ở bảng dưới đây:
+Let's chat cung cấp những chức năng chính được mô tả ở bảng dưới đây:
 
 | STT      | Tên chức năng | Actor     | Mô tả     |
 | :---:        |    :----:   |          :---: |          :--- |
@@ -23,7 +23,7 @@ Awesome chat  cung cấp những chức năng chính được mô tả ở bản
 | 7  | Gửi thông báo        | Hệ thống      | Gửi thông báo (thông báo kết bạn, cập nhật thông tin,...) đến người dùng      |
 
 ## III. Chi tiết kỹ thuật
-Công nghệ sử dụng: Nodejs
+Công nghệ sử dụng: MongoDB + NodeJS + ExpressJS 
 ## IV. Demo
 
 
