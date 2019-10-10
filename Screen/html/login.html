@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/9108dc3a8f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Login</title>
+</head>
+
+<body>
+    <form action="./html/login.html" class="login-form">
+        <h1>Login</h1>
+        <div class="txtb">
+            <input type="text">
+            <span data-placeholder="Email"></span>
+        </div>
+
+        <div class="txtb">
+            <input type="password">
+            <span data-placeholder="Password"></span>
+        </div>
+
+        <input type="submit" class="logbtn" value="Login">
+        <div class="bottom-social-icon">
+            <a href="#" class="btn-social">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="btn-social">
+                    <i class="fab fa-google"></i>
+                </a>
+        </div>
+        <div class="bottom-text">
+            Don't have account? <a href="#">Sign up</a>
+            <p class="forgot-password"><a href="#">Forgot password</a></p>
+        </div>
+    </form>
+    <script>
+        $(".txtb input").on("focus", function(){
+            $(this).addClass("focus")
+        });
+        $(".txtb input").on("blur", function(){
+            if($(this).val() == "")
+                $(this).removeClass("focus")
+        });
+    </script>
+</body>
+
+</html>
