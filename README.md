@@ -1,4 +1,4 @@
-# Web_chat_application
+# Let's chat application
 Let's chat
 ## I. Tổng quan
  Let's chat là một ứng dụng trên Web dành cho người muốn trò chuyện online.
