@@ -4,13 +4,20 @@ import ContactModel from "./models/Contact";
 import initRoutes from './routers/Router';
 import configViewEngine from './config/ConfigView';
 import bodyParser from 'body-parser';
+import connectFlash from 'connect-flash';
+import configSession from "./config/session";
+
 var app = express();
 
 ConnectDB();
 
+configSession(app);
+
 configViewEngine(app);
 
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(connectFlash());
 
 initRoutes(app);
 
