@@ -29,4 +29,14 @@ let UserSchema = new Schema({
     updatedAt: {type: Number, default: null},
     deletedAt: {type: Number, default: null}
 });
+
+UserSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    },
+    findByEmail(email) {
+        return this.findOne({"local.email": email}).exec(); 
+    }
+};
+
 module.exports = mongoose.model("user", UserSchema);
