@@ -3,11 +3,14 @@ import ConnectDB from "./config/ConnectDB";
 import ContactModel from "./models/Contact";
 import initRoutes from './routers/Router';
 import configViewEngine from './config/ConfigView';
+import bodyParser from 'body-parser';
 var app = express();
 
 ConnectDB();
 
 configViewEngine(app);
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 initRoutes(app);
 
