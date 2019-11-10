@@ -12,7 +12,7 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bluebird": "^3.5.3",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.1",
     "express": "^4.17.1",
@@ -20,7 +20,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
     "fs-extra": "^7.0.1",
-    "mongoose": "^4.13.9",
+    "mongoose": "^5.7.8",
     "multer": "^1.4.1",
     "nodemailer": "^4.4.2",
     "passport": "^0.4.0",
@@ -32,7 +32,6 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "pem": "^1.13.2"
+    "pem": "^1.14.3"
   }
 }
-
