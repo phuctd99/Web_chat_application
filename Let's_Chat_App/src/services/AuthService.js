@@ -20,7 +20,7 @@ let register =  (email, gender, password, protocol, host) => {
         }
         let salt = bcrypt.genSaltSync(salt);
         let userItem = {
-            userName: email.split("@")[0],
+            username: email.split("@")[0],
             gender: gender,
             local: {
                 email: email,
@@ -46,7 +46,7 @@ let verifyAccount = (token) => {
     return new Promise(async (resolve, reject) => {
         let userByToken = await UserModel.findByToken(token);
         if (!userByToken) {
-            return reject(errorMessage.account_undefined);
+            return reject(errorMessage.token_undefined);
         }
         await UserModel.verify(token);
         resolve(successMessage.account_actived);
