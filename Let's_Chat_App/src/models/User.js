@@ -36,6 +36,30 @@ UserSchema.statics = {
     },
     findByEmail(email) {
         return this.findOne({"local.email": email}).exec(); 
+    },
+    removeById(id) {
+        return this.findByIdAndRemove(id).exec();
+    },
+    findByToken(token) {
+        return this.findOne({"local.verifyToken": token}).exec(); 
+    },
+    verify(token) {
+        return this.findOneAndUpdate(
+            {"local.verifyToken" : token},
+            {
+                "local.isActive": true,
+                "local.verifyToken" : null
+            }
+        ).exec();
+    },
+    findUserById(id) {
+        return this.findById(id).exec();
+    }
+    
+};
+UserSchema.methods = {
+    comparePassword(password) {
+        return bccryt.compare(password, this.local.password);
     }
 };
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    This is chat page
+    <% if(success != "") { %>
+        <% success.forEach((item) => { %>
+            <div class="master-success-message alert alert-success"><%- item %></div>
+        <% }); %>
+    <% } %>
+    <a href="/logout">
+       Đăng xuất
+    </a>
+    <script src="/js/main.js"></script>
+</body>
+</html>
