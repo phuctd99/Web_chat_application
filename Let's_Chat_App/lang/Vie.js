@@ -21,7 +21,8 @@ export const successMessage = {
     account_actived: "Kích hoạt tài khoản thành công",
     loginSuccess: (username) => {
         return `Hello ${username}`;
-    }
+    },
+    logoutSuccess: "Thoát thành công"
 };
 export const mailMessage = {
     subject: "Xác nhận đăng ký tài khoản",
