@@ -22,7 +22,7 @@ let initRoutes = (app) => {
      }));
      router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
-    router.put('/user/update-avatar', auth.checkLogin, user.updateAvatar);
+    router.put('/user/update-avatar', auth.checkLoggedIn, user.updateAvatar);
     return app.use('/', router);
 };
 
