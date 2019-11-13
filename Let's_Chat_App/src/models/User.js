@@ -54,6 +54,9 @@ UserSchema.statics = {
     },
     findUserById(id) {
         return this.findById(id).exec();
+    },
+    updateUser(id, item) {
+        return this.findByIdAndUpdate(id, item).exec();
     }
     
 };

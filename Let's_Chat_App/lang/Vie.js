@@ -11,7 +11,9 @@ export const errorMessage = {
     account_is_activated: "Email chưa được kích hoạt!",
     token_undefined: "Token đã hết hạn",
     login_failed: "Tên đăng nhập hoặc mật khẩu sai",
-    server_error: "Lỗi máy chủ"
+    server_error: "Lỗi máy chủ",
+    avatar_type: 'Kiểu tệp không hợp lệ!',
+    avatar_size: 'Kích thước ảnh đại diện không quá 1MB!'
 };
 
 export const successMessage = {
@@ -22,7 +24,8 @@ export const successMessage = {
     loginSuccess: (username) => {
         return `Hello ${username}`;
     },
-    logoutSuccess: "Thoát thành công"
+    logoutSuccess: "Thoát thành công",
+    avatar_updated: "Cập nhật ảnh đại diện thành công" 
 };
 export const mailMessage = {
     subject: "Xác nhận đăng ký tài khoản",
