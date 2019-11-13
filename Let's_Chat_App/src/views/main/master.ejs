@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Let's Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="../../images/logo_favicon/letchat.jpg" />
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../bower_components/AlertifyJS/build/css/alertify.css">
+    <link rel="stylesheet" href="../../bower_components/emojionearea/dist/emojionearea.min.css">
+    <link rel="stylesheet" href="../../bower_components/photoset-grid/css/colorbox.css">
+
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body onload="spinLoaded()">
+    <!--Icon loader-->
+    <div id="loader"></div>
+    
+    <%- include('alert/alert'); %>
+
+    <%- include('navbar/navbar'); %>
+    
+    <%- content %>
+   
+    
+
+    <!--Libraries-->
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="../../bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../../bower_components/AlertifyJS/build/alertify.js"></script>
+    <script src="../../bower_components/moment/min/moment.min.js"></script>
+    <script src="../../bower_components/moment/min/moment-with-locales.min.js"></script>
+    <script src="../../bower_components/emojionearea/dist/emojionearea.min.js"></script>
+    <script src="../../bower_components/peerjs/peer.min.js"></script>
+    <script src="../../bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="../../bower_components/photoset-grid/jquery.photoset-grid.min.js"></script>
+    <script src="../../bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+
+    <!-- My js-->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
