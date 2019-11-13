@@ -9,7 +9,6 @@ let router = express.Router();
 
 let initRoutes = (app) => {
     //GET
-    router.get('/', home.getHome);
     router.get('/login-register',auth.checkLoggedOut, auth.getLoginRegister);
 
     //POST
