@@ -898,4 +898,10 @@ label:focus,
 .right .conversation-start span:after {
   right: 0;
 }
-
+.user-modal-alert-error, .user-modal-alert-success{
+  display: none;
+}
+.modal-header {
+  background-color: #00A4E4;
+  color: #ffffff;
+}

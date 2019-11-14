@@ -4,7 +4,7 @@ import initRoutes from './routers/Router';
 import configViewEngine from './config/ConfigView';
 import bodyParser from 'body-parser';
 import connectFlash from 'connect-flash';
-import configSession from "./config/session";
+import configSession from "./config/Session";
 import passport from "passport";
 
 var app = express();
