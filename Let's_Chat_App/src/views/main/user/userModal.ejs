@@ -107,16 +107,15 @@
                     </div>
                     <div id="password-profile" class="tab-pane fade">
                         <div class="col-md-9 personal-info">
-                            <div class="alert alert-danger alert-dismissable">
+                            <br>
+                            <div class="alert alert-danger alert-dismissable user-modal-password-alert-error">
                                 <a class="panel-close close" data-dismiss="alert">×</a>
-                                Update password error example<br>
-                                <!-- <script>openProfilePasswordModal();</script> -->
+                                <span>Cập nhật mật khẩu thất bại.</span>
                             </div>
 
-                            <div class="alert alert-success alert-dismissable">
+                            <div class="alert alert-success alert-dismissable user-modal-password-alert-success">
                                 <a class="panel-close close" data-dismiss="alert">×</a>
-                                Update password success example<br>
-                                <!-- <script>openProfilePasswordModal();</script> -->
+                                <span>Cập nhật mật khẩu thành công.</span>
                             </div>
 
                             <h3>Thay đổi mật khẩu</h3>
@@ -125,27 +124,27 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Mật khẩu cũ</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" type="password" name="current_password" placeholder="Enter your curent password...">
+                                        <input id="input-change-current-password" class="form-control" type="password" name="current_password" placeholder="Enter your curent password...">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Mật khẩu mới</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" type="password" name="new_password" placeholder="Enter new password...">
+                                        <input id="input-change-new-password" class="form-control" type="password" name="new_password" placeholder="Enter new password...">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Nhập lại mật khẩu mới</label>
                                     <div class="col-md-8">
-                                        <input class="form-control" type="password" name="confirm_new_password" placeholder="Enter confirm new password...">
+                                        <input id="input-change-confirm-new-password" class="form-control" type="password" name="confirm_new_password" placeholder="Enter confirm new password...">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label"></label>
                                     <div class="col-md-8">
-                                        <input type="submit" class="btn btn-primary custom-background-btn-primary" value="Lưu lại">
+                                        <input type="button" id="input-btn-update-password" class="btn btn-primary custom-background-btn-primary" value="Lưu lại">
                                         <span></span>
-                                        <input type="reset" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
+                                        <input type="button" id="input-btn-cancel-update-password" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
                                     </div>
                                 </div>
                             </form>

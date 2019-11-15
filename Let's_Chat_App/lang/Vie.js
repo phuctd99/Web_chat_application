@@ -18,7 +18,8 @@ export const errorMessage = {
     login_failed: "Tên đăng nhập hoặc mật khẩu sai",
     server_error: "Lỗi máy chủ",
     avatar_type: 'Kiểu tệp không hợp lệ!',
-    avatar_size: 'Kích thước ảnh đại diện không quá 1MB!'
+    avatar_size: 'Kích thước ảnh đại diện không quá 1MB!',
+    password_incorrect: 'Mật khẩu hiện tại không chính xác!'
 };
 
 export const successMessage = {
@@ -30,7 +31,8 @@ export const successMessage = {
         return `Hello ${username}`;
     },
     logoutSuccess: "Thoát thành công",
-    info_updated: 'Cập nhật thông tin thành công!'
+    info_updated: 'Cập nhật thông tin thành công!',
+    password_updated: 'Cập nhật mật khẩu thành công!'
 };
 export const mailMessage = {
     subject: "Xác nhận đăng ký tài khoản",
