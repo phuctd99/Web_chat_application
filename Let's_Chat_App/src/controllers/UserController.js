@@ -4,7 +4,7 @@ import fsExtra from 'fs-extra';
 import { app } from '../config/App';
 import { errorMessage, successMessage } from '../../lang/Vie';
 import { user } from '../services/index';
-
+import {validationResult} from 'express-validator/check';
 let storageAvatar = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, app.avatar_directiory);
@@ -41,7 +41,7 @@ let updateAvatar = (req, res) => {
       // remove old avatar
       await fsExtra.remove(`${app.avatar_directiory}/${update.avatar}`);
       let result = {
-        message: successMessage.avatar_updated,
+        message: successMessage.info_updated,
         imageSrc: `/images/users/${req.file.filename}`
       };
       // console.log(result);
@@ -53,6 +53,32 @@ let updateAvatar = (req, res) => {
   });
 };
 
+let updateInfo = async (req, res) => {
+  const errorArr = [];
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    const errors = Object.values(validationErrors.mapped());
+    errors.forEach(item => {
+      errorArr.push(item.msg);
+    });
+    return res.status(500).send(errorArr);
+  }
+
+  try {
+    let updateUserItem = req.body;
+    await user.updateUser(req.user._id, updateUserItem);
+    let result = {
+      message: successMessage.info_updated
+    };
+    // console.log(result);
+    return res.status(200).send(result);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+
 module.exports = {
-  updateAvatar: updateAvatar
+  updateAvatar: updateAvatar,
+  updateInfo: updateInfo
 };
