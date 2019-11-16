@@ -2,6 +2,7 @@ let userAvatar = null;
 let userInfo = {};
 let oldAvatar = null;
 let oldInfo = {};
+let userUpdatePassword = {};
 function updateUserInfo() {
   $('#input-change-avatar').bind('change', function() {
     const fileData = $(this).prop('files')[0];
@@ -46,7 +47,7 @@ function updateUserInfo() {
   $('#input-change-username').bind('change', function() {
     let username = $(this).val();
     let regexUsername = new RegExp(
-      '^[s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$'
+      /^[s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/
     );
     if (
       !regexUsername.test(username) ||
@@ -100,7 +101,7 @@ function updateUserInfo() {
 
   $('#input-change-phone').bind('change', function() {
     let phone = $(this).val();
-    let regexPhone = new RegExp('^(0)[0-9]{9,10}$');
+    let regexPhone = new RegExp(/^(0)[0-9]{9}$/);
     if (!regexPhone.test(phone)) {
       alertify.notify(
         'Số điện thoại bắt đầu bằng số 0 và có 10 ký tự!',
@@ -112,6 +113,73 @@ function updateUserInfo() {
       return false;
     }
     userInfo.phone = phone;
+  });
+  $('#input-change-current-password').bind('change', function() {
+    userUpdatePassword.currentPassword = $(this).val();
+  });
+
+  $('#input-change-new-password').bind('change', function() {
+    let newPassword = $(this).val();
+    // let regexPassword = new RegExp(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/
+    // );
+    // if (!regexPassword.test(newPassword)) {
+    //   alertify.notify(
+    //     'Mật khẩu ít nhất chứ 8 ký tự, bao gồm chữ hoa, chữ thương, chữ số và ký tự đặc biệt!',
+    //     'error',
+    //     7
+    //   );
+    //   $(this).val(null);
+    //   delete userUpdatePassword.newPassword;
+    //   return false;
+    // }
+    userUpdatePassword.newPassword = newPassword;
+  });
+
+  $('#input-change-confirm-new-password').bind('change', function() {
+    let confirmPassword = $(this).val();
+    if (!userUpdatePassword.newPassword) {
+      alertify.notify('Chưa nhập mật khẩu mới!', 'error', 7);
+      $(this).val(null);
+      delete userUpdatePassword.confirmPassword;
+      return false;
+    }
+    if (confirmPassword !== userUpdatePassword.newPassword) {
+      alertify.notify(
+        'Nhập lại mật khẩu chưa chuẩn, vui lòng nhập đúng để tiếp tục!',
+        'error',
+        7
+      );
+      $(this).val(null);
+      delete userUpdatePassword.confirmPassword;
+      return false;
+    }
+    userUpdatePassword.confirmPassword = confirmPassword;
+  });
+}
+
+function callLogout() {
+  let timerInterval;
+  Swal.fire({
+    position: 'top-end',
+    title: 'Đăng xuất sau 5 giây!',
+    html: '<strong></strong>',
+    timer: 5000,
+    onBeforeOpen: () => {
+      Swal.showLoading();
+      timerInterval = setInterval(() => {
+        Swal.getContent().querySelector('strong').textContent = Math.ceil(
+          Swal.getTimerLeft() / 1000
+        );
+      }, 1000);
+    },
+    onClose: () => {
+      clearInterval(timerInterval);
+    }
+  }).then(result => {
+    $.get('/logout', () => {
+      location.reload();
+    });
   });
 }
 function updateAvt() {
@@ -179,6 +247,36 @@ function updateInfo() {
     }
   });
 }
+function updatePassword() {
+  $.ajax({
+    url: '/user/update-password',
+    type: 'put',
+    data: userUpdatePassword,
+    success: function(result) {
+      // show notifications
+      $('.user-modal-password-alert-success')
+        .find('span')
+        .text(result.message);
+      $('.user-modal-password-alert-success').css('display', 'block');
+
+      // clear inputs
+      $('#input-btn-cancel-update-password').click();
+
+      // logout
+      callLogout();
+    },
+    error: function(err) {
+      // display errors
+      $('.user-modal-password-alert-error')
+        .find('span')
+        .text(err.responseText);
+      $('.user-modal-password-alert-error').css('display', 'block');
+
+      // reset inputs
+      $('#input-btn-cancel-update-password').click();
+    }
+  });
+}
 $(document).ready(function() {
   
 
@@ -224,5 +322,26 @@ $(document).ready(function() {
       : $('#input-change-gender-female').click();
     $('#input-change-address').val(oldInfo.address);
     $('#input-change-phone').val(oldInfo.phone);
+  });
+  $('#input-btn-update-password').bind('click', function() {
+    if (
+      !userUpdatePassword.currentPassword ||
+      !userUpdatePassword.newPassword ||
+      !userUpdatePassword.confirmPassword
+    ) {
+      alertify.notify(
+        'Bạn phải nhập đủ thông tin để đổi mật khẩu!',
+        'error',
+        7
+      );
+      return false;
+    }
+    updatePassword();
+  });
+  $('#input-btn-cancel-update-password').bind('click', function() {
+    userUpdatePassword = {};
+    $('#input-change-current-password').val(null);
+    $('#input-change-new-password').val(null);
+    $('#input-change-confirm-new-password').val(null);
   });
 });
