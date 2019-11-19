@@ -13,6 +13,17 @@ let ContactSchema = new Schema({
 ContactSchema.statics = {
     createNew(item) {
         return this.create(item);
+    },
+    findAllUserById(id) {
+      return this.find({
+        userId: id
+      }).exec();
+    },
+    removeRequestContact(userId, contactId) {
+      return this.remove({
+        $and: [{ userId: userId }, { contactId: contactId }]
+      }).exec();
     }
+    
 };
 module.exports = mongoose.model("contact", ContactSchema);
