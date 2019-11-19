@@ -12,6 +12,7 @@ let sendMail = (to, subject, htmlContent) => {
         host: host,
         port: port,
         secure: false,
+        service: 'gmail',
         auth: {
             user: adminEmail,
             pass: adminPassword
