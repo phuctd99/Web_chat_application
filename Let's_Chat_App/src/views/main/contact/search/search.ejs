@@ -1,0 +1,37 @@
+<% users.forEach(user =>{ %>
+    <li class="_contactList" data-uid="<%= user._id %>">
+    <div class="contactPanel">
+        <div class="user-avatar">
+        <img src="/images/users/<%= user.avatar %>" alt="" />
+        </div>
+        <div class="contain-addable-user-info">
+        <div class="user-name">
+            <p>
+            <%= user.username %>
+            </p>
+        </div>
+        <br />
+        <div class="user-email">
+            <p>
+            Email: <% if (user.local.email) { %> <%= user.local.email %> <% } else
+            if (user.facebook.email) { %> <%= user.facebook.email %> <% } else if
+            (user.google.email) { %> <%= user.google.email %> <% }%>
+            </p>
+        </div>
+        <br />
+        <div class="user-address">
+            <p>Địa chỉ: <%= user.address %></p>
+        </div>
+        </div>
+        <div class="user-add-new-contact" data-uid="<%= user._id %>">
+        Thêm vào danh sách liên lạc
+        </div>
+        <div
+        class="user-remove-request-contact action-danger"
+        data-uid="<%= user._id %>"
+        >
+        Hủy yêu cầu
+        </div>
+    </div>
+    </li>
+<% }); %>
