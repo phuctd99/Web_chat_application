@@ -19,3 +19,12 @@ function removeRequestContact() {
     });
   });
 }
+socket.on('respond-remove-request-contact', function(user) {
+  $('.noti_content')
+    .find(`span[data-uid=${user.id}]`)
+    .remove();
+  console.log(user.id);
+  decreaseNotification('count-request-contact-received');
+  decreaseNotificationNavbar('noti_contact_counter');
+  decreaseNotificationNavbar('noti_counter');
+});
