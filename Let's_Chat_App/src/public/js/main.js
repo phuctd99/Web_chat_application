@@ -1,4 +1,5 @@
 
+const socket = io();
 function nineScrollLeft() {
   $('.left').niceScroll({
     smoothscroll: true,

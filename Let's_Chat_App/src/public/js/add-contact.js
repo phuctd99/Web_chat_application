@@ -16,7 +16,7 @@ function addContact() {
   });
 }
 socket.on('respond-add-new-contact', function(user) {
-  let notification = `<span data-uid="${user.id}">
+  let notification = `<span class="noti-readed-false" data-uid="${user.id}">
   <img
     class="avatar-small"
     src="/images/users/${user.avatar}"

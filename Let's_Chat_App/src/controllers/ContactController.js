@@ -18,7 +18,7 @@ let addNew = async (req, res) => {
     let contactId = req.body.uid;
 
     let newContact = await contact.addNew(currentUserId, contactId);
-    return res.status(200).send(newContact);
+    return res.status(200).send({success: !!newContact});
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -30,7 +30,7 @@ let removeReqCon = async (req, res) => {
     let contactId = req.body.uid;
 
     let removeCon = await contact.removeReqCon(currentUserId, contactId);
-    return res.status(200).send(removeCon);
+    return res.status(200).send({success: !!removeCon});
   } catch (error) {
     return res.status(500).send(error);
   }

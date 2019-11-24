@@ -220,7 +220,7 @@ label:focus,
 
 #notifications {
   display: none;
-  min-width: 250px;
+  min-width: 300px;
   position: absolute;
   right: 17px !important;
   border: solid 1px rgba(100, 100, 100, 0.2);
@@ -253,7 +253,7 @@ label:focus,
 }
 
 .noti_contact_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #e1141e;
   color: #fff;
@@ -268,7 +268,7 @@ label:focus,
 }
 
 .noti_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #e1141e;
   color: #fff;
@@ -284,7 +284,7 @@ label:focus,
 
 .noti_content {
   position: relative;
-  height: 200px;
+  height: 300px;
   background-color: #fff;
   overflow: auto;
 }
@@ -295,6 +295,7 @@ label:focus,
   margin-top: 5px;
   margin-left: 7px;
   color: #333;
+  padding: 3px;
 }
 
 .seeAll {
@@ -1120,4 +1121,12 @@ label:focus,
 .modal-header {
   background-color: #00a4e4;
   color: #ffffff;
+}
+
+.noti-readed-false {
+  background: #E3E8F0;
+}
+
+.display-none {
+  display: none;
 }
