@@ -1,4 +1,4 @@
-const socket = io();
+
 let receiver = null;
 
 function selectReceiver(){
