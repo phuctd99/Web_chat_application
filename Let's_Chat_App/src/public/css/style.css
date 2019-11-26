@@ -161,7 +161,11 @@ label:focus,
   font-size: 14px;
   font-weight: 700;
 }
-
+.contactPanel .user-email {
+  max-width: 90%;
+  height: auto;
+  margin: 10px 0px 0px 60px;
+}
 .contactPanel .user-address {
   max-width: 90%;
   height: auto;
@@ -229,7 +233,7 @@ label:focus,
   z-index: 999;
 }
 
-#notifications h3 {
+#popup-mark-notif-as-read {
   display: block;
   color: #333;
   background: #fff;
@@ -283,19 +287,20 @@ label:focus,
 }
 
 .noti_content {
-  position: relative;
   height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content > span {
-  position: absolute;
+.noti_content > div {
   max-width: 95%;
-  margin-top: 5px;
-  margin-left: 7px;
+  margin: 5px 0px 0px 7px;
   color: #333;
   padding: 3px;
+}
+.noti_content > div:hover{
+  cursor: pointer;
+  background-color: #eceff1;
 }
 
 .seeAll {
@@ -1129,4 +1134,35 @@ label:focus,
 
 .display-none {
   display: none;
+}
+
+#noti_Button:hover{
+  text-decoration: none;
+}
+
+.list-notifications li{
+ 
+  width: 90%;
+  height: auto;
+  padding: 7px 0px 12px 5px;
+  margin: 0 auto;
+  list-style-type: none;
+
+}
+.list-notifications li div{
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddeeff;
+}
+.list-notifications li div:hover{
+  cursor: pointer;
+  background-color: #eceff1;
+}
+.mark-notif-as-read{
+  float: right;
+  margin-right: 20px;
+}
+.read-more-notif{
+  text-align: center;
 }
