@@ -1,6 +1,6 @@
 import ContactModel from '../models/Contact';
 import UserModel from '../models/User';
-
+import NotificationModel from '../models/Notification';
 let findUsers = (currentUserId, searchKey) => {
   return new Promise(async (resolve, reject) => {
     // console.log(currentUserId);
@@ -19,11 +19,24 @@ let findUsers = (currentUserId, searchKey) => {
 
 let addNew = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
-    const newContactItem = {
+    let contactExist = await ContactModel.checkExists(currentUserId, contactId);
+    if (contactExist) {
+      return reject(false);
+    }
+    let newContactItem = {
       userId: currentUserId,
       contactId: contactId
     };
+
+    let notificationItem = {
+      senderId: currentUserId,
+      receiverId: contactId,
+      type: NotificationModel.types.ADD_CONTACT,
+    };
+    await NotificationModel.model.createNew(notificationItem);
     let newContact = await ContactModel.createNew(newContactItem);
+
+
     resolve(newContact);
   });
 };
@@ -37,6 +50,10 @@ let removeReqCon = (currentUserId, contactId) => {
     if (removeReq.n === 0) {
       return reject(false);
     }
+    // remove notification
+    await NotificationModel.model.
+        removeRequestContactNotification(currentUserId, 
+          contactId, NotificationModel.types.ADD_CONTACT);
     resolve(true);
   });
 };

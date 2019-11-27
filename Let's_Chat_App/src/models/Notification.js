@@ -3,20 +3,71 @@ import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let NotificationSchema = new Schema({
-    sender: {
-        id: String,
-        username: String, 
-        avatar: String
-    },
-    receiver: {
-        id: String,
-        username: String, 
-        avatar: String
-    },
+    senderId: String,
+    receiverId: String,
     type: String,
-    content: String,
     isRead: {type: Boolean, default: false},
-    createdAt: {type: Number, default: Date.now},
+    createdAt: {type: Number, default: Date.now}
 });
+NotificationSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    },
+    removeRequestContactNotification(senderId, receiverId, type) {
+        return this.remove({
+            $and: [
+                {"senderId": senderId},
+                {"receiverId": receiverId},
+                {"type": type}
+            ]
+        }).exec();
+    },
+    getByUserIdAndLimit(userId, limit) {
+        return this.find({
+            "receiverId": userId
+        }).sort({"createdAt":1}).limit(limit).exec();
+    },
+    countNotifUnRead(userId){
+        return this.count({
+            $and:[
+                {"receiverId":userId},
+                {"isRead":false}
+            ]
+        }).exec();
+    }
+}
 
-module.exports = mongoose.model("notification", NotificationSchema);
+const NOTIFICATION_TYPES = {
+    ADD_CONTACT: "add_contact"
+};
+const NOTIFICATION_CONTENTS = {
+    getContent: (notificationType, isRead, userId, username, userAvatar) => {
+        if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
+            if (!isRead) {
+                return `<div class="noti-readed-false" data-uid="${userId}">
+                <img
+                class="avatar-small"
+                src="/images/users/${userAvatar}"
+                alt=""
+                />
+                <strong>${username}</strong> đã gửi cho bạn một lời mời kết
+                bạn! </div>`;
+            }
+            return `<div data-uid="${userId}">
+                <img
+                class="avatar-small"
+                src="/images/users/${userAvatar}"
+                alt=""
+                />
+                <strong>${username}</strong> đã gửi cho bạn một lời mời kết
+                bạn! </div>`;
+        }
+        return "Bị lỗi";
+    }
+};
+module.exports = {
+    model: mongoose.model("notification", NotificationSchema),
+    types: NOTIFICATION_TYPES,
+    contents: NOTIFICATION_CONTENTS,
+    
+};

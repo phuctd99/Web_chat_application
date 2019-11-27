@@ -19,3 +19,13 @@ function removeRequestContact() {
     });
   });
 }
+socket.on('respond-remove-request-contact', function(user) {
+  $('.noti_content')
+    .find(`div[data-uid=${user.id}]`)
+    .remove();//xoa o popup
+  $('ul.list-notifications').find(`li>div[data-uid=${user.id}]`).parent().remove();//xoa o modal
+  console.log(user.id);
+  decreaseNotification('count-request-contact-received');
+  decreaseNotificationNavbar('noti_contact_counter');
+  decreaseNotificationNavbar('noti_counter');
+});
