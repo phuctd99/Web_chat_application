@@ -26,6 +26,14 @@ NotificationSchema.statics = {
         return this.find({
             "receiverId": userId
         }).sort({"createdAt":1}).limit(limit).exec();
+    },
+    countNotifUnRead(userId){
+        return this.count({
+            $and:[
+                {"receiverId":userId},
+                {"isRead":false}
+            ]
+        }).exec();
     }
 }
 
@@ -36,23 +44,23 @@ const NOTIFICATION_CONTENTS = {
     getContent: (notificationType, isRead, userId, username, userAvatar) => {
         if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
             if (!isRead) {
-                return `<span class="noti-readed-false" data-uid="${userId}">
+                return `<div class="noti-readed-false" data-uid="${userId}">
                 <img
                 class="avatar-small"
                 src="/images/users/${userAvatar}"
                 alt=""
                 />
                 <strong>${username}</strong> đã gửi cho bạn một lời mời kết
-                bạn! </span><br /><br /><br />`;
+                bạn! </div>`;
             }
-            return `<span data-uid="${userId}">
+            return `<div data-uid="${userId}">
                 <img
                 class="avatar-small"
                 src="/images/users/${userAvatar}"
                 alt=""
                 />
                 <strong>${username}</strong> đã gửi cho bạn một lời mời kết
-                bạn! </span><br /><br /><br />`;
+                bạn! </div>`;
         }
         return "Bị lỗi";
     }
@@ -60,5 +68,6 @@ const NOTIFICATION_CONTENTS = {
 module.exports = {
     model: mongoose.model("notification", NotificationSchema),
     types: NOTIFICATION_TYPES,
-    contents: NOTIFICATION_CONTENTS
+    contents: NOTIFICATION_CONTENTS,
+    
 };
