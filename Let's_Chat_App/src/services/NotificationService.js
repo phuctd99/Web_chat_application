@@ -48,8 +48,22 @@ let readMore = (currentUserId, skipNumberNotification) => {
     });
 };
 
+ 
+let markReaded = (currentUserId, targetUsers) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await NotificationModel.model.markReaded(currentUserId, targetUsers);
+            resolve(true);
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            reject(false);
+        }
+    });
+};
+
 module.exports = {
     getNotifications: getNotifications,
     countNotifUnRead: countNotifUnRead,
-    readMore: readMore
+    readMore: readMore,
+    markReaded: markReaded
 }

@@ -40,6 +40,14 @@ NotificationSchema.statics = {
             "receiverId": userId
         }).sort({"createdAt":1}).skip(skip).limit(limit).exec();
         //skip bo qua cac ban ghi da lay
+    },
+    markReaded(userId, targetUsers) {
+        return this.updateMany({
+            $and: [
+                {"receiverId": userId},
+                {"senderId": {$in: targetUsers}}
+            ]
+        }, {"isRead": true}).exec();
     }
 }
 
