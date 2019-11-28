@@ -20,7 +20,7 @@ function addContact() {
   });
 }
 socket.on('respond-add-new-contact', function(user) {
-  let notification = `<div class="noti-readed-false" data-uid="${user.id}">
+  let notification = `<div class="noti-readed-false" data-uid="${user._id}">
   <img
     class="avatar-small"
     src="/images/users/${user.avatar}"
@@ -43,7 +43,7 @@ socket.on('respond-add-new-contact', function(user) {
       </div>
       <div class="user-name">
           <p>
-          ${user.username}
+            ${user.username}
           </p>
       </div>
       <br>
