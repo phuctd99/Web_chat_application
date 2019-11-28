@@ -1,5 +1,5 @@
 import express from 'express';
-import { home, auth, user, contact } from './../controllers/index';
+import { home, auth, user, contact, notification } from './../controllers/index';
 import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
@@ -25,6 +25,7 @@ let initRoutes = (app) => {
         auth.checkLoggedIn,
         contact.findUsers
       );
+    router.get('/notification/read-more',auth.checkLoggedIn,notification.readMore);
     
     router.post('/contact/add-new', auth.checkLoggedIn, contact.addNew);
     router.delete(
@@ -47,6 +48,7 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
+
     return app.use('/', router);
 };
 
