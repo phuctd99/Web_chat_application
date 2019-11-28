@@ -27,7 +27,7 @@ import {
         clients = removeSocketId(
           clients,
           socket.request.user._id,
-          socket
+          socket.id
         );
       });
     });
