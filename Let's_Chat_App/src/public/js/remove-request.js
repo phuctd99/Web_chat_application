@@ -15,6 +15,9 @@ function removeRequestContact() {
             .css('display', 'inline-block');
         }
         decreaseNotification('count-request-contact-sent');
+        //xoa o modal-tab dang cho xac nhan
+        $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
+        socket.emit('remove-request-contact', {contactId: targetId});
       }
     });
   });
@@ -24,8 +27,9 @@ socket.on('respond-remove-request-contact', function(user) {
     .find(`div[data-uid=${user.id}]`)
     .remove();//xoa o popup
   $('ul.list-notifications').find(`li>div[data-uid=${user.id}]`).parent().remove();//xoa o modal
-  console.log(user.id);
+  $("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
+  //console.log(user.id);
   decreaseNotification('count-request-contact-received');
-  decreaseNotificationNavbar('noti_contact_counter', -1);
-  decreaseNotificationNavbar('noti_counter', -1);
+  decreaseNotificationNavbar('noti_contact_counter', 1);
+  decreaseNotificationNavbar('noti_counter', 1);
 });
