@@ -89,7 +89,10 @@ UserSchema.statics = {
         'google.email': 1
       }
     ).exec();
-  }
+  },
+  getNormalUserById(id) {
+    return this.findById(id,{_id: 1,username: 1,address: 1,avatar: 1}).exec();
+ }
 };
 UserSchema.methods = {
     comparePassword(password) {
