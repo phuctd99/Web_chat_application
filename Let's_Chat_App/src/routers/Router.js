@@ -41,9 +41,9 @@ let initRoutes = (app) => {
     router.get('/contact/read-more-contacts-reviece',auth.checkLoggedIn,contact.readMoreContactsReviece);
     router.post('/contact/add-new', auth.checkLoggedIn, contact.addNew);
     router.delete(
-        '/contact/remove-request-contact',
+        '/contact/remove-request-contact-sent',
         auth.checkLoggedIn,
-        contact.removeReqCon
+        contact.removeRequestContactSent
     ); 
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);

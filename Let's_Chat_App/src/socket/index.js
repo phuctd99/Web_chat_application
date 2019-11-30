@@ -1,9 +1,9 @@
 import chat from './chat/Chat';
 import addNewContact from './contact/addNewContact';
-import removeRequestContact from './contact/removeRequestContact';
+import removeRequestContactSent from './contact/removeRequestContactSent';
 const initSockets = io => {
     addNewContact(io);
-    removeRequestContact(io);
+    removeRequestContactSent(io);
     let users = {};
     chat(users, io);
 }
