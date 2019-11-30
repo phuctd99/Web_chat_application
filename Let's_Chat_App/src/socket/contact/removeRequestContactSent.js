@@ -4,11 +4,11 @@ import {
     removeSocketId
   } from '../../helpers/SocketHelper';
   
-  let removeRequestContact = io => {
+  let removeRequestContactSent = io => {
     let clients = {};
     io.on('connection', socket => {
       clients = pushSocketId(clients, socket.request.user._id, socket.id);
-      socket.on('remove-request-contact', data => {
+      socket.on('remove-request-contact-sent', data => {
         let currentUser = {
           id: socket.request.user._id
         };
@@ -18,7 +18,7 @@ import {
             clients,
             data.contactId,
             io,
-            'respond-remove-request-contact',
+            'respond-remove-request-contact-sent',
             currentUser
           );
         }
@@ -33,4 +33,4 @@ import {
     });
   };
   
-  module.exports = removeRequestContact;
+  module.exports = removeRequestContactSent;
