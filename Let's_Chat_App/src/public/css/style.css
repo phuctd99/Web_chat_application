@@ -1162,6 +1162,9 @@ label:focus,
   float: right;
   margin-right: 20px;
 }
+.read-more-contacts,
+.read-more-contacts-sent,
+.read-more-contacts-reviece,
 .read-more-notif{
   text-align: center;
 }

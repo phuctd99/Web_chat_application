@@ -26,7 +26,19 @@ let initRoutes = (app) => {
         contact.findUsers
       );
     router.get('/notification/read-more',auth.checkLoggedIn,notification.readMore);
+    router.put('/notification/mark-readed',auth.checkLoggedIn,notification.markAllReaded);
     
+    
+    router.put(
+        '/user/update-password',
+        auth.checkLoggedIn,
+        userValid.updatePassword,
+        user.updatePassword
+    );
+
+    router.get('/contact/read-more-contacts',auth.checkLoggedIn,contact.readMoreContacts);
+    router.get('/contact/read-more-contacts-sent',auth.checkLoggedIn,contact.readMoreContactsSent);
+    router.get('/contact/read-more-contacts-reviece',auth.checkLoggedIn,contact.readMoreContactsReviece);
     router.post('/contact/add-new', auth.checkLoggedIn, contact.addNew);
     router.delete(
         '/contact/remove-request-contact',
@@ -48,6 +60,7 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
+   
 
     return app.use('/', router);
 };

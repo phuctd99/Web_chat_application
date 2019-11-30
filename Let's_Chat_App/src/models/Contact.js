@@ -37,6 +37,95 @@ ContactSchema.statics = {
           ]}
         ]
       }).exec();
+    },
+    getContacts(userId, limit) {
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+    getContactsSent(userId, limit) {
+      return this.find({
+        $and: [
+          {$or: [
+            {"userId":userId},
+            {"contactId":userId}
+          ]
+          },
+          {"status": false}
+
+        ]
+      }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+    getContactsReviece(userId, limit) {
+      return this.find({
+        $and: [
+          {"contactId": userId},
+          {"status": false}
+
+        ]
+      }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+    countAllContacts(userId) {
+      return this.count({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).exec();
+    },
+    countAllContactsSent(userId) {
+      return this.count({
+        $and: [
+          {$or: [
+            {"userId":userId},
+            {"contactId":userId}
+          ]
+          },
+          {"status": false}
+
+        ]
+      }).exec();
+    },
+    countAllContactsReviece(userId) {
+      return this.count({
+        $and: [
+          {"contactId": userId},
+          {"status": false}
+
+        ]
+      }).exec();
+    },
+    readMoreContacts(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+    readMoreContactsSent(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+    readMoreContactsReviece(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
     }
     
 };
