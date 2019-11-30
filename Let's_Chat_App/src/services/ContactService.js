@@ -66,9 +66,9 @@ let getContacts = (currentUserId) => {
       let contacts = await ContactModel.getContacts(currentUserId, LIMIT_NUMBER);
       let users = contacts.map(async (contact) => {
         if(contact.contactId==currentUserId){
-          return await UserModel.findUserById(contact.userId);
+          return await UserModel.getNormalUserById(contact.userId);
         }else{
-        return await UserModel.findUserById(contact.contactId);
+        return await UserModel.getNormalUserById(contact.contactId);
         };
       });
       resolve(await Promise.all(users));
@@ -83,7 +83,7 @@ let getContactsSent = (currentUserId) => {
     try {
       let contacts = await ContactModel.getContactsSent(currentUserId, LIMIT_NUMBER);
       let users = contacts.map(async (contact) => {getContactsSent
-        return await UserModel.findUserById(contact.contactId);
+        return await UserModel.getNormalUserById(contact.contactId);
       });
       resolve(await Promise.all(users));
     } catch (error) {
@@ -97,7 +97,7 @@ let getContactsReviece = (currentUserId) => {
     try {
       let contacts = await ContactModel.getContactsReviece(currentUserId, LIMIT_NUMBER);
       let users = contacts.map(async (contact) => {
-        return await UserModel.findUserById(contact.userId);
+        return await UserModel.getNormalUserById(contact.userId);
       });
       resolve(await Promise.all(users));
     } catch (error) {
@@ -136,6 +136,56 @@ let countAllContactsReviece = (currentUserId) => {
     }
   });
 };
+
+let readMoreContacts =(currentUserId,skipNumberContacts)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+        let newContacts = await ContactModel.readMoreContacts(currentUserId, skipNumberContacts,LIMIT_NUMBER);
+        
+        let users = newContacts.map(async (contact) => {
+          if(contact.contactId==currentUserId){
+            return await UserModel.getNormalUserById(contact.userId);
+          }else{
+          return await UserModel.getNormalUserById(contact.contactId);
+          };
+        });
+        resolve(await Promise.all(users));
+        
+    } catch (error) {
+        reject(error);
+    }
+});
+};
+let readMoreContactsSent =(currentUserId,skipNumberContacts)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+        let newContacts = await ContactModel.readMoreContactsSent(currentUserId, skipNumberContacts,LIMIT_NUMBER);
+        
+        let users = newContacts.map(async (contact) => {
+          return await UserModel.getNormalUserById(contact.contactId);
+        });
+        resolve(await Promise.all(users));
+        
+    } catch (error) {
+        reject(error);
+    }
+});
+};
+let readMoreContactsReviece =(currentUserId,skipNumberContacts)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+        let newContacts = await ContactModel.readMoreContactsReviece(currentUserId, skipNumberContacts,LIMIT_NUMBER);
+        
+        let users = newContacts.map(async (contact) => {
+          return await UserModel.getNormalUserById(contact.userId);
+        });
+        resolve(await Promise.all(users));
+        
+    } catch (error) {
+        reject(error);
+    }
+});
+};
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
@@ -145,5 +195,9 @@ module.exports = {
   getContactsReviece: getContactsReviece,
   countAllContacts: countAllContacts,
   countAllContactsReviece: countAllContactsReviece,
-  countAllContactsSent: countAllContactsSent
+  countAllContactsSent: countAllContactsSent,
+  readMoreContacts:readMoreContacts,
+  readMoreContactsSent:readMoreContactsSent,
+  readMoreContactsReviece:readMoreContactsReviece
+
 };

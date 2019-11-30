@@ -99,6 +99,33 @@ ContactSchema.statics = {
 
         ]
       }).exec();
+    },
+    readMoreContacts(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+    readMoreContactsSent(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+    readMoreContactsReviece(userId,skip,limit){
+      return this.find({
+        $and: [
+          {"userId": userId},
+          {"status": true}
+
+        ]
+      }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
     }
     
 };

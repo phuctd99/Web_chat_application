@@ -36,8 +36,45 @@ let removeReqCon = async (req, res) => {
   }
 };
 
+let readMoreContacts = async (req,res) =>{
+  try {
+    //get skipNumber
+    let skipNumberContacts = +(req.query.skipNumber);
+    //get more item
+    let newContactUsers = await contact.readMoreContacts(req.user._id, skipNumberContacts);
+    return res.status(200).send(newContactUsers);
+  } catch (error) {
+      return res.status(500).send(error);
+  }
+};
+let readMoreContactsSent = async (req,res) =>{
+  try {
+    //get skipNumber
+    let skipNumberContacts = +(req.query.skipNumber);
+    //get more item
+    let newContactUsers = await contact.readMoreContactsSent(req.user._id, skipNumberContacts);
+    return res.status(200).send(newContactUsers);
+  } catch (error) {
+      return res.status(500).send(error);
+  }
+};
+let readMoreContactsReviece = async (req,res) =>{
+  try {
+    //get skipNumber
+    let skipNumberContacts = +(req.query.skipNumber);
+    //get more item
+    let newContactUsers = await contact.readMoreContactsReviece(req.user._id, skipNumberContacts);
+    return res.status(200).send(newContactUsers);
+  } catch (error) {
+      return res.status(500).send(error);
+  }
+};
+
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
-  removeReqCon: removeReqCon
+  removeReqCon: removeReqCon,
+  readMoreContacts:readMoreContacts,
+  readMoreContactsSent:readMoreContactsSent,
+  readMoreContactsReviece:readMoreContactsReviece
 };
