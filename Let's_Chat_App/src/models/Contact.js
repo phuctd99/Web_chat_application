@@ -21,7 +21,12 @@ ContactSchema.statics = {
     },
     removeRequestContactSent(userId, contactId) {
       return this.remove({
-        $and: [{ userId: userId }, { contactId: contactId }]
+        $and: [{ "userId": userId }, { "contactId": contactId }]
+      }).exec();
+    },
+    removeRequestContactReceive(userId, contactId) {
+      return this.remove({
+        $and: [{ "contactId": userId }, { "userId": contactId }]
       }).exec();
     },
     checkExists(userId, contactId) {
