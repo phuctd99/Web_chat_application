@@ -9,6 +9,9 @@ function addContact() {
         $('#find-user')
           .find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`)
           .css('display', 'inline-block');
+        
+        increaseNotificationNavbar('noti_contact_counter', 1);
+        
         increaseNotification('count-request-contact-sent');
         
         let userInfoHtml = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML;
@@ -54,10 +57,11 @@ socket.on('respond-add-new-contact-sent', function(user) {
       <div class="user-acccept-contact-received" data-uid="${user.id}">
           Chấp nhận
       </div>
-      <div class="user-reject-request-contact-received action-danger" data-uid="${user.id}">
+      <div class="user-remove-request-contact-receive action-danger" data-uid="${user.id}">
           Xóa yêu cầu
       </div>
-  </div>
-</li>`;
-$("#request-contact-received").find("ul").prepend(userInfoHtml);
+    </div>
+  </li>`;
+  $("#request-contact-received").find("ul").prepend(userInfoHtml);
+  removeRequestContactReceive();
 });

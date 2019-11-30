@@ -45,6 +45,12 @@ let initRoutes = (app) => {
         auth.checkLoggedIn,
         contact.removeRequestContactSent
     ); 
+    router.delete(
+        '/contact/remove-request-contact-receive',
+        auth.checkLoggedIn,
+        contact.removeRequestContactReceive
+    ); 
+    
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
     router.put('/user/update-avatar', auth.checkLoggedIn, user.updateAvatar);

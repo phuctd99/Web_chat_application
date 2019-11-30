@@ -13,11 +13,13 @@ function removeRequestContactSent() {
           $('#find-user')
             .find(`div.user-add-new-contact[data-uid = ${targetId}]`)
             .css('display', 'inline-block');
-        }
+        
+        decreaseNotificationNavbar('noti_contact_counter', 1);
         decreaseNotification('count-request-contact-sent');
         //xoa o modal-tab dang cho xac nhan
         $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
         socket.emit('remove-request-contact-sent', {contactId: targetId});
+        }
       }
     });
   });
