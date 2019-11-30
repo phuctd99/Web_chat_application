@@ -24,12 +24,23 @@ let addNew = async (req, res) => {
   }
 };
 
-let removeReqCon = async (req, res) => {
+let removeRequestContactSent = async (req, res) => {
   try {
     let currentUserId = req.user._id;
     let contactId = req.body.uid;
 
-    let removeCon = await contact.removeReqCon(currentUserId, contactId);
+    let removeCon = await contact.removeRequestContactSent(currentUserId, contactId);
+    return res.status(200).send({success: !!removeCon});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+let removeRequestContactReceive = async (req, res) => {
+  try {
+    let currentUserId = req.user._id;
+    let contactId = req.body.uid;
+
+    let removeCon = await contact.removeRequestContactReceive(currentUserId, contactId);
     return res.status(200).send({success: !!removeCon});
   } catch (error) {
     return res.status(500).send(error);
@@ -73,8 +84,9 @@ let readMoreContactsReviece = async (req,res) =>{
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
-  removeReqCon: removeReqCon,
+  removeRequestContactSent: removeRequestContactSent,
   readMoreContacts:readMoreContacts,
   readMoreContactsSent:readMoreContactsSent,
-  readMoreContactsReviece:readMoreContactsReviece
+  readMoreContactsReviece:readMoreContactsReviece,
+  removeRequestContactReceive: removeRequestContactReceive
 };
