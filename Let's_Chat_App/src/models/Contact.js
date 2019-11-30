@@ -26,7 +26,9 @@ ContactSchema.statics = {
     },
     removeRequestContactReceive(userId, contactId) {
       return this.remove({
-        $and: [{ "contactId": userId }, { "userId": contactId }]
+        $and: [
+          { "contactId": userId }, 
+          { "userId": contactId }]
       }).exec();
     },
     checkExists(userId, contactId) {
@@ -46,22 +48,19 @@ ContactSchema.statics = {
     getContacts(userId, limit) {
       return this.find({
         $and: [
-          {"userId": userId},
-          {"status": true}
-
+            {$or: [
+              {"userId": userId},
+              {"contactId": userId}
+              ]},
+            {"status": true} 
         ]
       }).sort({"createdAt": -1}).limit(limit).exec();
     },
     getContactsSent(userId, limit) {
       return this.find({
         $and: [
-          {$or: [
-            {"userId":userId},
-            {"contactId":userId}
-          ]
-          },
+          {"userId": userId},
           {"status": false}
-
         ]
       }).sort({"createdAt": -1}).limit(limit).exec();
     },
@@ -77,37 +76,38 @@ ContactSchema.statics = {
     countAllContacts(userId) {
       return this.count({
         $and: [
-          {"userId": userId},
-          {"status": true}
-
+            {$or: [
+              {"userId": userId},
+              {"contactId": userId}
+              ]},
+            {"status": true} 
         ]
       }).exec();
     },
     countAllContactsSent(userId) {
       return this.count({
         $and: [
-          {$or: [
-            {"userId":userId},
-            {"contactId":userId}
-          ]
-          },
-          {"status": false}
 
+          {"userId": userId},
+          {"status": false}
+        
         ]
       }).exec();
     },
     countAllContactsReviece(userId) {
       return this.count({
         $and: [
+
           {"contactId": userId},
           {"status": false}
-
+        
         ]
       }).exec();
     },
     readMoreContacts(userId,skip,limit){
       return this.find({
         $and: [
+
           {"userId": userId},
           {"status": true}
 
