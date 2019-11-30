@@ -1,10 +1,35 @@
 <div class="col-sm-9 sidenav no-padding">
   <div class="right" data-chat="">
     <div class="top">
-      <span>To: <span id="nameOfReceiver"></span></span>
+      <span>To: <span class="name">Let's Chat (admin)</span></span>
     </div>
     <div class="content-chat">
-      <div id="chat-field" class="chat" data-chat=""></div>
+      <div id="chat-field" class="chat" data-chat="">
+        <div class="bubble me" data-mess-id="${item._id}">
+          Hello, I'm Let's Chat, Nice to meet you!
+        </div>
+        <div class="bubble you" data-mess-id="${item._id}">
+          Really? I'm Let's Chat too, what the f*ck?
+        </div>
+        <div class="bubble me" data-mess-id="${item._id}">This is me !!!</div>
+        <div class="bubble me bubble-image-file" data-mess-id="${item._id}">
+          <img src="../../images/users/ava.png" class="show-image-chat" />
+        </div>
+        <div
+          class="bubble me bubble-image-file"
+          data-mess-id="${item._id}"
+        ></div>
+        <div class="bubble you" data-mess-id="${item._id}">
+          And this is me @@ !!!
+        </div>
+        <div class="bubble you bubble-image-file" data-mess-id="${item._id}">
+          <img src="../../images/users/ava.png" class="show-image-chat" />
+        </div>
+        <div
+          class="bubble you bubble-image-file"
+          data-mess-id="${item._id}"
+        ></div>
+      </div>
     </div>
     <div class="write" data-chat="">
       <input

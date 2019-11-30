@@ -21,7 +21,7 @@ import {
             clients,
             data.contactId,
             io,
-            'respond-add-new-contact',
+            'respond-add-new-contact-sent',
             currentUser
           );
         }

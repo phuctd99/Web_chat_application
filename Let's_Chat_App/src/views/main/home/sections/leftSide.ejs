@@ -15,19 +15,28 @@
     </div>
     <ul class="people no-padding-start">
       <a href="#uidcontact._id" class="room-chat">
-        <% contactedUsers.forEach((item) => { %>
-        <li class="person" data-uid="<%= item._id %>">
+        <li class="person" data-uid="5da7393b2006ee38b8133f6d">
           <div class="left-avatar">
             <div class="dot"></div>
-            <img src="../../images/users/<%= item.avatar %>" alt="" />
+            <img src="../../images/users/ava.png" alt="" />
           </div>
           <span class="name">
-            <%= item.username %>
+            Agent P
           </span>
           <span class="time">Một phút trước</span>
           <span class="preview">Xin chào</span>
         </li>
-        <% }); %>
+        <li class="person" data-uid="5da74656f5cedd30a8381d0d">
+          <div class="left-avatar">
+            <div class="dot"></div>
+            <img src="../../images/users/ava.png" alt="" />
+          </div>
+          <span class="name">
+            Agent O
+          </span>
+          <span class="time">Một phút trước</span>
+          <span class="preview">Boujour</span>
+        </li>
       </a>
     </ul>
   </div>

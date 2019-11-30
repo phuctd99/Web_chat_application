@@ -7,19 +7,20 @@ function addContact() {
           .find(`div.user-add-new-contact[data-uid = ${targetId}]`)
           .hide();
         $('#find-user')
-          .find(`div.user-remove-request-contact[data-uid = ${targetId}]`)
+          .find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`)
           .css('display', 'inline-block');
         increaseNotification('count-request-contact-sent');
         
         let userInfoHtml = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML;
         $("#request-contact-sent").find("ul").prepend(userInfoHtml);
+        removeRequestContactSent();
         socket.emit('add-new-contact', {contactId: targetId});
       }
     });
     
   });
 }
-socket.on('respond-add-new-contact', function(user) {
+socket.on('respond-add-new-contact-sent', function(user) {
   let notification = `<div class="noti-readed-false" data-uid="${user._id}">
   <img
     class="avatar-small"
