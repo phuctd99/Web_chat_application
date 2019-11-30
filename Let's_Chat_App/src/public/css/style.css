@@ -297,7 +297,7 @@ label:focus,
   color: #333;
   padding: 3px;
 }
-.noti_content > div:hover{
+.noti_content > div:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
@@ -1128,43 +1128,57 @@ label:focus,
 }
 
 .noti-readed-false {
-  background: #E3E8F0;
+  background: #e3e8f0;
 }
 
 .display-none {
   display: none;
 }
 
-#noti_Button:hover{
+#noti_Button:hover {
   text-decoration: none;
 }
 
-.list-notifications li{
- 
+.list-notifications li {
   width: 90%;
   height: auto;
   padding: 7px 0px 12px 5px;
   margin: 0 auto;
   list-style-type: none;
-
 }
-.list-notifications li div{
+.list-notifications li div {
   width: 100%;
   padding: 15px;
   border-radius: 5px;
   border: 1px solid #ddeeff;
 }
-.list-notifications li div:hover{
+.list-notifications li div:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
-.mark-notif-as-read{
+.mark-notif-as-read {
   float: right;
   margin-right: 20px;
 }
 .read-more-contacts,
 .read-more-contacts-sent,
 .read-more-contacts-reviece,
-.read-more-notif{
+.read-more-notif {
   text-align: center;
+}
+
+.avatar-of-user-chatting {
+  height: 50px;
+  width: 50px;
+  float: left;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  -webkit-animation-name: slideFromLeft;
+  animation-name: slideFromLeft;
+}
+
+.avatar-of-user-chatting img {
+  height: 100%;
+  width: auto;
+  border-radius: 50%;
 }

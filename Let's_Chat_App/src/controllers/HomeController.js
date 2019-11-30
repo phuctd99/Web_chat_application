@@ -17,6 +17,7 @@ let getHome = async (req, res) => {
     let countAllContacts = await contact.countAllContacts(req.user._id);
     let countAllContactsSent = await contact.countAllContactsSent(req.user._id);
     let countAllContactsReviece = await contact.countAllContactsReviece(req.user._id);
+    let contactedUsers = await contact.getAllContacts(req.user._id);
 
     return res.render('main/home/home', {
         errors: req.flash("errors"),
@@ -30,8 +31,8 @@ let getHome = async (req, res) => {
         contactsReviece: contactsReviece,
         countAllContacts: countAllContacts,
         countAllContactsSent: countAllContactsSent,
-        countAllContactsReviece: countAllContactsReviece
-
+        countAllContactsReviece: countAllContactsReviece,
+        contactedUsers: contactedUsers
     });
 };
 
