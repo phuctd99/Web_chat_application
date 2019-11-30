@@ -186,6 +186,21 @@ let readMoreContactsReviece =(currentUserId,skipNumberContacts)=>{
     }
 });
 };
+
+let getAllContacts = currentUserId => {
+  return new Promise(async (resolve, reject) => {
+    let contactedUsers = await ContactModel.findAllUserById(currentUserId);
+    let contactedUserIds = [];
+    contactedUsers.forEach(user => {
+      if (user.status) {
+        contactedUserIds.push(user.contactId);
+      }
+    });
+    let users = UserModel.findUsers(contactedUserIds);
+    resolve(users);
+  });
+};
+
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
@@ -198,6 +213,6 @@ module.exports = {
   countAllContactsSent: countAllContactsSent,
   readMoreContacts:readMoreContacts,
   readMoreContactsSent:readMoreContactsSent,
-  readMoreContactsReviece:readMoreContactsReviece
-
+  readMoreContactsReviece:readMoreContactsReviece,
+  getAllContacts: getAllContacts
 };
