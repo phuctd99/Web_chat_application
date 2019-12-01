@@ -49,7 +49,12 @@ let initRoutes = (app) => {
         '/contact/remove-request-contact-receive',
         auth.checkLoggedIn,
         contact.removeRequestContactReceive
-    ); 
+    );
+    router.put(
+        '/contact/accept-request-contact-receive',
+        auth.checkLoggedIn,
+        contact.acceptRequestContactReceive
+    );  
     
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);

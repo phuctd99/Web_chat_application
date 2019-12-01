@@ -175,7 +175,7 @@ label:focus,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact-sent,
-.contactPanel .user-acccept-contact-received,
+.contactPanel .user-accept-request-contact-receive,
 .contactPanel .user-remove-request-contact-receive {
   box-sizing: border-box;
   display: inline-flex;

@@ -24,21 +24,21 @@ function addContact() {
   });
 }
 socket.on('respond-add-new-contact-sent', function(user) {
-  let notification = `<div class="noti-readed-false" data-uid="${user._id}">
+  let notification = `<div class="noti-readed-false" data-uid="${user.id}">
   <img
     class="avatar-small"
     src="/images/users/${user.avatar}"
     alt=""
   />
-  <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết
-  bạn! </div>`;
-  $('.noti_content').prepend(notification);
-  $('ul.list-notifications').prepend(`<li>${notification}</li>`);
+    <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết
+    bạn! </div>`;
+    $('.noti_content').prepend(notification);
+    $('ul.list-notifications').prepend(`<li>${notification}</li>`);
 
-  increaseNotification('count-request-contact-received');
+    increaseNotification('count-request-contact-received');
 
-  increaseNotificationNavbar('noti_contact_counter', 1);
-  increaseNotificationNavbar('noti_counter', 1);
+    increaseNotificationNavbar('noti_contact_counter', 1);
+    increaseNotificationNavbar('noti_counter', 1);
 
   let userInfoHtml = `<li class="_contactList" data-uid="${user.id}">
   <div class="contactPanel">
@@ -54,7 +54,7 @@ socket.on('respond-add-new-contact-sent', function(user) {
       <div class="user-address">
           <span>&nbsp ${user.address}</span>
       </div>
-      <div class="user-acccept-contact-received" data-uid="${user.id}">
+      <div class="user-accept-request-contact-receive" data-uid="${user.id}">
           Chấp nhận
       </div>
       <div class="user-remove-request-contact-receive action-danger" data-uid="${user.id}">
@@ -64,4 +64,5 @@ socket.on('respond-add-new-contact-sent', function(user) {
   </li>`;
   $("#request-contact-received").find("ul").prepend(userInfoHtml);
   removeRequestContactReceive();
+  acceptRequestContactReceive();
 });

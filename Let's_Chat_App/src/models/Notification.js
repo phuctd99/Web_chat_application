@@ -61,7 +61,8 @@ NotificationSchema.statics = {
 }
 
 const NOTIFICATION_TYPES = {
-    ADD_CONTACT: "add_contact"
+    ADD_CONTACT: "add_contact",
+    ACCEPT_CONTACT: "accpect_contact"
 };
 const NOTIFICATION_CONTENTS = {
     getContent: (notificationType, isRead, userId, username, userAvatar) => {
@@ -83,6 +84,26 @@ const NOTIFICATION_CONTENTS = {
                 alt=""
                 />
                 <strong>${username}</strong> đã gửi cho bạn một lời mời kết
+                bạn! </div>`;
+        }
+        if (notificationType === NOTIFICATION_TYPES.ACCEPT_CONTACT) {
+            if (!isRead) {
+                return `<div class="noti-readed-false" data-uid="${userId}">
+                <img
+                class="avatar-small"
+                src="/images/users/${userAvatar}"
+                alt=""
+                />
+                <strong>${username}</strong> đã đồng ý lời mời kết
+                bạn! </div>`;
+            }
+            return `<div data-uid="${userId}">
+                <img
+                class="avatar-small"
+                src="/images/users/${userAvatar}"
+                alt=""
+                />
+                <strong>${username}</strong> đã đồng ý lời mời kết
                 bạn! </div>`;
         }
         return "Bị lỗi";
