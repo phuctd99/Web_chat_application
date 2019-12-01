@@ -30,7 +30,6 @@ socket.on('respond-remove-request-contact-sent', function(user) {
     .remove();//xoa o popup
   $('ul.list-notifications').find(`li>div[data-uid=${user.id}]`).parent().remove();//xoa o modal
   $("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
-  //console.log(user.id);
   decreaseNotification('count-request-contact-received');
   decreaseNotificationNavbar('noti_contact_counter', 1);
   decreaseNotificationNavbar('noti_counter', 1);
