@@ -21,16 +21,26 @@ ContactSchema.statics = {
     },
     removeRequestContactSent(userId, contactId) {
       return this.remove({
-        $and: [{ "userId": userId }, { "contactId": contactId }]
+        $and: [{ "userId": userId }, { "contactId": contactId }, {"status": false}]
       }).exec();
     },
     removeRequestContactReceive(userId, contactId) {
       return this.remove({
         $and: [
           { "contactId": userId }, 
-          { "userId": contactId }]
+          { "userId": contactId },
+          {"status": false}]
       }).exec();
     },
+    acceptRequestContactReceive(userId, contactId) {
+      return this.update({
+        $and: [
+          { "contactId": userId }, 
+          { "userId": contactId },
+          {"status": false}]
+      }, {"status": true}).exec();
+    },
+    
     checkExists(userId, contactId) {
       return this.findOne({
         $or: [

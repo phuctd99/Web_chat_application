@@ -8,15 +8,15 @@ function removeRequestContactReceive() {
         success: function(data) {
             if (data) {
                 // hủy là xóa luôn thông báo
-                $('.noti_content').find(`div[data-uid=undefined]`).remove();//xoa o popup
-                $('ul.list-notifications').find(`li>div[data-uid=undefined]`).parent().remove();//xoa o modal    
+                $('.noti_content').find(`div[data-uid=${targetId}]`).remove();//xoa o popup
+                $('ul.list-notifications').find(`li>div[data-uid=${targetId}]`).parent().remove();//xoa o modal    
                 decreaseNotificationNavbar('noti_contact_counter', 1);
                 decreaseNotificationNavbar('noti_counter', 1);
                 decreaseNotification('count-request-contact-received');
                 //xoa o modal-tab dang cho xac nhan
                 $("#request-contact-received").find(`li[data-uid=${targetId}]`).remove();
                 socket.emit('remove-request-contact-receive', {contactId: targetId});
-            }
+          }
         }
       });
     });
@@ -27,7 +27,6 @@ function removeRequestContactReceive() {
     
     $("#request-contact-sent").find(`li[data-uid=${user.id}]`).remove();
    
-    //console.log(user.id);
     decreaseNotification('count-request-contact-sent');
     decreaseNotificationNavbar('noti_contact_counter', 1);
     decreaseNotificationNavbar('noti_counter', 1);
