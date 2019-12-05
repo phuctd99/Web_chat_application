@@ -26,6 +26,7 @@
    
     <%- include('user/userModal'); %>
     <%- include('contact/contactModal'); %>
+    <%- include('notification/notificationModal'); %>
     <!--Libraries-->
     <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -42,12 +43,23 @@
     <!-- SocketIO -->
     <script src = "/socket.io/socket.io.js"></script>
     <!-- My js-->
+    <script src="../../js/main.js"></script>
     <script src="/js/notification.js"></script>
     <script src="/js/add-contact.js"></script>
-    <script src="/js/remove-request.js"></script>
+    <script src="/js/remove-request-contact-sent.js"></script>
+    <script src="/js/remove-request-contact-receive.js"></script>
+    <script src="/js/accept-request-contact-receive.js"></script>
     <script src="/js/find-user.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="/js/readMoreContacts.js"></script>
+    <script src="/js/readMoreContactsSent.js"></script>
+    <script src="/js/readMoreContactsReviece.js"></script>
+    
+    <script src="/js/caculate-notification.js"></script>
+    <script src="/js/caculate-notification-contact.js"></script>
     <script src="../../js/updateUser.js"></script>
     <script src="../../js/chat.js"></script>
+    
+    <script src="/js/readMoreNotif.js"></script>
+    <script src="/js/mark-notification-readed.js"></script>
 </body>
 </html>

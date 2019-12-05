@@ -1,5 +1,5 @@
 import express from 'express';
-import { home, auth, user, contact } from './../controllers/index';
+import { home, auth, user, contact, notification } from './../controllers/index';
 import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
@@ -25,13 +25,37 @@ let initRoutes = (app) => {
         auth.checkLoggedIn,
         contact.findUsers
       );
+    router.get('/notification/read-more',auth.checkLoggedIn,notification.readMore);
+    router.put('/notification/mark-readed',auth.checkLoggedIn,notification.markAllReaded);
     
+    
+    router.put(
+        '/user/update-password',
+        auth.checkLoggedIn,
+        userValid.updatePassword,
+        user.updatePassword
+    );
+
+    router.get('/contact/read-more-contacts',auth.checkLoggedIn,contact.readMoreContacts);
+    router.get('/contact/read-more-contacts-sent',auth.checkLoggedIn,contact.readMoreContactsSent);
+    router.get('/contact/read-more-contacts-reviece',auth.checkLoggedIn,contact.readMoreContactsReviece);
     router.post('/contact/add-new', auth.checkLoggedIn, contact.addNew);
     router.delete(
-        '/contact/remove-request-contact',
+        '/contact/remove-request-contact-sent',
         auth.checkLoggedIn,
-        contact.removeReqCon
+        contact.removeRequestContactSent
     ); 
+    router.delete(
+        '/contact/remove-request-contact-receive',
+        auth.checkLoggedIn,
+        contact.removeRequestContactReceive
+    );
+    router.put(
+        '/contact/accept-request-contact-receive',
+        auth.checkLoggedIn,
+        contact.acceptRequestContactReceive
+    );  
+    
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
     router.put('/user/update-avatar', auth.checkLoggedIn, user.updateAvatar);
@@ -47,6 +71,8 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
+   
+
     return app.use('/', router);
 };
 

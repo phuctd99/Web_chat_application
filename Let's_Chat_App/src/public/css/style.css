@@ -22,7 +22,6 @@ body {
   text-rendering: optimizeLegibility;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
-  background-image: url('../images/background/image.jpg');
   background-size: cover;
   background-repeat: none;
 }
@@ -161,7 +160,11 @@ label:focus,
   font-size: 14px;
   font-weight: 700;
 }
-
+.contactPanel .user-email {
+  max-width: 90%;
+  height: auto;
+  margin: 10px 0px 0px 60px;
+}
 .contactPanel .user-address {
   max-width: 90%;
   height: auto;
@@ -171,10 +174,9 @@ label:focus,
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
-.contactPanel .user-remove-request-contact,
-.contactPanel .user-acccept-contact-received,
-.contactPanel .user-remove-request-sent,
-.contactPanel .user-reject-request-contact-received {
+.contactPanel .user-remove-request-contact-sent,
+.contactPanel .user-accept-request-contact-receive,
+.contactPanel .user-remove-request-contact-receive {
   box-sizing: border-box;
   display: inline-flex;
   flex-shrink: 0;
@@ -203,7 +205,7 @@ label:focus,
   margin: 10px 0px 5px 2px;
 }
 
-.contactPanel .user-remove-request-contact {
+.contactPanel .user-remove-request-contact-sent {
   display: none;
 }
 
@@ -220,7 +222,7 @@ label:focus,
 
 #notifications {
   display: none;
-  min-width: 250px;
+  min-width: 300px;
   position: absolute;
   right: 17px !important;
   border: solid 1px rgba(100, 100, 100, 0.2);
@@ -229,7 +231,7 @@ label:focus,
   z-index: 999;
 }
 
-#notifications h3 {
+#popup-mark-notif-as-read {
   display: block;
   color: #333;
   background: #fff;
@@ -268,7 +270,7 @@ label:focus,
 }
 
 .noti_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #e1141e;
   color: #fff;
@@ -283,17 +285,20 @@ label:focus,
 }
 
 .noti_content {
-  height: 200px;
+  height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content > span {
-  position: absolute;
+.noti_content > div {
   max-width: 95%;
-  margin-top: 5px;
-  margin-left: 7px;
+  margin: 5px 0px 0px 7px;
   color: #333;
+  padding: 3px;
+}
+.noti_content > div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
 }
 
 .seeAll {
@@ -1120,3 +1125,62 @@ label:focus,
   background-color: #00a4e4;
   color: #ffffff;
 }
+
+.noti-readed-false {
+  background: #e3e8f0;
+}
+
+.display-none {
+  display: none;
+}
+
+#noti_Button:hover {
+  text-decoration: none;
+}
+
+.list-notifications li {
+  width: 90%;
+  height: auto;
+  padding: 7px 0px 12px 5px;
+  margin: 0 auto;
+  list-style-type: none;
+}
+.list-notifications li div {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddeeff;
+}
+.list-notifications li div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+.mark-notif-as-read {
+  float: right;
+  margin-right: 20px;
+}
+.read-more-contacts,
+.read-more-contacts-sent,
+.read-more-contacts-reviece,
+.read-more-notif {
+  text-align: center;
+}
+
+.avatar-of-user-chatting {
+  height: 50px;
+  width: 50px;
+  float: left;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  -webkit-animation-name: slideFromLeft;
+  animation-name: slideFromLeft;
+}
+
+.avatar-of-user-chatting img {
+  height: 100%;
+  width: auto;
+  border-radius: 50%;
+}
+.display-important {
+  display: inline-block !important;
+} 

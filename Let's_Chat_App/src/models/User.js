@@ -89,6 +89,21 @@ UserSchema.statics = {
         'google.email': 1
       }
     ).exec();
+  },
+  getNormalUserById(id) {
+    return this.findById(id,{_id: 1,username: 1,address: 1,avatar: 1}).exec();
+  },
+  findUsers(userIds){
+    return this.find(
+      {
+        _id : {$in : userIds}
+      },
+      {
+        _id: 1,
+        username: 1,
+        avatar: 1
+      }
+    ).exec();
   }
 };
 UserSchema.methods = {
