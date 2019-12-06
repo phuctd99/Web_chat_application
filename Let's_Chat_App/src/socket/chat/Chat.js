@@ -33,7 +33,7 @@ const chat = (users, io) => {
           data.receiverId,
           io,
           'receive-message',
-          data.messageContent
+          message
         );
       }
     });
