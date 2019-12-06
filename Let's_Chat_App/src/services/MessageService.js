@@ -1,11 +1,15 @@
 import MessageModel from '../models/Message';
 
-const saveMessage = item => {
-  MessageModel.createNew(item);
+const saveMessage = async item => {
+  await MessageModel.createNew(item);
 };
 
-const getMessageByUserId = id => {};
+const getMessageBySenderIdAndReceiverId = async (senderId, receiverId) => {
+  const messages = await MessageModel.getMessageBySenderIdAndReceiverId(senderId, receiverId);
+  return messages;
+};
 
 module.exports = {
-  saveMessage: saveMessage
+  saveMessage: saveMessage,
+  getMessageBySenderIdAndReceiverId: getMessageBySenderIdAndReceiverId
 };
