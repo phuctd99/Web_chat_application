@@ -13,22 +13,20 @@
         title="Tạo một nhóm trò chuyện mới"
       ></a>
     </div>
-    <ul class="people no-padding-start">
-      <a href="#uidcontact._id" class="room-chat">
-        <% contactedUsers.forEach((item) => { %>
-        <li class="person" data-uid="<%= item._id %>">
-          <div class="left-avatar">
-            <div class="dot"></div>
-            <img src="../../images/users/<%= item.avatar %>" alt="" />
-          </div>
-          <span class="name">
-            <%= item.username %>
-          </span>
-          <span class="time">Một phút trước</span>
-          <span class="preview">Xin chào</span>
-        </li>
-        <% }); %>
-      </a>
+    <ul id="contact-list" class="people no-padding-start">
+      <% contactedUsers.forEach((item) => { %>
+      <li id="li-<%= item._id %>" class="person" data-uid="<%= item._id %>">
+        <div class="left-avatar">
+          <div class="dot"></div>
+          <img src="../../images/users/<%= item.avatar %>" alt="" />
+        </div>
+        <span class="name">
+          <%= item.username %>
+        </span>
+        <span class="time">Một phút trước</span>
+        <span class="preview">Xin chào</span>
+      </li>
+      <% }); %>
     </ul>
   </div>
 </div>

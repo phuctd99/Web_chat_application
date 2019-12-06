@@ -54,6 +54,10 @@ function selectReceiver() {
   });
 }
 
+function updateLeftSide(){
+
+}
+
 function onEnter() {
   $('#chatInputField').keypress(function(e) {
     if (e.which == 13) {
@@ -87,20 +91,26 @@ function updateSenderMessageBox() {
 
 function receiveMessage() {
   socket.on('receive-message', function(message) {
-    const messageElement = `<div class="line-chat">
-		<div class="avatar-of-user-chatting">
-			<img src="${receiverAvatar}" alt="" />
-		</div>
-		<div id="message" class="bubble you">
-			${message}
-		</div>
-	</div>`;
-    $('#chat-field').append(messageElement);
-    $('#chat-field')
-      .stop()
-      .animate({
-        scrollTop: $('#chat-field')[0].scrollHeight
-      });
+    if (message.senderId == receiverId){
+      const messageElement = `<div class="line-chat">
+      <div class="avatar-of-user-chatting">
+        <img src="${receiverAvatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${message.text}
+      </div>
+    </div>`;
+      $('#chat-field').append(messageElement);
+      $('#chat-field')
+        .stop()
+        .animate({
+          scrollTop: $('#chat-field')[0].scrollHeight
+        });
+    }
+    const receiverLeftTag = $(`#li-${message.senderId}`).prop('outerHTML');
+    $(`#li-${message.senderId}`).remove();
+    $('#contact-list').prepend(receiverLeftTag);
+    $(`#li-${message.senderId}`).find('span.preview').text(message.text);
   });
 }
 
