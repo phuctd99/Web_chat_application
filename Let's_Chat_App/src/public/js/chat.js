@@ -1,5 +1,40 @@
 let receiverId = null;
+const senderId = $('#chatInputField').data('uid');
 let receiverAvatar = null;
+
+function appendMessagesToView(messages){
+  messages.forEach(function(message){
+    let messageElement = '';
+    if (senderId == message.senderId && receiverId == message.receiverId){
+      messageElement = `<div>
+      <div id="message" class="bubble me">
+        ${message.text}
+      </div>
+    </div>`;
+    } else if (senderId == message.receiverId && receiverId == message.senderId) {
+      messageElement = `<div class="line-chat">
+      <div class="avatar-of-user-chatting">
+        <img src="${receiverAvatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${message.text}
+      </div>
+    </div>`;
+    }
+    $('#chat-field').append(messageElement);
+    $('#chat-field')
+      .stop()
+      .animate({
+        scrollTop: $('#chat-field')[0].scrollHeight
+      });
+  });
+}
+
+function getMessages(){
+  $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}`, function(data, status){
+    appendMessagesToView(data.messages);
+  });
+};
 
 function selectReceiver() {
   $('.person').on('click', function() {
@@ -14,6 +49,8 @@ function selectReceiver() {
     receiverAvatar = $(this)
       .find('img')
       .attr('src');
+    $('#chat-field').empty();
+    getMessages();
   });
 }
 
@@ -22,7 +59,7 @@ function onEnter() {
     if (e.which == 13) {
       let message = $(this).val();
       const data = {
-        senderId: $(this).data('uid'),
+        senderId: senderId,
         receiverId: receiverId,
         messageContent: message
       };
@@ -67,7 +104,7 @@ function receiveMessage() {
   });
 }
 
-$(document).ready(function() {
+function init(){
   $('.person')
     .first()
     .css('background-color', 'green');
@@ -84,6 +121,11 @@ $(document).ready(function() {
       .find('span.name')
       .text()
   );
+  getMessages();
+}
+
+$(document).ready(function() {
+  init();
   selectReceiver();
   onEnter();
   updateSenderMessageBox();
