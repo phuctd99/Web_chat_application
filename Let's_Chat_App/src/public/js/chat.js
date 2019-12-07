@@ -6,7 +6,7 @@ function appendMessagesToView(messages){
   messages.forEach(function(message){
     let messageElement = '';
     if (senderId == message.senderId && receiverId == message.receiverId){
-      messageElement = `<div>
+      messageElement = `<div class="line-chat">
       <div id="message" class="bubble me">
         ${message.text}
       </div>
@@ -38,8 +38,8 @@ function getMessages(){
 
 function selectReceiver() {
   $('.person').on('click', function() {
-    $('li').css('background-color', 'white');
-    $(this).css('background-color', 'green');
+    $('.person').css('background-color', 'white');
+    $(this).css('background-color', '#e6e6e6');
     $('#nameOfReceiver').text(
       $(this)
         .find('span.name')
@@ -74,7 +74,7 @@ function onEnter() {
 
 function updateSenderMessageBox() {
   socket.on('update-sender-message-box', function(message) {
-    const messageElement = `<div>
+    const messageElement = `<div class="line-chat">
 		<div id="message" class="bubble me">
 			${message}
 		</div>
@@ -117,7 +117,7 @@ function receiveMessage() {
 function init(){
   $('.person')
     .first()
-    .css('background-color', 'green');
+    .css('background-color', '#e6e6e6');
   receiverId = $('.person')
     .first()
     .data('uid');
