@@ -16,7 +16,7 @@ ContactSchema.statics = {
     },
     findAllUserById(id) {
       return this.find({
-        userId: id
+        $or: [{ userId: id }, { contactId: id }]
       }).exec();
     },
     removeRequestContactSent(userId, contactId) {

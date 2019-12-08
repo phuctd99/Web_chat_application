@@ -224,12 +224,16 @@ let getAllContacts = currentUserId => {
   return new Promise(async (resolve, reject) => {
     let contactedUsers = await ContactModel.findAllUserById(currentUserId);
     let contactedUserIds = [];
-    contactedUsers.forEach(user => {
-      if (user.status) {
-        contactedUserIds.push(user.contactId);
+    contactedUsers.forEach(contact => {
+      if (contact.status) {
+        if (contact.contactId != currentUserId){
+          contactedUserIds.push(contact.contactId);
+        }else{
+          contactedUserIds.push(contact.userId);
+        }
       }
     });
-    let users = UserModel.findUsers(contactedUserIds);
+    let users = await UserModel.findUsers(contactedUserIds);
     resolve(users);
   });
 };

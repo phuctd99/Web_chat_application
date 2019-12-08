@@ -1,5 +1,5 @@
 import express from 'express';
-import { home, auth, user, contact, notification } from './../controllers/index';
+import { home, auth, user, contact, notification, message } from './../controllers/index';
 import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
@@ -8,12 +8,9 @@ initPassportLocal();
 let router = express.Router();
 
 let initRoutes = (app) => {
-    //GET
     router.get('/login-register',auth.checkLoggedOut, auth.getLoginRegister);
 
-    //POST
     router.post("/register", auth.checkLoggedOut, authValidator.register, auth.postRegister);
-    router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
     router.post("/login", auth.checkLoggedOut, passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/login-register",
@@ -72,6 +69,7 @@ let initRoutes = (app) => {
         user.updatePassword
     );
    
+    router.get('/get-messages', message.getAllMessages);
 
     return app.use('/', router);
 };

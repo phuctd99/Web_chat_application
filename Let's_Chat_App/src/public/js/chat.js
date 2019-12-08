@@ -1,10 +1,45 @@
 let receiverId = null;
+const senderId = $('#chatInputField').data('uid');
 let receiverAvatar = null;
+
+function appendMessagesToView(messages){
+  messages.forEach(function(message){
+    let messageElement = '';
+    if (senderId == message.senderId && receiverId == message.receiverId){
+      messageElement = `<div class="line-chat">
+      <div id="message" class="bubble me">
+        ${message.text}
+      </div>
+    </div>`;
+    } else if (senderId == message.receiverId && receiverId == message.senderId) {
+      messageElement = `<div class="line-chat">
+      <div class="avatar-of-user-chatting">
+        <img src="${receiverAvatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${message.text}
+      </div>
+    </div>`;
+    }
+    $('#chat-field').append(messageElement);
+    $('#chat-field')
+      .stop()
+      .animate({
+        scrollTop: $('#chat-field')[0].scrollHeight
+      });
+  });
+}
+
+function getMessages(){
+  $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}`, function(data, status){
+    appendMessagesToView(data.messages);
+  });
+};
 
 function selectReceiver() {
   $('.person').on('click', function() {
-    $('li').css('background-color', 'white');
-    $(this).css('background-color', 'green');
+    $('.person').css('background-color', 'white');
+    $(this).css('background-color', '#e6e6e6');
     $('#nameOfReceiver').text(
       $(this)
         .find('span.name')
@@ -14,7 +49,13 @@ function selectReceiver() {
     receiverAvatar = $(this)
       .find('img')
       .attr('src');
+    $('#chat-field').empty();
+    getMessages();
   });
+}
+
+function updateLeftSide(){
+
 }
 
 function onEnter() {
@@ -22,7 +63,7 @@ function onEnter() {
     if (e.which == 13) {
       let message = $(this).val();
       const data = {
-        senderId: $(this).data('uid'),
+        senderId: senderId,
         receiverId: receiverId,
         messageContent: message
       };
@@ -33,7 +74,7 @@ function onEnter() {
 
 function updateSenderMessageBox() {
   socket.on('update-sender-message-box', function(message) {
-    const messageElement = `<div>
+    const messageElement = `<div class="line-chat">
 		<div id="message" class="bubble me">
 			${message}
 		</div>
@@ -50,27 +91,33 @@ function updateSenderMessageBox() {
 
 function receiveMessage() {
   socket.on('receive-message', function(message) {
-    const messageElement = `<div class="line-chat">
-		<div class="avatar-of-user-chatting">
-			<img src="${receiverAvatar}" alt="" />
-		</div>
-		<div id="message" class="bubble you">
-			${message}
-		</div>
-	</div>`;
-    $('#chat-field').append(messageElement);
-    $('#chat-field')
-      .stop()
-      .animate({
-        scrollTop: $('#chat-field')[0].scrollHeight
-      });
+    if (message.senderId == receiverId){
+      const messageElement = `<div class="line-chat">
+      <div class="avatar-of-user-chatting">
+        <img src="${receiverAvatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${message.text}
+      </div>
+    </div>`;
+      $('#chat-field').append(messageElement);
+      $('#chat-field')
+        .stop()
+        .animate({
+          scrollTop: $('#chat-field')[0].scrollHeight
+        });
+    }
+    const receiverLeftTag = $(`#li-${message.senderId}`).prop('outerHTML');
+    $(`#li-${message.senderId}`).remove();
+    $('#contact-list').prepend(receiverLeftTag);
+    $(`#li-${message.senderId}`).find('span.preview').text(message.text);
   });
 }
 
-$(document).ready(function() {
+function init(){
   $('.person')
     .first()
-    .css('background-color', 'green');
+    .css('background-color', '#e6e6e6');
   receiverId = $('.person')
     .first()
     .data('uid');
@@ -84,6 +131,11 @@ $(document).ready(function() {
       .find('span.name')
       .text()
   );
+  getMessages();
+}
+
+$(document).ready(function() {
+  init();
   selectReceiver();
   onEnter();
   updateSenderMessageBox();

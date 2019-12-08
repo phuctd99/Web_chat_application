@@ -15,6 +15,14 @@ let MessageSchema = new Schema({
 MessageSchema.statics = {
   createNew(message) {
     return this.create(message);
+  },
+  getMessageBySenderIdAndReceiverId(senderId, receiverId) {
+    return this.find({
+      $or: [
+        {$and: [{ senderId: senderId }, { receiverId: receiverId }]},
+        {$and: [{ senderId: receiverId }, { receiverId: senderId }]}
+      ]
+    }).exec();
   }
 };
 
