@@ -111,6 +111,7 @@ function receiveMessage() {
     $(`#li-${message.senderId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${message.senderId}`).find('span.preview').text(message.text);
+    selectReceiver();
   });
 }
 
