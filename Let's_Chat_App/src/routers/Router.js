@@ -4,10 +4,12 @@ import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
 import initPassportFacebook from "../controllers/passportController/facebook";
+import initPassportGoogle from "../controllers/passportController/google";
 
 
 initPassportLocal();
 initPassportFacebook();
+initPassportGoogle();
 let router = express.Router();
 
 let initRoutes = (app) => {
@@ -27,7 +29,13 @@ let initRoutes = (app) => {
          successRedirect: '/',
          failureRedirect: '/login-register'
      })); 
-     
+    
+     router.get('/auth/google' ,auth.checkLoggedOut, passport.authenticate('google', {scope: ["email"]}));
+     router.get('/auth/google/callback' ,auth.checkLoggedOut, passport.authenticate('google', {
+         successRedirect: '/',
+         failureRedirect: '/login-register'
+     }))
+
     router.get(
         '/contact/find-users/:keyword',
         auth.checkLoggedIn,
