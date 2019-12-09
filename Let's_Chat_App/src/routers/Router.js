@@ -11,6 +11,7 @@ let initRoutes = (app) => {
     router.get('/login-register',auth.checkLoggedOut, auth.getLoginRegister);
 
     router.post("/register", auth.checkLoggedOut, authValidator.register, auth.postRegister);
+    router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
     router.post("/login", auth.checkLoggedOut, passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/login-register",
