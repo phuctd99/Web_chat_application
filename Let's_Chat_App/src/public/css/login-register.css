@@ -1,48 +1,85 @@
-
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
 
 /* @charset "UTF-8"; */
 
 body {
-  /*position: fixed;*/
-  /*width: 100%;*/
-  height: 100vh;
-  background-color: #f8f8f8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
-  background-image: url("../images/background/facebook-workplace-chat-desktop-software-screen-share.png");
-  background-size: cover;
-  background-repeat: none;
-  color: #fff;
+  margin: 0 !important;
 }
+.container-fluid {
 
-.container {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)), url("../../images/background/background1.jpg");
+  background-size: cover;
+  position: relative;
 }
 
 .my-content {
-  margin-top: 80px;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
+
+  position: absolute;
+  top:40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  text-align: center;
+  line-height: 1.7;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
-@media screen and (max-width: 768px) {
+.box-content {
+  
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%,-50%);
+}
+.main-text {
+  animation: moveInLeft 1s ease-out; 
+  letter-spacing: 13px;
+  margin-bottom: 30px;
+}
+
+.sub-text {
+  animation: moveInRight 1s ease-out; 
+  letter-spacing: 12px;
+  margin-bottom: 70px;
+}
+
+@media screen and (max-width: 830px) {
   body {
     position: static;
   }
+  .main-text {
+    font-size: 12px;
+  }
+  .sub-text {
+    font-size: 14px;
+    letter-spacing: 7px;
+  }
+  .big-login,.big-register {
+    font-size: 10px !important;
+    margin-bottom: 10px;
+    width: 140px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
 }
 
 .modal-title {
   color: #2c3e50;
 }
 
-hr {
-  width: 80%;
-}
+
 
 .login-title {
   font-size: 52px;
@@ -51,18 +88,41 @@ hr {
 .table a {
   color: #fff;
 }
-
-.my-table>tbody>tr>td {
-  border-top: 0px;
-  font-size: 15px;
+.social a {
+    text-decoration: none;
 }
-
 .bottom-description {
   margin-top: 30px;
   font-size: 15px;
   font-style: italic;
 }
 
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem); }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem); }
+  80% {
+    transform: translateX(1rem); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem); }
+  80% {
+    transform: translateX(-1rem); }
+  100% {
+    opacity: 1;
+    transform: translateX(0); } }
 .animated {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
@@ -182,6 +242,7 @@ hr {
   animation-name: shake;
 }
 
+
 .login .modal-dialog {
   width: 500px;
 }
@@ -208,7 +269,6 @@ hr {
 }
 
 .login .division .line {
-  border-top: 1px solid #DFDFDF;
   position: absolute;
   top: 10px;
   width: 34%;
@@ -226,8 +286,7 @@ hr {
   color: #424242;
   font-size: 17px;
 }
-
-.login .box .social {
+.social {
   float: none;
   margin: 0 auto 30px;
   text-align: center;
@@ -236,28 +295,30 @@ hr {
 .login .social .circle {
   background-color: #EEEEEE;
   color: #FFFFFF;
-  border-radius: 100px;
+  border-radius: 3px;
   display: inline-block;
-  margin: 0 17px;
+  margin-bottom: 7px;
   padding: 15px;
+  width: 100%;
 }
 
 .login .social .circle .fa {
   font-size: 16px;
+  text-align: left;
+  
 }
 
 .login .social .facebook {
   background-color: #455CA8;
   color: #FFFFFF;
+  text-transform: uppercase;
 }
 
 .login .social .google {
   background-color: #F74933;
+  text-transform: uppercase;
 }
 
-.login .social .github {
-  background-color: #403A3A;
-}
 
 .login .facebook:hover {
   background-color: #6E83CD;
@@ -267,10 +328,6 @@ hr {
   background-color: #FF7566;
 }
 
-.login .github:hover {
-  background-color: #4D4D4d;
-  ;
-}
 
 .login .forgot {
   color: #797979;
@@ -282,21 +339,18 @@ hr {
 
 .login .btn-login,
 .registerBox .btn-register {
-  background-color: #00BBFF;
-  border-color: #00BBFF;
+  /* background: linear-gradient(to right, #800080, #ffc0cb); */
+  background: linear-gradient(to left top,#11cdef 0,#1171ef 100%);
+  /* border-color: #00BBFF; */
   border-width: 0;
   color: #FFFFFF;
   display: block;
   margin: 0 auto;
+  margin-bottom: 25px;
+  margin-top: 25px;
   padding: 15px 50px;
   text-transform: uppercase;
   width: 100%;
-}
-
-.login .btn-login:hover,
-.registerBox .btn-register:hover {
-  background-color: #00A4E4;
-  color: #FFFFFF;
 }
 
 .login .form-control {
@@ -323,45 +377,44 @@ hr {
   color: #333333;
   font-size: 16px;
   height: 46px;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
   padding: 13px 12px;
   width: 100%;
 }
-
 @media (max-width:400px) {
   .login .modal-dialog {
     width: 100%;
   }
 }
 
+
 .big-login,
 .big-register {
-  background-color: #00bbff;
-  color: #FFFFFF;
-  border-radius: 7px;
-  border-width: 2px;
+  width: 140px;
+  color: white;
+  border-radius: 0px;
   font-size: 14px;
-  font-style: normal;
   font-weight: 200;
   padding: 12px 40px;
   text-transform: uppercase;
   transition: all 0.3s ease 0s;
+  box-shadow: 0px 0.5px 10px rgba(0, 0, 0, 0.6);
+  animation: moveInBottom .5s ease-out .75s;
+  animation-fill-mode: backwards;
 }
 
+.big-login{
+  margin-right: 5px;
+  background: linear-gradient(to left top,#11cdef 0,#1171ef 100%)
+}
 .big-login:hover {
-  background-color: #00A4E4;
-  color: #FFFFFF;
+  color: white;
+  background: linear-gradient(87deg,#11cdef 0,#1171ef 100%)
 }
-
 .big-register {
-  background-color: rgba(0, 0, 0, .0);
-  color: #00bbff;
-  border-color: #00bbff;
-}
-
-.big-register:hover {
-  border-color: #00A4E4;
-  color: #00A4E4;
+  color: rgba(101, 78, 163, 1);
+  background: white;
+  margin-left: 5px;
 }
 
 label {
