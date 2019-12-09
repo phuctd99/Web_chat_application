@@ -1,7 +1,6 @@
 function increaseNotificationNavbar(classname, number) {
     let currentValue = +$(`.${classname}`).text();
     currentValue += number;
-  
     if (currentValue === 0) {
       $(`.${classname}`)
         .css('display', 'none')
@@ -15,6 +14,7 @@ function increaseNotificationNavbar(classname, number) {
   
   function decreaseNotificationNavbar(classname, number) {
     let currentValue = +$(`.${classname}`).text();
+    console.log(currentValue);
     if (currentValue > 0) {
       currentValue -= number;
       if (currentValue === 0) {
