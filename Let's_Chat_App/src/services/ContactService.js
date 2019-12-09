@@ -233,8 +233,15 @@ let getAllContacts = currentUserId => {
         }
       }
     });
-    let users = await UserModel.findUsers(contactedUserIds);
-    resolve(users);
+    const users = contactedUserIds.map(async (userId, index) => {
+      const user = await UserModel.findContactedUserById(userId);
+      const result = {
+        user: user,
+        latestMessage: contactedUsers[index].latestMessage
+      };
+      return result;
+    });
+    Promise.all(users).then(users => {resolve(users);});
   });
 };
 

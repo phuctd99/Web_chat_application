@@ -1,4 +1,5 @@
 import Message from '../../services/MessageService';
+import Contact from '../../models/Contact';
 import {
   pushSocketId,
   emitData,
@@ -6,9 +7,9 @@ import {
 } from '../../helpers/SocketHelper';
 
 const chat = (users, io) => {
-  io.on('connection', function(socket) {
+  io.on('connection', socket => {
     users = pushSocketId(users, socket.request.user._id, socket.id);
-    socket.on('send-message', function(data) {
+    socket.on('send-message', data => {
       // save message on db
       const message = {
         senderId: socket.request.user._id,
@@ -16,6 +17,14 @@ const chat = (users, io) => {
         text: data.messageContent
       };
       Message.saveMessage(message);
+
+      // save latset contact
+      const latestMessage = {
+        sender: socket.request.user._id,
+        content: data.messageContent,
+        createdAt: new Date().getTime()
+      }
+      Contact.updateTheLatestMessage(socket.request.user._id, data.receiverId, latestMessage);
 
       // send message to sender
       emitData(

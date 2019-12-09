@@ -1,6 +1,7 @@
 let receiverId = null;
 const senderId = $('#chatInputField').data('uid');
 let receiverAvatar = null;
+let allMessages = [];
 
 function appendMessagesToView(messages){
   messages.forEach(function(message){
@@ -31,13 +32,19 @@ function appendMessagesToView(messages){
 }
 
 function getMessages(){
-  $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}`, function(data, status){
-    appendMessagesToView(data.messages);
-  });
+  if (!allMessages[receiverId]){
+    $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}`, function(data, status){
+      allMessages[receiverId] = data.messages;
+      appendMessagesToView(allMessages[receiverId]);
+    });
+  }else{
+    appendMessagesToView(allMessages[receiverId]);
+  }
+  
 };
 
 function selectReceiver() {
-  $('.person').on('click', function() {
+  $(document).on('click', '.person', function() {
     $('.person').css('background-color', 'white');
     $(this).css('background-color', '#e6e6e6');
     $('#nameOfReceiver').text(
@@ -52,10 +59,6 @@ function selectReceiver() {
     $('#chat-field').empty();
     getMessages();
   });
-}
-
-function updateLeftSide(){
-
 }
 
 function onEnter() {
@@ -86,6 +89,10 @@ function updateSenderMessageBox() {
         scrollTop: $('#chat-field')[0].scrollHeight
       });
     $('#chatInputField').val('');
+    const receiverLeftTag = $(`#li-${receiverId}`).prop('outerHTML');
+    $(`#li-${receiverId}`).remove();
+    $('#contact-list').prepend(receiverLeftTag);
+    $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + message);
   });
 }
 
@@ -111,7 +118,6 @@ function receiveMessage() {
     $(`#li-${message.senderId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${message.senderId}`).find('span.preview').text(message.text);
-    selectReceiver();
   });
 }
 
