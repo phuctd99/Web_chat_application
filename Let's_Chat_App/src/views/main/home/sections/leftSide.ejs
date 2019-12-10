@@ -15,16 +15,23 @@
     </div>
     <ul id="contact-list" class="people no-padding-start">
       <% contactedUsers.forEach((item) => { %>
-      <li id="li-<%= item._id %>" class="person" data-uid="<%= item._id %>">
+      <li
+        id="li-<%= item.user._id %>"
+        class="person"
+        data-uid="<%= item.user._id %>"
+      >
         <div class="left-avatar">
           <div class="dot"></div>
-          <img src="../../images/users/<%= item.avatar %>" alt="" />
+          <img src="../../images/users/<%= item.user.avatar %>" alt="" />
         </div>
         <span class="name">
-          <%= item.username %>
+          <%= item.user.username %>
         </span>
         <span class="time">Một phút trước</span>
-        <span class="preview">Xin chào</span>
+        <span class="preview">
+          <% if (user._id == item.latestMessage.sender){ %>Bạn: <% } %> <%=
+          item.latestMessage.content %>
+        </span>
       </li>
       <% }); %>
     </ul>
