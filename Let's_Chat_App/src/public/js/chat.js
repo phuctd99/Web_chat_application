@@ -43,22 +43,51 @@ function getMessages(){
   
 };
 
-function selectReceiver() {
-  $(document).on('click', '.person', function() {
-    $('.person').css('background-color', 'white');
-    $(this).css('background-color', '#e6e6e6');
-    $('#nameOfReceiver').text(
-      $(this)
-        .find('span.name')
-        .text()
-    );
-    receiverId = $(this).data('uid');
-    receiverAvatar = $(this)
+function focusReceiver(receiverId){
+  receiverAvatar = $(`#li-${receiverId}`)
       .find('img')
       .attr('src');
-    $('#chat-field').empty();
-    getMessages();
+  $('.person').css('background-color', 'white');
+  $(`#li-${receiverId}`).css('background-color', '#e6e6e6');
+  $('#nameOfReceiver').text(
+    $(`#li-${receiverId}`)
+      .find('span.name')
+      .text()
+  );
+  $('#chat-field').empty();
+  getMessages();
+}
+
+function selectReceiver() {
+  $(document).on('click', '.person', function() {
+    receiverId = $(this).data('uid');
+    focusReceiver(receiverId);
   });
+}
+
+function selectReceiverFromModal(){
+  $(document).on('click', '.user-talk', function() {
+    $('#contactsModal').modal('toggle');
+    receiverId = $(this).data('uid');
+    focusReceiver(receiverId);
+  });
+}
+
+function findConversationBySearchBox(){
+  $('.searchBox').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('.person').hide().filter(function () {
+        return $(this).find('span.name').text().toLowerCase().indexOf($('.searchBox').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('.person').show();
+    }
+    if ($('.person:visible').length > 0){
+      receiverId = $('.person:visible').first().data('uid');
+      focusReceiver(receiverId);
+    } 
+  }); 
 }
 
 function onEnter() {
@@ -122,29 +151,18 @@ function receiveMessage() {
 }
 
 function init(){
-  $('.person')
-    .first()
-    .css('background-color', '#e6e6e6');
   receiverId = $('.person')
     .first()
     .data('uid');
-  receiverAvatar = $('.person')
-    .first()
-    .find('img')
-    .attr('src');
-  $('#nameOfReceiver').text(
-    $('.person')
-      .first()
-      .find('span.name')
-      .text()
-  );
-  getMessages();
+  focusReceiver(receiverId);
 }
 
 $(document).ready(function() {
   init();
   selectReceiver();
+  selectReceiverFromModal();
   onEnter();
   updateSenderMessageBox();
   receiveMessage();
+  findConversationBySearchBox();
 });
