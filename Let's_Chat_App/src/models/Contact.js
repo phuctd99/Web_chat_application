@@ -5,6 +5,11 @@ let Schema = mongoose.Schema;
 let ContactSchema = new Schema({
     userId: String,
     contactId: String,
+    latestMessage:{
+      sender: String,
+      content: String,
+      createdAt: Number
+    },
     status: {type: Boolean, default: false},
     createdAt: {type: Number, default: Date.now},
     updatedAt: {type: Number, default: null},
@@ -17,7 +22,7 @@ ContactSchema.statics = {
     findAllUserById(id) {
       return this.find({
         $or: [{ userId: id }, { contactId: id }]
-      }).exec();
+      }).sort({'latestMessage.createdAt': -1}).exec();
     },
     removeRequestContactSent(userId, contactId) {
       return this.remove({
@@ -54,6 +59,23 @@ ContactSchema.statics = {
           ]}
         ]
       }).exec();
+    },
+
+    removeContact(userId, contactId){
+      return this.remove({
+        $or: [
+          {$and: [
+            {"userId": userId},
+            {"contactId": contactId},
+            {"status": true}
+          ]},
+          {$and: [
+            {"userId": contactId},
+            {"contactId": userId},
+            {"status": true}
+          ]}
+        ]
+      }).exec()
     },
     getContacts(userId, limit) {
       return this.find({
@@ -141,7 +163,22 @@ ContactSchema.statics = {
 
         ]
       }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+    updateTheLatestMessage(senderId, receiverId, message){
+      return this.findOneAndUpdate(
+        {$or: [
+          {$and: [
+            {"userId": senderId},
+            {"contactId": receiverId}
+          ]},
+          {$and: [
+            {"userId": receiverId},
+            {"contactId": senderId}
+          ]}
+        ]},
+        { $set: { latestMessage: message } },
+        { upsert: true }
+        ).exec();
     }
-    
 };
 module.exports = mongoose.model("contact", ContactSchema);

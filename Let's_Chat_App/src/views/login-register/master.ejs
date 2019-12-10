@@ -29,23 +29,24 @@
     <script src="/js/login-register.js" type="text/javascript"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <div class="col-sm-2"></div>
       <div class="col-sm-8 my-content">
         <div class="row">
           <div class="col-sm-12">
-            <h1 class="login-title text-center">Welcome To Let's Chat</h1>
-            <hr />
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6 table-responsive">
-              <table class="table my-table"></table>
-            </div>
+            <h1 class="login-title main-text">Let's Chat</h1>
+            <h2 class="sub-text">is how creative and beyond the limits</h2>
+          </div>
+            <!-- <div class="col-sm-3"></div> -->
+            <!-- <div class="col-sm-6 table-responsive"> -->
+              <!-- <table class="table my-table"></table> -->
+        </div>
             <div class="col-sm-3"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-7 text-center">
+
+          <div class="  box-content">
             <a
               class="btn big-login"
               data-toggle="modal"
@@ -61,21 +62,9 @@
               >Đăng ký</a
             >
           </div>
-          <div class="col-sm-3"></div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 text-center bottom-description">
-            <span>
-              " It's a New Contact Every Day "
-            </span>
-            <br />
-            <span>
-              " I Scream, You Scream, We All Scream For Chatting "
-            </span>
-          </div>
+
         </div>
       </div>
-      <div class="col-sm-2"></div>
       <div class="modal fade login" id="loginModal">
         <div class="modal-dialog login animated">
           <div class="modal-content">
@@ -94,6 +83,19 @@
               <%- include('notification/notification');%> 
               <%-include('login/login');%> 
               <%- include('register/register');%>
+              <div class="division">
+                <div class="line l"></div>
+                <span>hoặc</span>
+                <div class="line r"></div>
+            </div>
+            <div class="social">
+                <a id="google_login" class="circle google" href="/auth/google" title="Đăng nhập bằng tài khoản Google">
+                    Đăng nhập với google
+                </a>
+                <a id="facebook_login" class="circle facebook" href="/auth/facebook" title="Đăng nhập bằng tài khoản Facebook">
+                    Đăng nhập với facebook
+                </a>
+            </div>
             </div>
             <div class="modal-footer">
               <div class="forgot login-footer">

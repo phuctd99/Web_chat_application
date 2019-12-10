@@ -1,6 +1,5 @@
 function increaseNotification(classname) {
     let currentValue = +$(`.${classname}`)
-      .find('em')
       .text();
     currentValue += 1;
     if (currentValue === 0) {
@@ -9,16 +8,13 @@ function increaseNotification(classname) {
         .html('');
     } else {
       $(`.${classname}`)
-        .css('display', 'block')
-        .html(`<em>${currentValue}</em>`);
+        .css('display', 'inline-block')
+        .html(currentValue);
     }
-    
   }
   
   function decreaseNotification(classname) {
-    
     let currentValue = +$(`.${classname}`)
-      .find('em')
       .text();
       if (currentValue > 0) {
         currentValue -= 1;
@@ -28,8 +24,8 @@ function increaseNotification(classname) {
             .html('');
         } else {
           $(`.${classname}`)
-            .css('display', 'block')
-            .html(`<em>${currentValue}</em>`);
+            .css('display', 'inline-block')
+            .html(currentValue);
         }
       }
   }

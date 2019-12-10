@@ -42,6 +42,18 @@ let addNew = (currentUserId, contactId) => {
     resolve(newContact);
   });
 };
+let removeContact = (currentUserId, contactId)=>{
+  return new Promise(async (resolve, reject) => {
+    let removeContact = await ContactModel.removeContact(
+      currentUserId,
+      contactId
+    );
+    if (removeContact.n === 0) {
+      return reject(false);
+    }
+    resolve(true);
+  });
+}
 
 let removeRequestContactSent  = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
@@ -233,14 +245,22 @@ let getAllContacts = currentUserId => {
         }
       }
     });
-    let users = await UserModel.findUsers(contactedUserIds);
-    resolve(users);
+    const users = contactedUserIds.map(async (userId, index) => {
+      const user = await UserModel.findContactedUserById(userId);
+      const result = {
+        user: user,
+        latestMessage: contactedUsers[index].latestMessage
+      };
+      return result;
+    });
+    Promise.all(users).then(users => {resolve(users);});
   });
 };
 
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
+  removeContact:removeContact,
   removeRequestContactSent: removeRequestContactSent,
   removeRequestContactReceive: removeRequestContactReceive,
   acceptRequestContactReceive: acceptRequestContactReceive,
