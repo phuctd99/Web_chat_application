@@ -12,7 +12,7 @@
                             Danh bạ 
                             <% if(countAllContacts > 0){ %>
                                 <span class="show-number-contacts count-contacts">
-                                    (`<em><%= countAllContacts %></em>`)
+                                    <%= countAllContacts %>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-contacts display-none">
@@ -25,7 +25,7 @@
                             Đang chờ xác nhận 
                             <% if( countAllContactsSent > 0){ %>
                                 <span class="show-number-contacts count-request-contact-sent">
-                                    (`<em><%= countAllContactsSent %></em>`)
+                                    <%= countAllContactsSent %>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-request-contact-sent display-none"></span>
@@ -36,7 +36,7 @@
                             Yêu cầu kết bạn 
                             <% if(countAllContactsReviece > 0){ %>
                                 <span class="show-number-contacts count-request-contact-received">
-                                    (`<em><%= countAllContactsReviece %></em>`)
+                                    <%= countAllContactsReviece %>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-request-contact-received display-none"></span>
