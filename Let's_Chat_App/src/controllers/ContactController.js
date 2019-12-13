@@ -1,4 +1,5 @@
-import { contact } from '../services/index';
+import { contact, group } from '../services/index';
+import helper from '../helpers/ArrayHelper';
 
 let findUsers = async (req, res) => {
   try {
@@ -104,6 +105,14 @@ let readMoreContactsReviece = async (req,res) =>{
   }
 };
 
+const getAllContacts = async (req, res) => {
+  const userId = req.user._id;
+  let contactedUsers = await contact.getAllContacts(userId);
+  let groups = await group.getAllGroupById(userId);
+  let usersAndGroups = helper.mergeContactsAndGroups(contactedUsers, groups);
+  return res.json({usersAndGroups: usersAndGroups});
+};
+
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
@@ -113,5 +122,6 @@ module.exports = {
   readMoreContacts:readMoreContacts,
   readMoreContactsSent:readMoreContactsSent,
   readMoreContactsReviece:readMoreContactsReviece,
-  removeRequestContactReceive: removeRequestContactReceive
+  removeRequestContactReceive: removeRequestContactReceive,
+  getAllContacts: getAllContacts
 };

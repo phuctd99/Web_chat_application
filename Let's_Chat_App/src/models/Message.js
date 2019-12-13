@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
-let { Schema } = mongoose;
+let { Schema, Types } = mongoose;
 
 let MessageSchema = new Schema({
-  senderId: String,
-  receiverId: String,
+  senderId: { type: Schema.Types.ObjectId, ref: 'user' },
+  receiverId: { type: Schema.Types.ObjectId, ref: 'user' },
+  groupId: String,
   text: String,
   file: { data: Buffer, contentType: String, fileName: String },
   createdAt: { type: Number, default: Date.now },
@@ -19,10 +20,17 @@ MessageSchema.statics = {
   getMessageBySenderIdAndReceiverId(senderId, receiverId) {
     return this.find({
       $or: [
-        {$and: [{ senderId: senderId }, { receiverId: receiverId }]},
-        {$and: [{ senderId: receiverId }, { receiverId: senderId }]}
+        {$and: [{ senderId: Types.ObjectId(senderId) }, { receiverId: Types.ObjectId(receiverId) }]},
+        {$and: [{ senderId: Types.ObjectId(receiverId) }, { receiverId: Types.ObjectId(senderId) }]}
       ]
     }).exec();
+  },
+  getGroupMessages(groupId){
+    return this.find({
+      groupId: groupId
+    })
+    .populate('senderId', 'username avatar')
+    .exec();
   }
 };
 

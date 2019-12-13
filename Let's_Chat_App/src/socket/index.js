@@ -10,8 +10,7 @@ const initSockets = io => {
     removeRequestContactReceive(io);
     acceptRequestContactReceive(io);
     removeContact(io);
-    let users = {};
-    chat(users, io);
+    chat(io);
 }
 
 module.exports = initSockets;
