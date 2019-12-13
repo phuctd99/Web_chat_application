@@ -104,6 +104,16 @@ UserSchema.statics = {
         avatar: 1
       }
     ).exec();
+  },
+  findSenderInfomation(senderId){
+    return this.findOne({
+      _id: senderId 
+    },
+    {
+      _id: 1,
+      username: 1,
+      avatar: 1
+    }).exec();
   }
 };
 UserSchema.methods = {

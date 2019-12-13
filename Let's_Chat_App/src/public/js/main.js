@@ -148,7 +148,6 @@ function flashMasterNotify() {
   }
 }
 
-
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
