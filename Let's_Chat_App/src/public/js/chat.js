@@ -116,14 +116,15 @@ function onEnter() {
   $('#chatInputField').keypress(function(e) {
     if (e.which == 13) {
       let message = $(this).val();
-      if (messageType == 'person'){
+      if (message.length > 0 && messageType == 'person'){
         const data = {
+          createdAt: new Date().getTime(),
           senderId: senderId,
           receiverId: receiverId,
           messageContent: message
         };
         socket.emit('send-message', data);
-      }else if (messageType == 'group') {
+      }else if (message.length > 0 && messageType == 'group') {
         const data = {
           createdAt: new Date().getTime(),
           senderId: {
@@ -159,6 +160,8 @@ function updateSenderMessageBox() {
     $(`#li-${receiverId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + message.text);
+    $(`#li-${receiverId}`).find('span.time').attr('data-createAt', message.createdAt);
+    reCalculateTimeAgo();
   });
 }
 
@@ -189,6 +192,8 @@ function receiveMessage() {
     $(`#li-${message.senderId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${message.senderId}`).find('span.preview').text(message.text);
+    $(`#li-${message.senderId}`).find('span.time').attr('data-createAt', message.createdAt);
+    reCalculateTimeAgo();
   });
   socket.on('receive-group-message', function(data){
     if (allMessages[data.groupId]) {
@@ -217,6 +222,8 @@ function receiveMessage() {
     $(`#li-${data.groupId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${data.groupId}`).find('span.preview').text(`${data.senderId.username}: ${data.text}`);
+    $(`#li-${data.groupId}`).find('span.time').attr('data-createAt', data.createdAt);
+    reCalculateTimeAgo();
   });
 }
 
@@ -225,6 +232,35 @@ function init(){
     .first()
     .data('uid');
   focusReceiver(receiverId);
+}
+
+function calculateTimeAgo(time){
+  const secondsAgo = (new Date().getTime() - time)/1000;
+  if (parseInt(secondsAgo) === 0) {
+    return `Vừa xong`;
+  } else if (secondsAgo < 60){
+    return `${parseInt(secondsAgo)} giây trước`;
+  }else if (secondsAgo < 3600){
+    return `${parseInt(secondsAgo/60)} phút trước`;
+  }else if (secondsAgo < 86400){
+    return `${parseInt(secondsAgo/3600)} giờ trước`;
+  }else{
+    const timeAgo = parseInt(secondsAgo/86400);
+    if (timeAgo < 7){
+      return `${timeAgo} ngày trước`;
+    }
+    return `Từ ${new Date(time).toLocaleDateString()}`;
+  }
+}
+
+function reCalculateTimeAgo(){
+  $('#contact-list li').each(function(){
+    const liId = $(this).data('uid');
+    const time = $(`#li-${liId}`).find('span.time').attr('data-createAt');
+    if (time){
+      $(`#li-${liId}`).find('span.time').text(calculateTimeAgo(time));
+    }
+  });
 }
 
 function getAllContact() {
@@ -242,16 +278,16 @@ function getAllContact() {
         </div>
         <span class="name">
         ${item.user.username}
-        </span>
-        <span class="time">Một phút trước</span>
-        <span class="preview">`;
-        if (senderId == item.user._id){
-          element += `Bạn: `;
-        }
+        </span>`
         if (item.latestMessage.content){
-          element +=`${item.latestMessage.content}`
+          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
+          <span class="preview">`;
+          if (senderId == item.latestMessage.sender){
+            element += `Bạn: `;
+          }
+          element +=`${item.latestMessage.content}</span>`
         }
-        element += `</span></li>`; 
+        element += `</li>`; 
       }else{
         element += `<li
         id="li-${item._id}"
@@ -263,20 +299,18 @@ function getAllContact() {
         </div>
         <span class="name">
         ${item.name}
-        </span>
-        <span class="time">Một phút trước</span>
-        <span class="preview">`;
-        if (item.latestMessage){
+        </span>`;
+        if (item.latestMessage.content){
+          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
+          <span class="preview">`;
           if (senderId == item.latestMessage.sender._id){
             element += `Bạn: `;
           } else {
             element += `${item.latestMessage.sender.username}: `;
           }
-          if (item.latestMessage.content){
-            element +=`${item.latestMessage.content}`
-          }
+          element +=`${item.latestMessage.content}</span>`
         }
-        element += `</span></li>`;
+        element += `</li>`;
       }
       $('#contact-list').append(element);
     });

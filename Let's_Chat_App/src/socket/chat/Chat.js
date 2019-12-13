@@ -15,6 +15,7 @@ const chat = (io) => {
     socket.on('send-message', data => {
       // save message on db
       const message = {
+        createdAt: data.createdAt,
         senderId: data.senderId,
         receiverId: data.receiverId,
         text: data.messageContent
@@ -25,7 +26,7 @@ const chat = (io) => {
       const latestMessage = {
         sender: data.senderId,
         content: data.messageContent,
-        createdAt: new Date().getTime()
+        createdAt: data.createdAt
       }
       Contact.updateTheLatestMessage(data.senderId, data.receiverId, latestMessage);
 
@@ -63,7 +64,7 @@ const chat = (io) => {
       const latestMessage = {
         sender: data.senderId._id,
         content: data.text,
-        createdAt: new Date().getTime()
+        createdAt: data.createdAt
       }
       Group.updateTheLatestMessage(data.groupId, latestMessage);
 
