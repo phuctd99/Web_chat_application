@@ -736,6 +736,77 @@ label:focus,
   display: none;
 }
 
+/* group */
+.left .people .group {
+  position: relative;
+  width: 100%;
+  padding: 12px 10% 16px;
+  cursor: pointer;
+  background-color: #fff;
+  list-style: none;
+  margin: 10px auto;
+  border-radius: 15px;
+}
+
+
+.left .people .group .left-avatar {
+  position: relative;
+}
+
+.left .people .group .left-avatar img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  border: 1px solid #b2bec3;
+}
+
+.left .people .group .name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #1a1a1a;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+}
+
+.left .people .group .time {
+  font-size: 14px;
+  position: absolute;
+  top: 12px;
+  right: 10%;
+  padding:5px;
+  color: #999;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.left .people .group .preview {
+  font-size: 14px;
+  display: block;
+  overflow: hidden !important;
+  width: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #999;
+}
+
+.left .people .group.active,
+.left .people .group:hover {
+  background-color: #eceff1;
+}
+
+.left .people .group.active span,
+.left .people .group:hover span {
+  background: transparent;
+}
+
+.left .people .group.active:after,
+.left .people .group:hover:after {
+  display: none;
+}
+
 .right {
   position: relative;
   float: right;

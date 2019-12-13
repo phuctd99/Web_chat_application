@@ -53,6 +53,8 @@ let initRoutes = (app) => {
         auth.checkLoggedIn,
         contact.acceptRequestContactReceive
     );  
+
+    router.get('/get-all-contacts', contact.getAllContacts);
     
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
@@ -69,7 +71,6 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
-   
     router.get('/get-messages', message.getAllMessages);
 
     return app.use('/', router);

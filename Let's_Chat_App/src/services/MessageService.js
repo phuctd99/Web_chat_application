@@ -9,7 +9,13 @@ const getMessageBySenderIdAndReceiverId = async (senderId, receiverId) => {
   return messages;
 };
 
+const getGroupMessages = async groupId => {
+  const messages = await MessageModel.getGroupMessages(groupId);
+  return messages;
+}
+
 module.exports = {
   saveMessage: saveMessage,
-  getMessageBySenderIdAndReceiverId: getMessageBySenderIdAndReceiverId
+  getMessageBySenderIdAndReceiverId: getMessageBySenderIdAndReceiverId,
+  getGroupMessages: getGroupMessages
 };

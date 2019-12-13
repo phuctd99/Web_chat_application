@@ -1,18 +1,22 @@
 import Message from '../../services/MessageService';
 import Contact from '../../models/Contact';
+import Group from '../../models/ChatGroup';
+import User from '../../models/User';
 import {
   pushSocketId,
   emitData,
   removeSocketId
 } from '../../helpers/SocketHelper';
 
-const chat = (users, io) => {
+const chat = (io) => {
+  let users = {};
   io.on('connection', socket => {
     users = pushSocketId(users, socket.request.user._id, socket.id);
     socket.on('send-message', data => {
       // save message on db
       const message = {
-        senderId: socket.request.user._id,
+        createdAt: data.createdAt,
+        senderId: data.senderId,
         receiverId: data.receiverId,
         text: data.messageContent
       };
@@ -20,11 +24,11 @@ const chat = (users, io) => {
 
       // save latset contact
       const latestMessage = {
-        sender: socket.request.user._id,
+        sender: data.senderId,
         content: data.messageContent,
-        createdAt: new Date().getTime()
+        createdAt: data.createdAt
       }
-      Contact.updateTheLatestMessage(socket.request.user._id, data.receiverId, latestMessage);
+      Contact.updateTheLatestMessage(data.senderId, data.receiverId, latestMessage);
 
       // send message to sender
       emitData(
@@ -32,7 +36,7 @@ const chat = (users, io) => {
         data.senderId,
         io,
         'update-sender-message-box',
-        data.messageContent
+        message
       );
 
       // send message to receiver if online
@@ -46,6 +50,51 @@ const chat = (users, io) => {
         );
       }
     });
+    socket.on('send-group-message', async data => {
+      // save message on db
+      const message = {
+        createdAt: data.createdAt,
+        senderId: data.senderId._id,
+        groupId: data.groupId,
+        text: data.text
+      };
+      Message.saveMessage(message);
+
+      // save latset contact
+      const latestMessage = {
+        sender: data.senderId._id,
+        content: data.text,
+        createdAt: data.createdAt
+      }
+      Group.updateTheLatestMessage(data.groupId, latestMessage);
+
+      // send message to sender
+      emitData(
+        users,
+        data.senderId._id,
+        io,
+        'update-sender-message-box',
+        data
+      );
+
+      //send message to members
+      const memberIds = await Group.getMembers(data.groupId);
+      memberIds.members.forEach(memberId => {
+        if (memberId !== data.senderId._id){
+          if (users[memberId]) {
+            emitData(
+              users,
+              memberId,
+              io,
+              'receive-group-message',
+              data
+            );
+          }
+        }
+      })
+
+    });
+
     socket.on('disconnect', () => {
       users = removeSocketId(users, socket.request.user._id, socket.id);
     });

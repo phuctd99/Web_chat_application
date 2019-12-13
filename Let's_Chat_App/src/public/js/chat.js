@@ -1,12 +1,34 @@
 let receiverId = null;
 const senderId = $('#chatInputField').data('uid');
+const senderName = $('#chatInputField').data('uname');
+const senderAvatar = $('#chatInputField').data('ava');
 let receiverAvatar = null;
+let messageType = null;
 let allMessages = [];
 
 function appendMessagesToView(messages){
   messages.forEach(function(message){
     let messageElement = '';
-    if (senderId == message.senderId && receiverId == message.receiverId){
+    if (message.groupId){
+      if (senderId == message.senderId._id){
+        messageElement = 
+        `<div class="line-chat">
+          <div id="message" class="bubble me">
+            ${message.text}
+          </div>
+        </div>`;
+      } else {
+        messageElement = `<div class="line-chat">
+        <div><tag>${message.senderId.username}</tag></div>
+      <div class="avatar-of-user-chatting">
+        <img src="../../images/users/${message.senderId.avatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${message.text}
+      </div>
+    </div>`;
+      }
+    }else if (senderId == message.senderId && receiverId == message.receiverId){
       messageElement = `<div class="line-chat">
       <div id="message" class="bubble me">
         ${message.text}
@@ -33,21 +55,21 @@ function appendMessagesToView(messages){
 
 function getMessages(){
   if (!allMessages[receiverId]){
-    $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}`, function(data, status){
+    $.get(`/get-messages?senderId=${senderId}&receiverId=${receiverId}&type=${messageType}`, function(data, status){
       allMessages[receiverId] = data.messages;
       appendMessagesToView(allMessages[receiverId]);
     });
   }else{
     appendMessagesToView(allMessages[receiverId]);
   }
-  
 };
 
 function focusReceiver(receiverId){
+  messageType = $(`#li-${receiverId}`).attr('class');
   receiverAvatar = $(`#li-${receiverId}`)
       .find('img')
       .attr('src');
-  $('.person').css('background-color', 'white');
+  $('#contact-list li').css('background-color', 'white');
   $(`#li-${receiverId}`).css('background-color', '#e6e6e6');
   $('#nameOfReceiver').text(
     $(`#li-${receiverId}`)
@@ -59,7 +81,7 @@ function focusReceiver(receiverId){
 }
 
 function selectReceiver() {
-  $(document).on('click', '.person', function() {
+  $(document).on('click', '#contact-list li', function() {
     receiverId = $(this).data('uid');
     focusReceiver(receiverId);
   });
@@ -76,15 +98,15 @@ function selectReceiverFromModal(){
 function findConversationBySearchBox(){
   $('.searchBox').on("keyup", function () {
     if (this.value.length > 0) {   
-      $('.person').hide().filter(function () {
+      $('#contact-list li').hide().filter(function () {
         return $(this).find('span.name').text().toLowerCase().indexOf($('.searchBox').val().toLowerCase()) != -1;
       }).show(); 
     }  
     else { 
-      $('.person').show();
+      $('#contact-list li').show();
     }
-    if ($('.person:visible').length > 0){
-      receiverId = $('.person:visible').first().data('uid');
+    if ($('#contact-list li:visible').length > 0){
+      receiverId = $('#contact-list li:visible').first().data('uid');
       focusReceiver(receiverId);
     } 
   }); 
@@ -94,21 +116,37 @@ function onEnter() {
   $('#chatInputField').keypress(function(e) {
     if (e.which == 13) {
       let message = $(this).val();
-      const data = {
-        senderId: senderId,
-        receiverId: receiverId,
-        messageContent: message
-      };
-      socket.emit('send-message', data);
+      if (message.length > 0 && messageType == 'person'){
+        const data = {
+          createdAt: new Date().getTime(),
+          senderId: senderId,
+          receiverId: receiverId,
+          messageContent: message
+        };
+        socket.emit('send-message', data);
+      }else if (message.length > 0 && messageType == 'group') {
+        const data = {
+          createdAt: new Date().getTime(),
+          senderId: {
+            _id: senderId,
+            avatar: senderAvatar,
+            username: senderName
+          },
+          groupId: receiverId,
+          text: message
+        }
+        socket.emit('send-group-message', data);
+      }
     }
   });
 }
 
 function updateSenderMessageBox() {
   socket.on('update-sender-message-box', function(message) {
+    allMessages[receiverId].push(message);
     const messageElement = `<div class="line-chat">
 		<div id="message" class="bubble me">
-			${message}
+			${message.text}
 		</div>
 	</div>`;
     $('#chat-field').append(messageElement);
@@ -121,12 +159,19 @@ function updateSenderMessageBox() {
     const receiverLeftTag = $(`#li-${receiverId}`).prop('outerHTML');
     $(`#li-${receiverId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
-    $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + message);
+    $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + message.text);
+    $(`#li-${receiverId}`).find('span.time').attr('data-createAt', message.createdAt);
+    reCalculateTimeAgo();
   });
 }
 
 function receiveMessage() {
   socket.on('receive-message', function(message) {
+    if (allMessages[message.senderId]) {
+      allMessages[message.senderId].push(message);
+    } else {
+      getMessages();
+    }
     if (message.senderId == receiverId){
       const messageElement = `<div class="line-chat">
       <div class="avatar-of-user-chatting">
@@ -147,18 +192,134 @@ function receiveMessage() {
     $(`#li-${message.senderId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
     $(`#li-${message.senderId}`).find('span.preview').text(message.text);
+    $(`#li-${message.senderId}`).find('span.time').attr('data-createAt', message.createdAt);
+    reCalculateTimeAgo();
+  });
+  socket.on('receive-group-message', function(data){
+    if (allMessages[data.groupId]) {
+      allMessages[data.groupId].push(data);
+    } else {
+      getMessages();
+    }
+    if (data.groupId == receiverId){
+      const messageElement = `<div class="line-chat">
+      <div><tag>${data.senderId.username}</tag></div>
+      <div class="avatar-of-user-chatting">
+        <img src="../../images/users/${data.senderId.avatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+        ${data.text}
+      </div>
+    </div>`;
+      $('#chat-field').append(messageElement);
+      $('#chat-field')
+        .stop()
+        .animate({
+          scrollTop: $('#chat-field')[0].scrollHeight
+        });
+    }
+    const receiverLeftTag = $(`#li-${data.groupId}`).prop('outerHTML');
+    $(`#li-${data.groupId}`).remove();
+    $('#contact-list').prepend(receiverLeftTag);
+    $(`#li-${data.groupId}`).find('span.preview').text(`${data.senderId.username}: ${data.text}`);
+    $(`#li-${data.groupId}`).find('span.time').attr('data-createAt', data.createdAt);
+    reCalculateTimeAgo();
   });
 }
 
 function init(){
-  receiverId = $('.person')
+  receiverId = $('#contact-list li')
     .first()
     .data('uid');
   focusReceiver(receiverId);
 }
 
+function calculateTimeAgo(time){
+  const secondsAgo = (new Date().getTime() - time)/1000;
+  if (parseInt(secondsAgo) === 0) {
+    return `Vừa xong`;
+  } else if (secondsAgo < 60){
+    return `${parseInt(secondsAgo)} giây trước`;
+  }else if (secondsAgo < 3600){
+    return `${parseInt(secondsAgo/60)} phút trước`;
+  }else if (secondsAgo < 86400){
+    return `${parseInt(secondsAgo/3600)} giờ trước`;
+  }else{
+    const timeAgo = parseInt(secondsAgo/86400);
+    if (timeAgo < 7){
+      return `${timeAgo} ngày trước`;
+    }
+    return `Từ ${new Date(time).toLocaleDateString()}`;
+  }
+}
+
+function reCalculateTimeAgo(){
+  $('#contact-list li').each(function(){
+    const liId = $(this).data('uid');
+    const time = $(`#li-${liId}`).find('span.time').attr('data-createAt');
+    if (time){
+      $(`#li-${liId}`).find('span.time').text(calculateTimeAgo(time));
+    }
+  });
+}
+
+function getAllContact() {
+  $.get(`/get-all-contacts`, function(data, status){
+    data.usersAndGroups.forEach(function(item){
+      let element = ``;
+      if (item.user) {
+        element += `<li
+        id="li-${item.user._id}"
+        class="person"
+        data-uid="${item.user._id}">
+        <div class="left-avatar">
+          <div class="dot"></div>
+          <img src="../../images/users/${item.user.avatar}" alt="" />
+        </div>
+        <span class="name">
+        ${item.user.username}
+        </span>`
+        if (item.latestMessage.content){
+          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
+          <span class="preview">`;
+          if (senderId == item.latestMessage.sender){
+            element += `Bạn: `;
+          }
+          element +=`${item.latestMessage.content}</span>`
+        }
+        element += `</li>`; 
+      }else{
+        element += `<li
+        id="li-${item._id}"
+        class="group"
+        data-uid="${item._id}">
+        <div class="left-avatar">
+          <div class="dot"></div>
+          <img src="../../images/users/group.png" alt="" />
+        </div>
+        <span class="name">
+        ${item.name}
+        </span>`;
+        if (item.latestMessage.content){
+          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
+          <span class="preview">`;
+          if (senderId == item.latestMessage.sender._id){
+            element += `Bạn: `;
+          } else {
+            element += `${item.latestMessage.sender.username}: `;
+          }
+          element +=`${item.latestMessage.content}</span>`
+        }
+        element += `</li>`;
+      }
+      $('#contact-list').append(element);
+    });
+    init();
+  });
+}
+
 $(document).ready(function() {
-  init();
+  getAllContact();
   selectReceiver();
   selectReceiverFromModal();
   onEnter();
