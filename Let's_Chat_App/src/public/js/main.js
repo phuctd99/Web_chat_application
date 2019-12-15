@@ -1,7 +1,7 @@
 
 const socket = io();
 function nineScrollLeft() {
-  $('.left').niceScroll({
+  $('#contact-list').niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
     cursorcolor: '#ECECEC',
