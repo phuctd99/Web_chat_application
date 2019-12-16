@@ -2,52 +2,70 @@
   <div class="right" data-chat="">
     <div class="top">
       <span>To: <span id="nameOfReceiver"></span></span>
+      <span class="chat-menu-right">
+        <a href="#attachsModal" id="show-attachs" data-toggle="modal">
+            Tệp đính kèm
+            <i class="fa fa-paperclip"></i>
+        </a>
+      </span>
+      <span class="chat-menu-right">
+          <a href="javascript:void(0)">&nbsp;</a>
+      </span>
+      <span class="chat-menu-right">
+          <a href="#imagesModal" id="show-images" data-toggle="modal">
+              Hình ảnh
+              <i class="fa fa-photo"></i>
+          </a>
+      </span>
     </div>
     <div class="content-chat">
       <div id="chat-field" class="chat" data-chat=""></div>
     </div>
     <div class="write" data-chat="">
+        <div class="icons">
+            <a href="#" class="icon-chat" data-chat=""
+              ><i class="fa fa-smile-o"></i
+            ></a>
+            <label for="image-chat">
+              <input
+                type="file"
+                id="image-chat"
+                name="my-image-chat"
+                class="image-chat"
+                data-chat=""
+              />
+              <i class="fa fa-photo"></i>
+            </label>
+            <label for="attach-chat">
+              <input
+                type="file"
+                id="attach-chat"
+                name="my-attach-chat"
+                class="attach-chat"
+                data-chat=""
+              />
+              <i class="fa fa-paperclip"></i>
+            </label>
+            <a
+              href="#streamModal"
+              id="video-chat"
+              class="video-chat"
+              data-chat=""
+              data-toggle="modal"
+            >
+              <i class="fa fa-video-camera"></i>
+            </a>
+            <input type="hidden" id="peer-id" value="" />
+          </div>
       <input
         type="text"
         class="write-chat"
         id="chatInputField"
         data-uid="<%= user._id %>"
+        data-ava="<%= user.avatar %>"
+        data-uname="<%= user.username %>"
+        placeholder="Nhập tin nhắn..."
       />
-      <div class="icons">
-        <a href="#" class="icon-chat" data-chat=""
-          ><i class="fa fa-smile-o"></i
-        ></a>
-        <label for="image-chat">
-          <input
-            type="file"
-            id="image-chat"
-            name="my-image-chat"
-            class="image-chat"
-            data-chat=""
-          />
-          <i class="fa fa-photo"></i>
-        </label>
-        <label for="attach-chat">
-          <input
-            type="file"
-            id="attach-chat"
-            name="my-attach-chat"
-            class="attach-chat"
-            data-chat=""
-          />
-          <i class="fa fa-paperclip"></i>
-        </label>
-        <a
-          href="#streamModal"
-          id="video-chat"
-          class="video-chat"
-          data-chat=""
-          data-toggle="modal"
-        >
-          <i class="fa fa-video-camera"></i>
-        </a>
-        <input type="hidden" id="peer-id" value="" />
-      </div>
     </div>
   </div>
 </div>

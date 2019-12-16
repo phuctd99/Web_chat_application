@@ -23,7 +23,9 @@
     <%- include('navbar/navbar'); %>
     
     <%- content %>
-   
+    
+    <%- include('image/imageModal'); %>
+    <%- include('attach/attachModal'); %>
     <%- include('user/userModal'); %>
     <%- include('contact/contactModal'); %>
     <%- include('notification/notificationModal'); %>
@@ -46,6 +48,7 @@
     <script src="../../js/main.js"></script>
     <script src="/js/notification.js"></script>
     <script src="/js/add-contact.js"></script>
+    <script src="/js/removeContact.js"></script>
     <script src="/js/remove-request-contact-sent.js"></script>
     <script src="/js/remove-request-contact-receive.js"></script>
     <script src="/js/accept-request-contact-receive.js"></script>
@@ -58,6 +61,7 @@
     <script src="/js/caculate-notification-contact.js"></script>
     <script src="../../js/updateUser.js"></script>
     <script src="../../js/chat.js"></script>
+    <script src="../../js/selectChatType.js"></script>
     
     <script src="/js/readMoreNotif.js"></script>
     <script src="/js/mark-notification-readed.js"></script>

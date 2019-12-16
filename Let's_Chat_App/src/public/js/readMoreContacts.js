@@ -3,8 +3,8 @@ $(document).ready(function(){
         let skipNumber = $("#contacts").find("li").length;
         $.get(`/contact/read-more-contacts?skipNumber=${skipNumber}`,function(newContactUsers){
             if(!newContactUsers.length){
-                //console.log("ban khong co ban be nao");
-                alertify.notify("Bạn không có bạn bè nào","error",7);
+                //console.log("ban khong con ban be nao");
+                alertify.notify("Bạn không còn bạn bè nào","error",7);
                 return false;
             }
             newContactUsers.forEach(function(user){
@@ -31,6 +31,7 @@ $(document).ready(function(){
                 </div>
             </li>`);
             });
+            removeContact();
         });
     });
 });

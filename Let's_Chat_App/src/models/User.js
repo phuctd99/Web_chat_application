@@ -99,10 +99,10 @@ UserSchema.statics = {
   getNormalUserById(id) {
     return this.findById(id,{_id: 1,username: 1,address: 1,avatar: 1}).exec();
   },
-  findUsers(userIds){
-    return this.find(
+  findContactedUserById(userId){
+    return this.findOne(
       {
-        _id : {$in : userIds}
+        _id : userId
       },
       {
         _id: 1,
@@ -110,6 +110,16 @@ UserSchema.statics = {
         avatar: 1
       }
     ).exec();
+  },
+  findSenderInfomation(senderId){
+    return this.findOne({
+      _id: senderId 
+    },
+    {
+      _id: 1,
+      username: 1,
+      avatar: 1
+    }).exec();
   }
 };
 UserSchema.methods = {

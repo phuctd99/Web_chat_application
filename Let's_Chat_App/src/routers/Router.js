@@ -56,6 +56,7 @@ let initRoutes = (app) => {
     router.get('/contact/read-more-contacts-sent',auth.checkLoggedIn,contact.readMoreContactsSent);
     router.get('/contact/read-more-contacts-reviece',auth.checkLoggedIn,contact.readMoreContactsReviece);
     router.post('/contact/add-new', auth.checkLoggedIn, contact.addNew);
+    router.delete('/contact/remove-contact', auth.checkLoggedIn, contact.removeContact);
     router.delete(
         '/contact/remove-request-contact-sent',
         auth.checkLoggedIn,
@@ -71,6 +72,8 @@ let initRoutes = (app) => {
         auth.checkLoggedIn,
         contact.acceptRequestContactReceive
     );  
+
+    router.get('/get-all-contacts', contact.getAllContacts);
     
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
@@ -87,7 +90,6 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
-   
     router.get('/get-messages', message.getAllMessages);
 
     return app.use('/', router);

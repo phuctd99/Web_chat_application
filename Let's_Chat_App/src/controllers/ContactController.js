@@ -1,4 +1,5 @@
-import { contact } from '../services/index';
+import { contact, group } from '../services/index';
+import helper from '../helpers/ArrayHelper';
 
 let findUsers = async (req, res) => {
   try {
@@ -19,6 +20,18 @@ let addNew = async (req, res) => {
 
     let newContact = await contact.addNew(currentUserId, contactId);
     return res.status(200).send({success: !!newContact});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let removeContact = async (req,res) =>{
+  try {
+    let currentUserId = req.user._id;
+    let contactId = req.body.uid;
+
+    let removeContact = await contact.removeContact(currentUserId, contactId);
+    return res.status(200).send({success: !!removeContact});
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -92,13 +105,23 @@ let readMoreContactsReviece = async (req,res) =>{
   }
 };
 
+const getAllContacts = async (req, res) => {
+  const userId = req.user._id;
+  let contactedUsers = await contact.getAllContacts(userId);
+  let groups = await group.getAllGroupById(userId);
+  let usersAndGroups = helper.mergeContactsAndGroups(contactedUsers, groups);
+  return res.json({usersAndGroups: usersAndGroups});
+};
+
 module.exports = {
   findUsers: findUsers,
   addNew: addNew,
+  removeContact:removeContact,
   removeRequestContactSent: removeRequestContactSent,
   acceptRequestContactReceive: acceptRequestContactReceive,
   readMoreContacts:readMoreContacts,
   readMoreContactsSent:readMoreContactsSent,
   readMoreContactsReviece:readMoreContactsReviece,
-  removeRequestContactReceive: removeRequestContactReceive
+  removeRequestContactReceive: removeRequestContactReceive,
+  getAllContacts: getAllContacts
 };

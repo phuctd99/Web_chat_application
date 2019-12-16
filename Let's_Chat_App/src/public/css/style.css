@@ -87,7 +87,7 @@ label:focus,
 
 .modal-content {
   height: 100% !important;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .nav-tabs > li > a {
@@ -125,6 +125,11 @@ label:focus,
   border: 0;
   box-shadow: none;
   border-left: solid 1px #ccc;
+}
+.contactList{
+  overflow-y: scroll;
+  overflow-x: unset;
+  max-height: 450px;
 }
 .contactList > li {
   list-style-type: none;
@@ -212,6 +217,7 @@ label:focus,
 }
 
 .contactPanel .action-danger {
+  display: inline-block;
   border-color: #ff7675;
   background-color: #ff7675;
   margin: 10px 0px 5px 2px;
@@ -219,7 +225,10 @@ label:focus,
 
 .show-number-contacts {
   font-weight: bold;
-  color: red;
+  color: white;
+  padding: 2px;
+  background: #654ea3;
+  border-radius: 3px;
 }
 
 #notifications {
@@ -593,15 +602,17 @@ label:focus,
   float: left;
   border-radius: 20px;
   width: 100%;
+  min-width: 300px;
   height: 99%;
   border: 1px solid #e6e6e6;
   background-color: #fff;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .left .top {
+  display: flex;
   position: relative;
   width: 100%;
   height: 96px;
@@ -644,26 +655,25 @@ label:focus,
 .left a.create-group-chat {
   display: none;
   float: left;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 35px;
+  margin-top: 4px;
   margin-left: 10px;
-  border: 1px solid #2ecc71;
-  background-color: #2ecc71;
-  background-image: url('../images/icons/name-type.png');
+  background-image: url('../images/icons/group.png');
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-position: top 11px left 12.5px;
-  border-radius: 50%;
 }
 
 .left .people {
   margin: 10px;
-  
+  max-height: 480px;
   /* width: calc(100% + 2px); */
 }
 
 .left .people .person {
   position: relative;
   width: 100%;
+  min-height: 70px;
   padding: 12px 10% 16px;
   cursor: pointer;
   background-color: #fff;
@@ -695,11 +705,13 @@ label:focus,
 }
 
 .left .people .person .time {
+  min-width: 90px;
   font-size: 14px;
   position: absolute;
   top: 12px;
   right: 10%;
-  padding:5px;
+  padding-left: 4px;
+  padding-right: 4px;
   color: #999;
   background-color: #fff;
   border: 1px solid #999;
@@ -731,6 +743,78 @@ label:focus,
   display: none;
 }
 
+/* group */
+.left .people .group {
+  position: relative;
+  width: 100%;
+  padding: 12px 10% 16px;
+  cursor: pointer;
+  background-color: #fff;
+  list-style: none;
+  margin: 10px auto;
+  border-radius: 15px;
+}
+
+
+.left .people .group .left-avatar {
+  position: relative;
+}
+
+.left .people .group .left-avatar img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  border: 1px solid #b2bec3;
+}
+
+.left .people .group .name {
+  font-size: 14px;
+  line-height: 22px;
+  color: #1a1a1a;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+}
+
+.left .people .group .time {
+  font-size: 14px;
+  position: absolute;
+  top: 12px;
+  right: 10%;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: #999;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.left .people .group .preview {
+  font-size: 14px;
+  display: block;
+  overflow: hidden !important;
+  width: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #999;
+}
+
+.left .people .group.active,
+.left .people .group:hover {
+  background-color: #eceff1;
+}
+
+.left .people .group.active span,
+.left .people .group:hover span {
+  background: transparent;
+}
+
+.left .people .group.active:after,
+.left .people .group:hover:after {
+  display: none;
+}
+
 .right {
   position: relative;
   float: right;
@@ -759,12 +843,13 @@ label:focus,
 .right .top .chat-menu-right a {
   float: right;
   margin-right: 10px;
-  color: #2c3e50;
+  color: #eaafc8 ;
+  text-decoration: none;
 }
 
 .right .content-chat {
   width: 100%;
-  height: 75%;
+  height: 87%;
   padding: 10px 30px;
 }
 
@@ -925,19 +1010,18 @@ label:focus,
 }
 
 .right input{
+  width: 85%;
   background-color: #fff;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f1f0f0;
 }
 .right .write {
-  position: absolute;
-  bottom: 5px;
-  height: 16%;
+  display: flex;
   padding-left: 8px;
-  border: 1px solid #e6e6e6;
-  background-color: #fff;
   width: 98%;
   border-radius: 5px;
   margin: 0 1% 0 1%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .emojionearea-button {
@@ -982,17 +1066,16 @@ label:focus,
 }
 
 .right .write .icons {
-  height: 30%;
-  float: left;
-  padding-bottom: 4px;
-  margin-left: 10px;
+  width: 13%;
+  margin: 4px;
+  min-width: 135px;
 }
 
 .right .write .icons i {
   font-size: 20px;
   font-weight: 500;
   margin-right: 10px;
-  color: #654ea3;
+  color: #3e228a;
 }
 
 .right .bubble {

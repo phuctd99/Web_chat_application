@@ -1,7 +1,7 @@
 
 const socket = io();
 function nineScrollLeft() {
-  $('.left').niceScroll({
+  $('#contact-list').niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
     cursorcolor: '#ECECEC',
@@ -147,7 +147,6 @@ function flashMasterNotify() {
     alertify.notify(notify, "success", 3);
   }
 }
-
 
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
