@@ -8,7 +8,9 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#seting-profile">Cài đặt chung</a></li>
-                    <li><a data-toggle="tab" id="link-to-password-profile" href="#password-profile">Quản lý mật khẩu</a></li>
+                    <%if (user.local.email) {%>
+                        <li><a data-toggle="tab" id="link-to-password-profile" href="#password-profile">Quản lý mật khẩu</a></li>
+                    <% } %>
                 </ul>
                 <div class="tab-content">
                     <div id="seting-profile" class="tab-pane fade in active">
@@ -105,6 +107,7 @@
                             </form>
                         </div>
                     </div>
+                    <%if (user.local.email) {%>
                     <div id="password-profile" class="tab-pane fade">
                         <div class="col-md-9 personal-info">
                             <br>
@@ -136,7 +139,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Nhập lại mật khẩu mới</label>
                                     <div class="col-md-8">
-                                        <input id="input-change-confirm-new-password" class="form-control" type="password" name="confirm_new_password" placeholder="Enter confirm new password...">
+                                        <input id="input-change-confirm-new-password"  class="form-control" type="password" name="confirm_new_password" placeholder="Enter confirm new password...">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -150,6 +153,7 @@
                             </form>
                         </div>
                     </div>
+                    <% } %>
                 </div>
             </div>
         </div>

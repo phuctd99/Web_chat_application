@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import uuidv4 from "uuid/v4";
 import {errorMessage, successMessage, mailMessage} from "./../../lang/Vie";
 import mailer from "./../config/ConfigMailer";
+import MailMessage from "nodemailer/lib/mailer/mail-message";
 
 let salt = 7;
 
@@ -31,7 +32,7 @@ let register =  (email, gender, password, protocol, host) => {
         let user = await UserModel.createNew(userItem);
         console.log(user);
         let linkVerify = `${protocol}://${host}/verify/${user.local.verifyToken}`
-        mailer(email, mailMessage.subject, mailMessage.templace(linkVerify))
+        mailer(email, mailMessage.subjectToRegisterAccount, mailMessage.templaceToRegisterAccount(linkVerify))
             .then(success => {
                 resolve(successMessage.userCreated(user.local.email));
             })
@@ -53,8 +54,32 @@ let verifyAccount = (token) => {
     });
 }
 
+let resetPassword =  (email, id) => {
+    return new Promise( (resolve, reject) => {
+    let linkResetPassword = `http://localhost:30000/reset-password/${id}`
+    console.log(linkResetPassword)
+    mailer(email, mailMessage.subjectToResetPassword, mailMessage.templateToResetPassword(linkResetPassword))
+        .then(success => {
+            resolve(successMessage.password_reseted);
+        })
+        .catch(error => {
+            console.log(error)
+            reject(mailMessage.send_failed);
+        }) 
+    })
+}
+//  let verifyID = (id) => {
+//      return new Promise( async(resolve, reject) => {
+//          let idOnModel = await UserModel.findOne({_id: id});
+//          if(!idOnModel) {
+//              return reject(errorMessage.id_notfound);
+//          }
+//          return resolve(su)
+//      })
+//  }
 
 module.exports = {
     register: register,
-    verifyAccount: verifyAccount 
+    verifyAccount: verifyAccount,
+    resetPassword: resetPassword 
 }; 
