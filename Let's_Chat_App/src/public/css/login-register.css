@@ -42,6 +42,17 @@ body {
   text-align: center;
   transform: translate(-50%,-50%);
 }
+.box-update {
+  width: 480px;
+  background: white;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 7px;
+  height: 400px;
+}
 .main-text {
   animation: moveInLeft 1s ease-out; 
   letter-spacing: 13px;
@@ -85,6 +96,9 @@ body {
   font-size: 52px;
 }
 
+.title {
+  margin-bottom: 25px;
+}
 .table a {
   color: #fff;
 }
@@ -337,7 +351,7 @@ body {
   width: 100%;
 }
 
-.login .btn-login,
+.btn-login,
 .registerBox .btn-register {
   /* background: linear-gradient(to right, #800080, #ffc0cb); */
   background: linear-gradient(to left top,#11cdef 0,#1171ef 100%);
@@ -353,25 +367,25 @@ body {
   width: 100%;
 }
 
-.login .form-control {
+.form-control {
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 0.09);
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.09) inset;
   color: #FFFFFF;
 }
 
-.login .form-control:hover {
+ .form-control:hover {
   background-color: rgba(0, 0, 0, .16);
 }
 
-.login .form-control:focus {
+.form-control:focus {
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04) inset;
   background-color: rgba(0, 0, 0, 0.23);
   color: #FFFFFF;
 }
 
-.login .box .form input[type="text"],
-.login .box .form input[type="password"] {
+.box .form input[type="text"],
+.box .form input[type="password"] {
   border-radius: 3px;
   border: none;
   color: #333333;

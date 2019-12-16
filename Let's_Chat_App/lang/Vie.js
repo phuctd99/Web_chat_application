@@ -19,7 +19,8 @@ export const errorMessage = {
     server_error: "Lỗi máy chủ",
     avatar_type: 'Kiểu tệp không hợp lệ!',
     avatar_size: 'Kích thước ảnh đại diện không quá 1MB!',
-    password_incorrect: 'Mật khẩu hiện tại không chính xác!'
+    password_incorrect: 'Mật khẩu hiện tại không chính xác!',
+    id_notfound: 'Không tồn tại tài khoản này',
 };
 
 export const successMessage = {
@@ -32,14 +33,22 @@ export const successMessage = {
     },
     logoutSuccess: "Thoát thành công",
     info_updated: 'Cập nhật thông tin thành công!',
-    password_updated: 'Cập nhật mật khẩu thành công!'
+    password_updated: 'Cập nhật mật khẩu thành công!',
+    password_reseted: 'Kiểm tra email để lấy lại mật khẩu'
 };
 export const mailMessage = {
-    subject: "Xác nhận đăng ký tài khoản",
-    templace: (linkVerify) => {
+    subjectToRegisterAccount: "Xác nhận đăng ký tài khoản",
+    subjectToResetPassword:"Quên mật khẩu Let's Chat",
+    templaceToRegisterAccount: (linkVerify) => {
         return `
             <h2>Vui lòng bấm vào link để xác thực tài khoản </h2>
             <h3><a href="${linkVerify}" target="blank">${linkVerify}</a><h3>
+        `;
+    },
+    templateToResetPassword: (linkResetPassword) => {
+        return `
+            <h2> Chúng tôi nhận được yêu cầu thay đổi mật khẩu của bạn <h2>
+            <h3> <a href="${linkResetPassword}" target="blank"> Ấn vào đây để đổi mật khẩu </a></h3>
         `;
     },
     send_failed: "Có lỗi trong quá trình gửi email"
