@@ -3,20 +3,54 @@ import { home, auth, user, contact, notification, message } from './../controlle
 import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
+import initPassportFacebook from "../controllers/passportController/facebook";
+import initPassportGoogle from "../controllers/passportController/google";
+
+//test
+//import User from '../models/User';
+
 
 initPassportLocal();
+initPassportFacebook();
+initPassportGoogle();
 let router = express.Router();
 
 let initRoutes = (app) => {
-    router.get('/login-register',auth.checkLoggedOut, auth.getLoginRegister);
+    // router.get('/get-all-user', async (req, res) => {
+    //     try {
+    //         let user = await User.find().select('-local.password');
+    //         res.send(user);
+    //     } catch (error) {
+    //         res.status(500).send(error);
+    //     }
+    // });
 
+    router.post('/forgot-password', auth.checkLoggedOut, auth.forgotPassword);
+
+    router.post('/reset-password/', auth.checkLoggedOut, auth.resetPassword);
+    router.get('/login-register',auth.checkLoggedOut, auth.getLoginRegister);
+    router.get('/reset-password/:id', auth.checkLoggedOut, auth.getResetPassword);
     router.post("/register", auth.checkLoggedOut, authValidator.register, auth.postRegister);
+    router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
     router.post("/login", auth.checkLoggedOut, passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/login-register",
         successFlash: true,
         failureFlash: true
      }));
+
+     router.get('/auth/facebook', auth.checkLoggedOut, passport.authenticate('facebook', {scope: ["email"]}));
+     router.get('/auth/facebook/callback',auth.checkLoggedOut, passport.authenticate('facebook', {
+         successRedirect: '/',
+         failureRedirect: '/login-register'
+     })); 
+    
+     router.get('/auth/google' ,auth.checkLoggedOut, passport.authenticate('google', {scope: ["email"]}));
+     router.get('/auth/google/callback' ,auth.checkLoggedOut, passport.authenticate('google', {
+         successRedirect: '/',
+         failureRedirect: '/login-register'
+     }))
+
     router.get(
         '/contact/find-users/:keyword',
         auth.checkLoggedIn,
