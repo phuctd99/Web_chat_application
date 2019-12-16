@@ -47,6 +47,7 @@ initSockets(io);
 server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
     console.log(process.env.APP_PORT);
 })
+
 // https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT,process.env.APP_HOST, () => {
 //     console.log(`Server is running at ${process.env.APP_HOST}:${process.env.APP_PORT}`)
 //   })
