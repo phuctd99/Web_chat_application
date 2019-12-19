@@ -11,6 +11,14 @@ import http from 'http';
 import cookieParser from 'cookie-parser'
 import socketIO from 'socket.io';
 import initSockets from './socket/index';
+// import pem from "pem";
+// import https from "https";
+
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {
+//     throw err
+//   }
+  
 
 var app = express();
 
@@ -39,3 +47,8 @@ initSockets(io);
 server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
     console.log(process.env.APP_PORT);
 })
+
+// https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT,process.env.APP_HOST, () => {
+//     console.log(`Server is running at ${process.env.APP_HOST}:${process.env.APP_PORT}`)
+//   })
+// })
