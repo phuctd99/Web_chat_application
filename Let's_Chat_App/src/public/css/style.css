@@ -653,7 +653,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 45px;
   height: 35px;
@@ -1024,8 +1024,8 @@ label:focus,
   margin: 0 1% 0 1%;
 }
 
-.emojionearea-button {
-  opacity: 0 !important;
+/* .emojionearea-button {
+  content: "\1F603";
 }
 
 .emojionearea.emojionearea-inline {
@@ -1049,7 +1049,7 @@ label:focus,
 .emojionearea.emojionearea-inline > .emojionearea-editor {
   min-height: 40px;
   padding: 11px 0;
-}
+} */
 
 .write-chat {
   font-size: 16px;
@@ -1057,7 +1057,7 @@ label:focus,
   width: 100%;
   height: 70%;
   padding: 0 10px;
-  color: #1a1a1a;
+  /*color: #1a1a1a;*/
   border: 0;
   outline: none;
   background-color: #eceff1;

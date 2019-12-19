@@ -21,30 +21,6 @@ function nineScrollRight() {
   $('.right .chat').scrollTop($('.right .chat')[0].scrollHeight);
 }
 
-function enableEmojioneArea(chatId) {
-  $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
-    standalone: false,
-    pickerPosition: 'top',
-    filtersPosition: 'bottom',
-    tones: false,
-    autocomplete: false,
-    inline: true,
-    hidePickerOnBlur: true,
-    search: false,
-    shortnames: false,
-    events: {
-      keyup: function(editor, event) {
-        $('.write-chat').val(this.getText());
-      }
-    },
-  });
-  $('.icon-chat').bind('click', function(event) {
-    event.preventDefault();
-    $('.emojionearea-button').click();
-    $('.emojionearea-editor').focus();
-  });
-}
-
 function spinLoaded() {
   $('#loader').css('display', 'none');
 }
@@ -104,7 +80,7 @@ function gridPhotos(layoutNumber) {
 
 function showButtonGroupChat() {
   $('#select-type-chat').bind('change', function() {
-    if ($(this).val() === 'group-chat') {
+    if ($(this).val() === 'group-chat' || $(this).val() === 'all-chat') {
       $('.create-group-chat').show();
       // Do something...
     } else {
@@ -158,9 +134,6 @@ $(document).ready(function() {
   // Cấu hình thanh cuộn
   nineScrollLeft();
   nineScrollRight();
-
-  // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
-  enableEmojioneArea("17071995");
 
   // Icon loading khi chạy ajax
   ajaxLoading();

@@ -5,6 +5,7 @@ const senderAvatar = $('#chatInputField').data('ava');
 let receiverAvatar = null;
 let messageType = null;
 let allMessages = [];
+let typingMessages = [];
 
 function appendMessagesToView(messages){
   messages.forEach(function(message){
@@ -82,7 +83,15 @@ function focusReceiver(receiverId){
 
 function selectReceiver() {
   $(document).on('click', '#contact-list li', function() {
+    if ($('.write-chat')[0].emojioneArea.getText() !== ''){
+      typingMessages[receiverId] = $('.write-chat')[0].emojioneArea.getText();
+    }
     receiverId = $(this).data('uid');
+    if (typingMessages[receiverId]){
+      $('.write-chat')[0].emojioneArea.setText(typingMessages[receiverId]);
+    }else{
+      $('.write-chat')[0].emojioneArea.setText('');
+    }
     focusReceiver(receiverId);
   });
 }
@@ -113,32 +122,29 @@ function findConversationBySearchBox(){
 }
 
 function onEnter() {
-  $('#chatInputField').keypress(function(e) {
-    if (e.which == 13) {
-      let message = $(this).val();
-      if (message.length > 0 && messageType == 'person'){
-        const data = {
-          createdAt: new Date().getTime(),
-          senderId: senderId,
-          receiverId: receiverId,
-          messageContent: message
-        };
-        socket.emit('send-message', data);
-      }else if (message.length > 0 && messageType == 'group') {
-        const data = {
-          createdAt: new Date().getTime(),
-          senderId: {
-            _id: senderId,
-            avatar: senderAvatar,
-            username: senderName
-          },
-          groupId: receiverId,
-          text: message
-        }
-        socket.emit('send-group-message', data);
-      }
+  let message = $('#chatInputField').val();
+  if (message.length > 0 && messageType == 'person'){
+    const data = {
+      createdAt: new Date().getTime(),
+      senderId: senderId,
+      receiverId: receiverId,
+      messageContent: message
+    };
+    socket.emit('send-message', data);
+  }else if (message.length > 0 && messageType == 'group') {
+    const data = {
+      createdAt: new Date().getTime(),
+      senderId: {
+        _id: senderId,
+        avatar: senderAvatar,
+        username: senderName
+      },
+      groupId: receiverId,
+      text: message
     }
-  });
+    socket.emit('send-group-message', data);
+  }
+  delete typingMessages[receiverId];
 }
 
 function updateSenderMessageBox() {
@@ -278,8 +284,8 @@ function getAllContact() {
         </div>
         <span class="name">
         ${item.user.username}
-        </span>`
-        if (item.latestMessage.content){
+        </span>`;
+        if (Object.keys(item.latestMessage).length > 0){
           element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
           <span class="preview">`;
           if (senderId == item.latestMessage.sender){
@@ -300,7 +306,7 @@ function getAllContact() {
         <span class="name">
         ${item.name}
         </span>`;
-        if (item.latestMessage.content){
+        if (item.latestMessage){
           element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
           <span class="preview">`;
           if (senderId == item.latestMessage.sender._id){
@@ -318,11 +324,41 @@ function getAllContact() {
   });
 }
 
+function enableEmojioneAreaAndChat() {
+  $('.write-chat').emojioneArea({
+    standalone: false,
+    pickerPosition: 'top',
+    filtersPosition: 'bottom',
+    tones: false,
+    autocomplete: false,
+    inline: true,
+    hidePickerOnBlur: true,
+    search: false,
+    shortnames: false,
+    events: {
+      keyup: function(selector, event) {
+        const text = this.getText();
+        if (event.keyCode === 13 && text !== ''){
+          $('.write-chat').val(text);
+          onEnter();
+          this.setText('');
+        }
+      },
+      click: function(){
+        this.hidePicker();
+      },
+      button_click: function(){
+        
+      }
+    }
+  });
+}
+
 $(document).ready(function() {
   getAllContact();
+  enableEmojioneAreaAndChat();
   selectReceiver();
   selectReceiverFromModal();
-  onEnter();
   updateSenderMessageBox();
   receiveMessage();
   findConversationBySearchBox();
