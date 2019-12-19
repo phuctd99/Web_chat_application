@@ -1,7 +1,6 @@
 import Message from '../../services/MessageService';
 import Contact from '../../models/Contact';
 import Group from '../../models/ChatGroup';
-import User from '../../models/User';
 import {
   pushSocketId,
   emitData,
@@ -12,7 +11,7 @@ const chat = (io) => {
   let users = {};
   io.on('connection', socket => {
     users = pushSocketId(users, socket.request.user._id, socket.id);
-    socket.on('send-message', data => {
+    socket.on('send-message',async data => {
       // save message on db
       const message = {
         createdAt: data.createdAt,
@@ -20,7 +19,7 @@ const chat = (io) => {
         receiverId: data.receiverId,
         text: data.messageContent
       };
-      Message.saveMessage(message);
+      await Message.saveMessage(message);
 
       // save latset contact
       const latestMessage = {
@@ -28,7 +27,7 @@ const chat = (io) => {
         content: data.messageContent,
         createdAt: data.createdAt
       }
-      Contact.updateTheLatestMessage(data.senderId, data.receiverId, latestMessage);
+      await Contact.updateTheLatestMessage(data.senderId, data.receiverId, latestMessage);
 
       // send message to sender
       emitData(
@@ -58,7 +57,7 @@ const chat = (io) => {
         groupId: data.groupId,
         text: data.text
       };
-      Message.saveMessage(message);
+      await Message.saveMessage(message);
 
       // save latset contact
       const latestMessage = {
@@ -66,7 +65,7 @@ const chat = (io) => {
         content: data.text,
         createdAt: data.createdAt
       }
-      Group.updateTheLatestMessage(data.groupId, latestMessage);
+      await Group.updateTheLatestMessage(data.groupId, latestMessage);
 
       // send message to sender
       emitData(

@@ -1,5 +1,5 @@
 import express from 'express';
-import { home, auth, user, contact, notification, message } from './../controllers/index';
+import { home, auth, user, contact, notification, message, group } from './../controllers/index';
 import {authValidator, userValid} from './../validation/index';
 import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
@@ -106,6 +106,12 @@ let initRoutes = (app) => {
         user.updatePassword
     );
     router.get('/get-messages', message.getAllMessages);
+
+    router.post('/create-group', group.createGroup);
+
+    router.put('/add-member', group.addMember);
+
+    router.put('/kick-member', group.kickMember);
 
     return app.use('/', router);
 };

@@ -26,8 +26,16 @@ ChatGroupSchema.statics = {
 	},
 	addMember(groupId, userId){
 		return this.update(
-				{ _id: groupId }, 
-				{ $push: { members: userId } }
+			{ _id: groupId }, 
+			{ $push: { members: userId } }
+		).exec();
+	},
+	kickMember(groupId, userId){
+		return this.update(
+			{ _id: groupId },
+			{ 
+				$pull: { members: userId}
+			}
 		).exec();
 	},
 	getGroupByUserId(userId){
