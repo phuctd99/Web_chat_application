@@ -1258,3 +1258,18 @@ label:focus,
 /* .display-important {
   display: inline-block !important;
 }  */
+/*
+group modal
+*/
+#group-contact-list{
+  max-height: 420px;
+}
+#groupinfo-contact-list{
+  max-height: 320px;
+}
+#group-modal-avatar{
+  max-width: 70px;
+}
+.group-btn-info{
+  float: right;
+}
