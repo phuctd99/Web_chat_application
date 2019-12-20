@@ -653,7 +653,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 45px;
   height: 35px;
@@ -1024,8 +1024,8 @@ label:focus,
   margin: 0 1% 0 1%;
 }
 
-.emojionearea-button {
-  opacity: 0 !important;
+/* .emojionearea-button {
+  content: "\1F603";
 }
 
 .emojionearea.emojionearea-inline {
@@ -1049,7 +1049,7 @@ label:focus,
 .emojionearea.emojionearea-inline > .emojionearea-editor {
   min-height: 40px;
   padding: 11px 0;
-}
+} */
 
 .write-chat {
   font-size: 16px;
@@ -1057,7 +1057,7 @@ label:focus,
   width: 100%;
   height: 70%;
   padding: 0 10px;
-  color: #1a1a1a;
+  /*color: #1a1a1a;*/
   border: 0;
   outline: none;
   background-color: #eceff1;
@@ -1066,16 +1066,16 @@ label:focus,
 }
 
 .right .write .icons {
-  width: 13%;
-  margin: 4px;
-  min-width: 135px;
+  margin-left: 15px;
+  margin-top: 6px;
+  min-width: 80px;
 }
 
 .right .write .icons i {
   font-size: 20px;
   font-weight: 500;
   margin-right: 10px;
-  color: #3e228a;
+  color: #eaafc8;
 }
 
 .right .bubble {
@@ -1208,7 +1208,11 @@ label:focus,
 #noti_Button:hover {
   text-decoration: none;
 }
-
+.list-notifications{
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 470px;
+}
 .list-notifications li {
   width: 90%;
   height: auto;
@@ -1258,3 +1262,18 @@ label:focus,
 /* .display-important {
   display: inline-block !important;
 }  */
+/*
+group modal
+*/
+#group-contact-list{
+  max-height: 420px;
+}
+#groupinfo-contact-list{
+  max-height: 320px;
+}
+#group-modal-avatar{
+  max-width: 70px;
+}
+.group-btn-info{
+  float: right;
+}

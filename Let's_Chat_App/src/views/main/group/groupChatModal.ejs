@@ -1,0 +1,77 @@
+<div class="modal fade" id="groupChatModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Trò chuyện nhóm</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <a
+                        href="#groupChatInfoModal"
+                        class="create-group-chat"
+                        data-toggle="modal"
+                    >
+                    Xem thông tin nhóm
+                    </a>
+                </div>
+                <div id="find-user-contact" class="tab-pane fade in active">
+                    <div class="find-user-top">
+                        <div class="input-group col-md-12">
+                            <input id="input-find-users-in-contact" type="text" class="form-control" placeholder="Nhập E-mail hoặc username..." />
+                            <span class="input-group-btn">
+                                <button id="btn-find-users-in-contact" class="btn btn-lg" type="button">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div >
+                    <a data-toggle="tab" id="link-contacts" href="#contacts">
+                        Tất cả bạn bè 
+                        <% if(countAllContacts > 0){ %>
+                            (<%= countAllContacts %>) 
+                        <%}else{ %>
+                            <span class="show-number-contacts count-contacts display-none">
+                                </span>
+                            
+                        <%} %>
+                    </a>
+                </div>
+                <div class="find-user-bottom">
+                    <ul class="contactList" id="group-contact-list">
+                        <% contacts.forEach(function(user) {  %> 
+                            <li class="_contactList" data-uid="<%= user._id %>">
+                                <div class="contactPanel">
+                                    <div class="user-avatar">
+                                        <img src="../../images/users/<%= user.avatar %>" alt="">
+                                    </div>
+                                    <div class="user-name">
+                                        <p>
+                                            <%= user.username %>
+                                        </p>
+                                    </div>
+                                    <br>
+                                    <div class="user-address">
+                                        <span>&nbsp <%= user.address %></span>
+                                    </div>
+                                    <div class="user-talk" data-uid="<%= user._id %>">
+                                        Thêm vào nhóm
+                                    </div>
+                                </div>
+                            </li>
+                        <% }); %>
+                    </ul>
+                    <hr>
+                        <div class="read-more-contacts">
+                            <a href="#" id="read-more-contacts">
+                                    <strong>Xem thêm 10 bạn bè</strong>
+                            </a>
+                        </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,7 +50,6 @@ let postRegister = async (req, res) => {
         errors.forEach(item => {
             errorArr.push(item.msg);
         });
-        console.log(errorArr);
         req.flash("errors", errorArr);
         return res.redirect("/login-register");
     }
