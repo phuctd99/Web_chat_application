@@ -1,0 +1,127 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>All User</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/images/logo_favicon/letchat.jpg" />
+
+    <link
+      rel="stylesheet"
+      href="/bower_components/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/bower_components/font-awesome/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/bower_components/AlertifyJS/build/css/alertify.css"
+    />
+
+    <link href="/css/admindb.css" rel="stylesheet" />
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/AlertifyJS/build/alertify.js"></script>
+
+</head>
+
+<body>
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a ><img class="main-logo" src="/images/logo_favicon/letchatlogo.png" alt="" /></a>
+            </div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li class="item-menu"><a href="#">All User</a></li>
+                                <li class="item-menu"><a  href="/">Trở về trang chủ</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
+        <div class="contacts-area mg-b-15">
+            <div class="container-fluid">
+                <div class="inputSearch">
+                    <input type="search" name="search" id="search" placeholder="Search user " onkeyup="myFunction()">
+                </div>
+                <div class="row" id="listUserInfo">
+                  <% users.forEach((item) => { %>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 userItem" >
+                        <div class="student-inner-std mg-t-30" >
+                            <div class="user-img">
+                                    <img src= "/images/users/<%= item.avatar %>"/>
+                            </div>
+                            <div class="user">
+                                <h2><b>Name : </b><span class="name"><%= item.username %></span></h2>
+                                <p><b>Active : </b><%= item.local.isActive %></p>
+                                <p><b>Email : </b><span class="email"><%= item.local.email %></span></p>
+                                <p><b>Gender : </b><%= item.gender %></p>
+                                <% if(item.phone !== null) { %>
+                                <p><b> Phone : </b><%= item.phone %></p>
+                                <% } %>
+                                <% if(item.address !== null) { %>
+                                <p><b>Address : </b>Address : </p>
+                                <% } %>
+                                <p><b>Role : </b><%= item.role %></p>
+                                <div class="changeInfo">
+                                   <form action="/block-account" method="POST">
+                                        <% if(item.local.isActive === true) {%>
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <input type="submit" value="block" class="btn btn-danger btn-change">
+                                        <% } %>
+                                    </form>
+                                    <form action="/unblock-account" method="POST">  
+                                        <% if(item.local.isActive === false) { %>
+                                        <input type="hidden" name="id" value="<%=item.id%>">
+                                        <input type="submit" value="unblock" class="btn btn-success btn-change">
+                                        <% } %>
+                                    </form>
+                                </div>        
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function myFunction() {
+            var input, filter, listUserInfo, user, email, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            listUserInfo = document.getElementById("listUserInfo");
+            console.log(listUserInfo);
+            user = listUserInfo.getElementsByClassName("userItem");
+            // console.log(user);
+            for (i = 0; i < user.length; i++) {
+                userName = user[i].getElementsByClassName("name")[0];
+                // console.log(email);
+                txtValue = userName.textContent || userName.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    user[i].style.display = "";
+                } else {
+                    user[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
