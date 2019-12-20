@@ -15,6 +15,7 @@
                     Xem thông tin nhóm
                     </a>
                 </div>
+                <div class="listAddUserToGroup"></div>
                 <div id="find-user-contact" class="tab-pane fade in active">
                     <div class="find-user-top">
                         <div class="input-group col-md-12">
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div >
+                <div style="margin-top: 6px;">
                     <a data-toggle="tab" id="link-contacts" href="#contacts">
                         Tất cả bạn bè 
                         <% if(countAllContacts > 0){ %>
@@ -47,8 +48,8 @@
                                     <div class="user-avatar">
                                         <img src="../../images/users/<%= user.avatar %>" alt="">
                                     </div>
-                                    <div class="user-name">
-                                        <p>
+                                    <div class="user-name" >
+                                        <p id="<%= user._id %>">
                                             <%= user.username %>
                                         </p>
                                     </div>
@@ -56,8 +57,11 @@
                                     <div class="user-address">
                                         <span>&nbsp <%= user.address %></span>
                                     </div>
-                                    <div class="user-talk" data-uid="<%= user._id %>">
+                                    <div class="group-talk" id="btnadd<%= user._id %>"  onclick="addUser(`<%= user._id %>`)" data-uid="<%= user._id %>">
                                         Thêm vào nhóm
+                                    </div>
+                                    <div style="display:none;" class="group-talk" id="btndrop<%= user._id %>" onclick="dropUser(`<%= user._id %>`)" data-uid="<%= user._id %>">
+                                        Bỏ thêm
                                     </div>
                                 </div>
                             </li>
@@ -70,6 +74,9 @@
                             </a>
                         </div>
                     <hr>
+                </div>
+                <div class="group-btn-info">
+                    <input type="button" id="input-btn-add-group" class="btn btn-primary custom-background-btn-primary" name="submit" value="Tạo nhóm">
                 </div>
             </div>
         </div>

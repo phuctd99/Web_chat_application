@@ -180,6 +180,7 @@ label:focus,
 
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
+.contactPanel .group-talk,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-accept-request-contact-receive,
@@ -1266,7 +1267,7 @@ label:focus,
 group modal
 */
 #group-contact-list{
-  max-height: 420px;
+  max-height: 350px;
 }
 #groupinfo-contact-list{
   max-height: 320px;
@@ -1276,4 +1277,21 @@ group modal
 }
 .group-btn-info{
   float: right;
+}
+.btn-drop{
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: red;
+  border: none;
+}
+.sp-group{
+  margin-left: 4px;
+  margin-right: 4px;
+  padding: 6px;
+  background: rgb(230, 230, 230);
+  border-radius: 20px;
 }
