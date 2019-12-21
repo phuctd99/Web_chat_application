@@ -1,4 +1,4 @@
-let receiverId = null;
+let receiverId = null; // personal ID or group ID
 const senderId = $('#chatInputField').data('uid');
 const senderName = $('#chatInputField').data('uname');
 const senderAvatar = $('#chatInputField').data('ava');
@@ -65,15 +65,16 @@ function getMessages(){
   }
 };
 
-function focusReceiver(receiverId){
-  messageType = $(`#li-${receiverId}`).attr('class');
-  receiverAvatar = $(`#li-${receiverId}`)
+function focusReceiver(id){
+  receiverId = id;
+  messageType = $(`#li-${id}`).attr('class');
+  receiverAvatar = $(`#li-${id}`)
       .find('img')
       .attr('src');
   $('#contact-list li').css('background-color', 'white');
-  $(`#li-${receiverId}`).css('background-color', '#e6e6e6');
+  $(`#li-${id}`).css('background-color', '#e6e6e6');
   $('#nameOfReceiver').text(
-    $(`#li-${receiverId}`)
+    $(`#li-${id}`)
       .find('span.name')
       .text()
   );
@@ -275,48 +276,62 @@ function getAllContact() {
       let element = ``;
       if (item.user) {
         element += `<li
-        id="li-${item.user._id}"
-        class="person"
-        data-uid="${item.user._id}">
-        <div class="left-avatar">
-          <div class="dot"></div>
-          <img src="../../images/users/${item.user.avatar}" alt="" />
-        </div>
-        <span class="name">
-        ${item.user.username}
-        </span>`;
-        if (Object.keys(item.latestMessage).length > 0){
-          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
-          <span class="preview">`;
-          if (senderId == item.latestMessage.sender){
+          id="li-${item.user._id}"
+          class="group"
+          data-uid="${item.user._id}">
+          <div class="left-avatar">
+            <div class="dot"></div>
+            <img src="../../images/users/${item.user.avatar}" alt="" />
+          </div>
+          <span class="name">
+          ${item.user.username}
+          </span>
+          <span class="time" data-createAt="`;
+        if (item.latestMessage.createdAt) {
+          element += `${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>`;
+        } else {
+          element += `"></span>`;
+        }
+        element += `<span class="preview">`;
+        if (item.latestMessage.sender) {
+          if (senderId == item.latestMessage.sender._id) {
             element += `Bạn: `;
           }
-          element +=`${item.latestMessage.content}</span>`
         }
-        element += `</li>`; 
+        if (item.latestMessage.content) {
+          element += `${item.latestMessage.content}`;
+        }
+        element += `</span></li>`;
       }else{
         element += `<li
-        id="li-${item._id}"
-        class="group"
-        data-uid="${item._id}">
-        <div class="left-avatar">
-          <div class="dot"></div>
-          <img src="../../images/users/group.png" alt="" />
-        </div>
-        <span class="name">
-        ${item.name}
-        </span>`;
-        if (item.latestMessage){
-          element += `<span class="time" data-createAt="${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>
-          <span class="preview">`;
-          if (senderId == item.latestMessage.sender._id){
+          id="li-${item._id}"
+          class="group"
+          data-uid="${item._id}">
+          <div class="left-avatar">
+            <div class="dot"></div>
+            <img src="../../images/users/group.png" alt="" />
+          </div>
+          <span class="name">
+          ${item.name}
+          </span>
+          <span class="time" data-createAt="`;
+        if (item.latestMessage.createdAt) {
+          element += `${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>`;
+        } else {
+          element += `"></span>`;
+        }
+        element += `<span class="preview">`;
+        if (item.latestMessage.sender) {
+          if (senderId == item.latestMessage.sender._id) {
             element += `Bạn: `;
           } else {
             element += `${item.latestMessage.sender.username}: `;
           }
-          element +=`${item.latestMessage.content}</span>`
         }
-        element += `</li>`;
+        if (item.latestMessage.content) {
+          element += `${item.latestMessage.content}`;
+        }
+        element += `</span></li>`;
       }
       $('#contact-list').append(element);
     });
@@ -354,6 +369,43 @@ function enableEmojioneAreaAndChat() {
   });
 }
 
+//send image
+function sendImage(){
+  $('#image-chat').bind('change', function() {
+    const imageData = $(this).prop('files')[0];
+    const match = ['image/png', 'image/jpg', 'image/jpeg'];
+    const limit = 1048576; // 1 MB
+
+    if ($.inArray(imageData.type, match) === -1) {
+      alertify.notify('Kiểu file không hợp lệ!', 'error', 7);
+      $(this).val(null);
+      return false;
+    }
+    if (imageData.size > limit) {
+      alertify.notify('Dung lượng ảnh tối đa 1 MB!', 'error', 7);
+      $(this).val(null);
+      return false;
+    }
+    let messageData = new FormData();
+    // let fileReader = new FileReader();
+    // fileReader.readAsDataURL(imageData);
+    // console.log(fileReader);
+    // fileReader.onload = function(element){
+    //   console.log('abc', element.target.result);
+    // }
+    
+    if (messageType == 'person'){
+      messageData.append('image', imageData);
+      messageData.append('receiverId', receiverId);
+      socket.emit('send-image', messageData);
+    }else if (messageType == 'group'){
+      messageData.append('image', imageData);
+      messageData.append('groupId', receiverId);
+      socket.emit('send-image-to-group', messageData);
+    } 
+  });
+}
+
 $(document).ready(function() {
   getAllContact();
   enableEmojioneAreaAndChat();
@@ -362,4 +414,5 @@ $(document).ready(function() {
   updateSenderMessageBox();
   receiveMessage();
   findConversationBySearchBox();
+  sendImage();
 });
