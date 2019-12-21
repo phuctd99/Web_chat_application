@@ -12,7 +12,7 @@
                             Danh bạ 
                             <% if(countAllContacts > 0){ %>
                                 <span class="show-number-contacts count-contacts">
-                                    <%= countAllContacts %>
+                                    <%= countAllContacts - 1%>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-contacts display-none">
@@ -91,13 +91,16 @@
                                         </li>
                                     <% }); %>
                                 </ul>
-                                <hr>
+                                <% if(contacts.length >=10 ) { %>
+                                <hr>                             
                                     <div class="read-more-contacts">
                                         <a href="#" id="read-more-contacts">
-                                                <strong>Xem thêm 10 bạn bè</strong>
+                                            
+                                                <strong>Xem thêm 10 bạn bè</strong> 
                                         </a>
                                     </div>
                                 <hr>
+                                <%} %> 
                             </div>
                         </div>
                         <div id="request-contact-sent" class="tab-pane fade">
@@ -126,6 +129,7 @@
                                     <% }); %>
                                     
                                 </ul>
+                                <% if(contactsSent.length >=10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts-sent">
                                     <a href="#" id="read-more-contacts-sent">
@@ -133,13 +137,14 @@
                                     </a>
                                 </div>
                                 <hr>
+                                <% } %>
                             </div>
                         </div>
                         <div id="request-contact-received" class="tab-pane fade">
                             <div class="find-user-bottom">
                                 <ul class="contactList">
                                     <% contactsReviece.forEach(function(user) {  %> 
-                                        <li class="_contactList" data-uid="<%= user._id %>">
+                                        <li id="conReq-<%= user._id %>" class="_contactList" data-uid="<%= user._id %>">
                                                 <div class="contactPanel">
                                                     <div class="user-avatar">
                                                         <img src="../../images/users/<%= user.avatar %>" alt="">
@@ -165,6 +170,7 @@
                                     <% }); %>
                                     
                                 </ul>
+                                <% if(contactsReviece.length >=10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts">
                                     <a href="#" id="read-more-contacts-reviece">
@@ -172,6 +178,7 @@
                                     </a>
                                 </div>
                                 <hr>
+                                <% } %>
                             </div>
                         </div>
                     </div>

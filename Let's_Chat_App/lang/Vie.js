@@ -13,7 +13,7 @@ export const validationMessage = {
 export const errorMessage = {
     account_is_used: "Email đã bị sử dụng!",
     account_is_removed: "Email đã bị xóa!",
-    account_is_activated: "Email chưa được kích hoạt!",
+    account_is_actived: "Tài khoản chưa được kích hoạt!",
     token_undefined: "Token đã hết hạn",
     login_failed: "Tên đăng nhập hoặc mật khẩu sai",
     server_error: "Lỗi máy chủ",

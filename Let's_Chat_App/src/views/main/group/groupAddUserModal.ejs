@@ -1,18 +1,11 @@
-<div class="modal fade" id="groupChatModal" role="dialog">
+<div class="modal fade" id="groupAddUserModal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Tạo nhóm</h4>
+                <h4 class="modal-title">Thêm thành viên</h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <label class="col-md-3">Tên nhóm:</label>
-                    <div class="col-md-3" style="width: 60%;">
-                        <input id="input-groupname" class="form-control" type="text" name="groupname" value="">
-                    </div>
-                </div>
-                <br>
                 <br>
                 <div id="find-user-contact" class="tab-pane fade in active">
                     <div class="find-user-top">
@@ -57,10 +50,10 @@
                                         <div class="user-address">
                                             <span>&nbsp <%= user.address %></span>
                                         </div>
-                                        <div id="btn-add-member-<%= user._id %>" class="btn-add-member group-talk" data-uid="<%= user._id %>" data-ava="<%= user.avatar %>" data-username="<%= user.username %>" data-role="<%= user.role %>">
+                                        <div id="btn-add-member-addModal-<%= user._id %>" class="btn-add-member group-talk" data-uid="<%= user._id %>" data-ava="<%= user.avatar %>" data-username="<%= user.username %>" data-role="<%= user.role %>">
                                             Thêm vào nhóm
                                         </div>
-                                        <div id="btn-drop-member-<%= user._id %>" style="display:none;" class="btn-drop-member group-talk" data-uid="<%= user._id %>" data-role="<%= user.role %>">
+                                        <div id="btn-drop-member-addModal-<%= user._id %>" style="display:none;" class="btn-drop-member group-talk" data-uid="<%= user._id %>" data-role="<%= user.role %>">
                                             Bỏ thêm
                                         </div>
                                     </div>
@@ -69,13 +62,12 @@
                         </ul>
                         <hr>
                     </div>
-                    <div class="listAddUserToGroup">
-                        
-                        
+                    <div class="listAddUserToGroup-addmodal">
+                
                     </div>
                 </div>
                 <div class="group-btn-info">
-                    <input type="button" id="input-btn-add-group" class="btn btn-primary custom-background-btn-primary" name="submit" value="Tạo nhóm">
+                    <input type="button" id="input-btn-add-user" class="btn btn-primary custom-background-btn-primary" name="submit" value="Cập nhật">
                 </div>
             </div>
         </div>

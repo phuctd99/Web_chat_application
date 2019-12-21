@@ -4548,6 +4548,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #e7e7e7;
 }
 @media (max-width: 767px) {
+  .personal-info{
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 310px;
+  }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #777;
   }

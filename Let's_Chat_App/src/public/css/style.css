@@ -180,6 +180,9 @@ label:focus,
 
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
+.contactPanel .kick-member,
+.contactPanel .group-talk,
+.contactPanel .authorize-manager,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-accept-request-contact-receive,
@@ -745,6 +748,7 @@ label:focus,
 
 /* group */
 .left .people .group {
+  min-height: 70px;
   position: relative;
   width: 100%;
   padding: 12px 10% 16px;
@@ -1066,16 +1070,16 @@ label:focus,
 }
 
 .right .write .icons {
-  width: 13%;
-  margin: 4px;
-  min-width: 135px;
+  margin-left: 15px;
+  margin-top: 6px;
+  min-width: 80px;
 }
 
 .right .write .icons i {
   font-size: 20px;
   font-weight: 500;
   margin-right: 10px;
-  color: #3e228a;
+  color: #eaafc8;
 }
 
 .right .bubble {
@@ -1208,7 +1212,11 @@ label:focus,
 #noti_Button:hover {
   text-decoration: none;
 }
-
+.list-notifications{
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 470px;
+}
 .list-notifications li {
   width: 90%;
   height: auto;
@@ -1262,7 +1270,7 @@ label:focus,
 group modal
 */
 #group-contact-list{
-  max-height: 420px;
+  max-height: 350px;
 }
 #groupinfo-contact-list{
   max-height: 320px;
@@ -1272,4 +1280,53 @@ group modal
 }
 .group-btn-info{
   float: right;
+}
+.btn-drop{
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: red;
+  border: none;
+}
+.sp-group{
+  margin-left: 4px;
+  margin-right: 4px;
+  padding: 6px;
+  background: rgb(230, 230, 230);
+  border-radius: 20px;
+}
+.add-user-item{
+  min-height: 60px;
+  background: rgb(230, 230, 230);
+  margin-right: 4px;
+  border-radius: 8px;
+  width: fit-content;
+}
+.listAddUserToGroup{
+  overflow-y: scroll;
+  max-height: 350px;
+}
+.get-group-info-btn{
+  width: 24px;
+  height: 24px;
+  border-radius: 10px;
+  border: none;
+  position:absolute;
+  left:4px;
+  top:6px;
+  background: #38ECDF;
+}
+.add-user-to-group{
+  width: 24px;
+  height: 24px;
+  border-radius: 10px;
+  border: none;
+  position:absolute;
+  left:4px;
+  top:34px;
+  background: red;
+  color: white;
 }

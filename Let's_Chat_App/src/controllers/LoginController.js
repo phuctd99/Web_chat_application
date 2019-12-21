@@ -18,7 +18,7 @@ let initPassLocal = () => {
                 return done(null, false, req.flash("errors", errorMessage.login_failed)); 
             }
             if (!user.local.isActive) {
-                return done(null, false, req.flash("errors", errorMessage.account_isActive)); 
+                return done(null, false, req.flash("errors", errorMessage.account_is_actived)); 
             }
             let checkPassword = await user.comparePassword(password);
             if (!checkPassword) {

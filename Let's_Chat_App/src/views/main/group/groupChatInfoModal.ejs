@@ -6,27 +6,20 @@
                 <h4 class="modal-title">Thông tin nhóm</h4>
             </div>
             <div class="modal-body">
-                <div style="display:flex; justify-content: space-between;">
-                    <div class="text-center" id="div-update-group-avatar" style="width: 45%;display: flex;">
+                <div style="display:flex; justify-content: space-around;">
+                    <div class="text-center" id="div-update-group-avatar">
                         <div id="image-edit-profile">
                             <img src="/images/users/group.png" id="group-modal-avatar" class="avatar img-circle" alt="avatar">
                         </div>
-                        <input type="file" class="form-control" id="input-change-group-avatar" name="group-avatar"><br>
-                        <div id="show-button-update-group-avatar"></div>
                     </div>
-                    <div class="form-group" style="width: 45%;">
+                    <div class="form-group">
                         <label class="col-md-3 control-label">Groupname:</label>
                             <div class="col-md-8">
                                 <input id="input-change-groupname" class="form-control" type="text" name="groupname" value="">
                             </div>
                         <div style="display: inline-block;margin: 10px;">
                             Số lượng thành viên trong nhóm:  
-                            <% if(countAllContacts > 0){ %>
-                                    <%= countAllContacts %>
-                            <%}else{ %>
-                                <span class="show-number-contacts count-contacts display-none">
-                                    </span>
-                            <%} %>
+                            <lable id="quantity-of-group-members"></lable>
                         </div>
                     </div>
                 </div>
@@ -44,34 +37,7 @@
                 </div>
                 <div class="find-user-bottom">
                     <ul class="contactList" id="groupinfo-contact-list">
-                        <% contacts.forEach(function(user) {  %> 
-                            <li class="_contactList" data-uid="<%= user._id %>">
-                                <div class="contactPanel">
-                                    <div class="user-avatar">
-                                        <img src="../../images/users/<%= user.avatar %>" alt="">
-                                    </div>
-                                    <div class="user-name">
-                                        <p>
-                                            <%= user.username %>
-                                        </p>
-                                    </div>
-                                    <br>
-                                    <div class="user-address">
-                                        <span>&nbsp <%= user.address %></span>
-                                    </div>
-                                    <div class="user-talk" data-uid="<%= user._id %>">
-                                        Xóa khỏi nhóm
-                                    </div>
-                                </div>
-                            </li>
-                        <% }); %>
                     </ul>
-                    <hr>
-                        <div class="read-more-contacts">
-                            <a href="#" id="read-more-contacts">
-                                    <strong>Xem thêm 10 thành viên</strong>
-                            </a>
-                        </div>
                     <hr>
                 </div>
                 <div class="group-btn-info">
