@@ -1,0 +1,76 @@
+<div class="modal fade" id="groupAddUserModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thêm thành viên</h4>
+            </div>
+            <div class="modal-body">
+                <br>
+                <div id="find-user-contact" class="tab-pane fade in active">
+                    <div class="find-user-top">
+                        <div class="input-group col-md-12">
+                            <input id="input-find-users-in-contact" type="text" class="form-control" placeholder="Nhập E-mail hoặc username..." />
+                            <span class="input-group-btn">
+                                <button id="btn-find-users-in-contact" class="btn btn-lg" type="button">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 6px;">
+                    <a data-toggle="tab" id="link-contacts" href="#contacts">
+                        Tất cả bạn bè 
+                        <% if(countAllContacts > 0){ %>
+                            (<%= countAllContacts %>) 
+                        <%}else{ %>
+                            <span class="show-number-contacts count-contacts display-none">
+                                </span>
+                            
+                        <%} %>
+                    </a>
+                    <label style="float: right;">Thành viên đã thêm:</label>
+                </div>
+                <div style="display: flex;justify-content: space-between;width: 100%;">
+                    <div class="find-user-bottom" style="width: 70%;">
+                        <ul class="contactList" id="group-contact-list">
+                            <% contacts.forEach(function(user) {  %> 
+                                <li class="group-contact-list-item" data-uid="<%= user._id %>" data-role="<%= user.role %>">
+                                    <div class="contactPanel">
+                                        <div class="user-avatar">
+                                            <img src="../../images/users/<%= user.avatar %>" alt="">
+                                        </div>
+                                        <div class="user-name" >
+                                            <p>
+                                                <%= user.username %>
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="user-address">
+                                            <span>&nbsp <%= user.address %></span>
+                                        </div>
+                                        <div id="btn-add-member-addModal-<%= user._id %>" class="btn-add-member group-talk" data-uid="<%= user._id %>" data-ava="<%= user.avatar %>" data-username="<%= user.username %>" data-role="<%= user.role %>">
+                                            Thêm vào nhóm
+                                        </div>
+                                        <div id="btn-drop-member-addModal-<%= user._id %>" style="display:none;" class="btn-drop-member group-talk" data-uid="<%= user._id %>" data-role="<%= user.role %>">
+                                            Bỏ thêm
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <hr>
+                    </div>
+                    <div class="listAddUserToGroup-addmodal">
+                
+                    </div>
+                </div>
+                <div class="group-btn-info">
+                    <input type="button" id="input-btn-add-user" class="btn btn-primary custom-background-btn-primary" name="submit" value="Cập nhật">
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
