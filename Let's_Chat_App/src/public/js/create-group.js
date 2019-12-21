@@ -1,9 +1,13 @@
 let members = [$('#chatInputField').data('uid')];
+let userId = [$('#chatInputField').data('uid')];
 
 function addMemberToCreate(){
   $('.btn-add-member').bind('click', function(){
     let id = $(this).data('uid');
     members.push(id);
+    if ($(this).data('role') === 'admin'){
+      userId.push(id);
+    }
     $(this).hide();
     $(`#btn-drop-member-${id}`).show();
     let listAddMemberItem = `
@@ -30,6 +34,12 @@ function dropMemberToCreate(){
     let index = members.indexOf(id);
     if (index > -1) {
       members.splice(index, 1);
+    }
+    if ($(this).data('role') === 'admin'){
+      let index = userId.indexOf(id);
+      if (index > -1) {
+        userId.splice(index, 1);
+      }
     }
     $(`#btn-add-member-${id}`).show();
     $(`#btn-drop-member-${id}`).hide();
@@ -60,12 +70,12 @@ function createGroup(){
     const group = {
       name: groupName,
       userAmount: members.length,
-      userId: $('#chatInputField').data('uid'),
+      userId: userId,
       members: members
     }
     socket.emit('create-group', group);
     $('#groupChatModal').modal('toggle');
-    members = [];
+    members = [$('#chatInputField').data('uid')];
     $('#input-groupname').val('');
     $('.listAddUserToGroup-item').remove();
   });
@@ -86,6 +96,7 @@ function afterSuccessfullyCreateGroup(){
     </span>
     <span class="time" data-createAt=""></span>
     <span class="preview"></span>
+    <button class="get-group-info-btn" data-gid="${group._id}">&#9432</button>
     </li>`;
     $('#contact-list').append(element);
   });

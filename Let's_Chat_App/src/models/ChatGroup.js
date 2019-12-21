@@ -6,7 +6,9 @@ let ChatGroupSchema = new Schema({
 	name: String,
 	userAmount: {type: Number, min: 3, max: 20},
 	messageAmount: {type: Number, default: 0},
-	userId: String,
+	userId: [
+		{type: String}
+	],
 	members: [
 			{type: String}
 	],
@@ -63,6 +65,19 @@ ChatGroupSchema.statics = {
 			{
 				_id: 0,
 				members: 1
+			}
+		).exec();
+	},
+	getGroupById(groupId){
+		return this.findOne({
+			_id: groupId
+		}).exec();
+	},
+	authorizeGroupManager(groupId, userId){
+		this.update(
+			{ _id: groupId },
+			{ 
+				$push: { userId: userId }
 			}
 		).exec();
 	}
