@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import uuidv4 from "uuid/v4";
 import {errorMessage, successMessage, mailMessage} from "./../../lang/Vie";
 import mailer from "./../config/ConfigMailer";
-import MailMessage from "nodemailer/lib/mailer/mail-message";
+
 
 let salt = 7;
 
@@ -68,15 +68,7 @@ let resetPassword =  (email, id) => {
         }) 
     })
 }
-//  let verifyID = (id) => {
-//      return new Promise( async(resolve, reject) => {
-//          let idOnModel = await UserModel.findOne({_id: id});
-//          if(!idOnModel) {
-//              return reject(errorMessage.id_notfound);
-//          }
-//          return resolve(su)
-//      })
-//  }
+
 
 module.exports = {
     register: register,

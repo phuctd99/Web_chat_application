@@ -5,9 +5,7 @@ import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
 import initPassportFacebook from "../controllers/passportController/facebook";
 import initPassportGoogle from "../controllers/passportController/google";
-
-//test
-//import User from '../models/User';
+import admin from "../controllers/adminController"
 
 
 initPassportLocal();
@@ -16,14 +14,13 @@ initPassportGoogle();
 let router = express.Router();
 
 let initRoutes = (app) => {
-    // router.get('/get-all-user', async (req, res) => {
-    //     try {
-    //         let user = await User.find().select('-local.password');
-    //         res.send(user);
-    //     } catch (error) {
-    //         res.status(500).send(error);
-    //     }
-    // });
+
+    router.get('/get-user',auth.checkLoggedIn, admin.checkIsAdmin, admin.dashboard);
+
+    router.post('/block-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.blockAccount);
+
+    router.post('/unblock-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.unblockAccount);
+    
 
     router.post('/forgot-password', auth.checkLoggedOut, auth.forgotPassword);
 
