@@ -112,9 +112,13 @@ let initRoutes = (app) => {
 
     router.post('/create-group', group.createGroup);
 
-    router.put('/add-member', group.addMember);
+    router.post('/add-member', group.addMember);
 
-    router.put('/kick-member', group.kickMember);
+    router.post('/kick-member', group.kickMember);
+
+    router.post('/authorize-group-manager', group.authorizeGroupManager)
+
+    router.get('/get-group', group.getGroupById);
 
     return app.use('/', router);
 };

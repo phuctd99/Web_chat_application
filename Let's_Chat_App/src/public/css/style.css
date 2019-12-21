@@ -180,7 +180,9 @@ label:focus,
 
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
+.contactPanel .kick-member,
 .contactPanel .group-talk,
+.contactPanel .authorize-manager,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-accept-request-contact-receive,
@@ -1294,4 +1296,25 @@ group modal
   padding: 6px;
   background: rgb(230, 230, 230);
   border-radius: 20px;
+}
+.add-user-item{
+  min-height: 60px;
+  background: rgb(230, 230, 230);
+  margin-right: 4px;
+  border-radius: 8px;
+  width: fit-content;
+}
+.listAddUserToGroup{
+  overflow-y: scroll;
+  max-height: 350px;
+}
+.get-group-info-btn{
+  width: 24px;
+  height: 24px;
+  border-radius: 10px;
+  border: none;
+  position:absolute;
+  left:4px;
+  top:6px;
+  background: #38ECDF;
 }

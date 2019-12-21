@@ -277,7 +277,7 @@ function getAllContact() {
       if (item.user) {
         element += `<li
           id="li-${item.user._id}"
-          class="group"
+          class="person"
           data-uid="${item.user._id}">
           <div class="left-avatar">
             <div class="dot"></div>
@@ -294,7 +294,7 @@ function getAllContact() {
         }
         element += `<span class="preview">`;
         if (item.latestMessage.sender) {
-          if (senderId == item.latestMessage.sender._id) {
+          if (senderId == item.latestMessage.sender) {
             element += `Bạn: `;
           }
         }
@@ -315,23 +315,23 @@ function getAllContact() {
           ${item.name}
           </span>
           <span class="time" data-createAt="`;
-        if (item.latestMessage.createdAt) {
+        if (item.latestMessage) {
           element += `${item.latestMessage.createdAt}">${calculateTimeAgo(item.latestMessage.createdAt)}</span>`;
         } else {
           element += `"></span>`;
         }
         element += `<span class="preview">`;
-        if (item.latestMessage.sender) {
+        if (item.latestMessage) {
           if (senderId == item.latestMessage.sender._id) {
             element += `Bạn: `;
           } else {
             element += `${item.latestMessage.sender.username}: `;
           }
         }
-        if (item.latestMessage.content) {
+        if (item.latestMessage) {
           element += `${item.latestMessage.content}`;
         }
-        element += `</span></li>`;
+        element += `</span><button class="get-group-info-btn" data-gid="${item._id}"><i class="fa fa-cog"></i></button></li>`;
       }
       $('#contact-list').append(element);
     });

@@ -1,5 +1,11 @@
 import { group } from '../services/index';
 
+const getGroupById = async (req, res) => {
+  const groupId = req.query.gid;
+  const data = await group.getGroupAndMembersByGroupId(groupId);
+  return res.json(data);
+}
+
 const createGroup = async (req, res) => {
   const members = req.body.members;
   if (members.length < 3) {
@@ -57,8 +63,26 @@ const kickMember = async (req, res) => {
   }
 };
 
+const authorizeGroupManager = async (req, res) => {
+  const groupId = req.body.groupId;
+  const userId = req.body.userId;
+  const result = await group.authorizeGroupManager(groupId, userId);
+  if (result) {
+    return res.json({
+      status: 'success',
+    });
+  } else {
+    return res.json({
+      status: 'error',
+      message: 'Lỗi'
+    });
+  }
+}
+
 module.exports = {
+  getGroupById: getGroupById,
   createGroup: createGroup,
   addMember : addMember,
-  kickMember: kickMember
+  kickMember: kickMember,
+  authorizeGroupManager: authorizeGroupManager
 };

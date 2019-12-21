@@ -97,7 +97,7 @@ UserSchema.statics = {
     ).exec();
   },
   getNormalUserById(id) {
-    return this.findById(id,{_id: 1,username: 1,address: 1,avatar: 1}).exec();
+    return this.findById(id,{_id: 1,username: 1, role: 1, address: 1,avatar: 1}).exec();
   },
   findContactedUserById(userId){
     return this.findOne(
@@ -120,6 +120,21 @@ UserSchema.statics = {
       username: 1,
       avatar: 1
     }).exec();
+  },
+  getUsersById(ids){
+    return this.find(
+      {_id: {$in: ids}},
+      {
+        _id: 1,
+        username: 1,
+        address: 1,
+        avatar: 1,
+        role: 1,
+        'local.email': 1,
+        'facebook.email': 1,
+        'google.email': 1
+      }
+    ).exec();
   }
 };
 UserSchema.methods = {
