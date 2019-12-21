@@ -12,7 +12,7 @@
                             Danh bạ 
                             <% if(countAllContacts > 0){ %>
                                 <span class="show-number-contacts count-contacts">
-                                    <%= countAllContacts %>
+                                    <%= countAllContacts - 1%>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-contacts display-none">
@@ -91,7 +91,7 @@
                                         </li>
                                     <% }); %>
                                 </ul>
-                                <% if(contacts.length >10 ) { %>
+                                <% if(contacts.length >=10 ) { %>
                                 <hr>                             
                                     <div class="read-more-contacts">
                                         <a href="#" id="read-more-contacts">
@@ -129,7 +129,7 @@
                                     <% }); %>
                                     
                                 </ul>
-                                <% if(contactsSent.length >10 ) { %>
+                                <% if(contactsSent.length >=10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts-sent">
                                     <a href="#" id="read-more-contacts-sent">
@@ -170,7 +170,7 @@
                                     <% }); %>
                                     
                                 </ul>
-                                <% if(contactsReviece.length >10 ) { %>
+                                <% if(contactsReviece.length >=10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts">
                                     <a href="#" id="read-more-contacts-reviece">
