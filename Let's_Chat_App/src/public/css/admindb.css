@@ -185,8 +185,14 @@ input[type=search] {
     padding: 10px;
 }
 .inputSearch {
-    display:block;
+    display: flex;
+    justify-content: space-between;
+    margin-left:20px;
+    margin-right:20px;
     margin-top: 40px;
+}
+a {
+    color: #654ea3;
 }
 li a {
     color: #fff;
@@ -260,6 +266,9 @@ li a:hover {
     bottom:0px; 
     left: 50%;
     transform: translate(-50%,-50%)
+}
+.btn-custom {
+    padding: 10px 20px ;
 }
 #sidebar.active .sidebar-header .main-logo {
     display: none;
@@ -459,7 +468,7 @@ ul.breadcome-menu li a:hover {
 }
 
 .student-inner-std {
-    height: 539px;
+    height: 420px;
     text-align: center;
     background: #fff;
     -webkit-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
@@ -472,7 +481,8 @@ ul.breadcome-menu li a:hover {
 }
 
 .user-img img {
-    width: 100%;
+    width: 50%;
+    border-radius: 100px;
 }
 
 
