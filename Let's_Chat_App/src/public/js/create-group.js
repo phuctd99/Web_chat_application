@@ -12,7 +12,7 @@ function addMemberToCreate(){
     $(`#btn-drop-member-${id}`).show();
     let listAddMemberItem = `
     <div id="listAddUserToGroup-${id}" class="listAddUserToGroup-item">
-      <div class="contactPanel">
+      <div class="contactPanel add-user-item">
         <button class="btn-drop btn-drop-member" data-uid="${id}">x</button>
         <div class="user-avatar">
             <img src="../../images/users/${$(this).data('ava')}" alt="">

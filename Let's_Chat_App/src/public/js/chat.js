@@ -331,7 +331,7 @@ function getAllContact() {
         if (item.latestMessage) {
           element += `${item.latestMessage.content}`;
         }
-        element += `</span><button class="get-group-info-btn" data-gid="${item._id}">&#9432</button></li>`;
+        element += `</span><button class="get-group-info-btn" data-gid="${item._id}"><i class="fa fa-cog"></i></button></li>`;
       }
       $('#contact-list').append(element);
     });
