@@ -1,0 +1,532 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+html,
+body {
+    height: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    background: #F6F8FA;
+}
+
+.floatleft {
+    float: left
+}
+
+.floatright {
+    float: right
+}
+
+.alignleft {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px
+}
+
+.alignright {
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 15px
+}
+
+.aligncenter {
+    display: block;
+    margin: 0 auto 15px
+}
+
+a:focus {
+    outline: 0px solid
+}
+
+img {
+    max-width: 100%;
+    height: auto
+}
+
+.fix {
+    overflow: hidden
+}
+
+p {
+    margin: 0 0 15px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 10px;
+    font-weight: 700;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ec4445;
+    text-decoration: none;
+}
+
+a:visited,
+a:link,
+a:active {
+    text-decoration: none;
+}
+
+a:active,
+a:hover {
+    outline: 0 none;
+}
+
+ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0
+}
+
+.clear {
+    clear: both
+}
+
+body {}
+
+@font-face {
+    font-family: 'educate-icon';
+    src: url('fonts/educate-icon.ttf?ka5vvx') format('truetype'), url('fonts/educate-icon.woff?ka5vvx') format('woff'), url('fonts/educate-icon.svg?ka5vvx#educate-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*----------------------------------------*/
+
+
+/*  2. Helper Class
+/*----------------------------------------*/
+
+.mg-tb-30 {
+    margin: 30px 0px;
+}
+
+.mg-b-30 {
+    margin-bottom: 30px;
+}
+
+.mg-tb-15 {
+    margin: 15px 0px;
+}
+
+.mg-t-30 {
+    margin-top: 30px;
+}
+
+.mg-b-10 {
+    margin-bottom: 23px;
+}
+
+.mg-ub-10 {
+    margin-bottom: 17px;
+}
+
+.mg-t-15 {
+    margin-top: 15px;
+}
+
+.mg-t-10 {
+    margin-top: 10px;
+}
+
+.mg-b-15 {
+    margin-bottom: 20px;
+}
+
+.mt-b-30 {
+    margin-bottom: 30px;
+}
+
+.bg-green {
+    background: #006DF0;
+}
+
+.bg-red {
+    background: #933EC5;
+}
+
+.bg-blue {
+    background: #65b12d;
+}
+
+.bg-purple {
+    background: #D80027;
+}
+
+
+/*  4. left sidebar
+/*----------------------------------------*/
+
+.all-content-wrapper {
+    margin-left: 200px;
+    transition: all 0.3s;
+}
+
+.left-sidebar-pro {
+    z-index: 9999;
+    width: 240px;
+}
+
+input[type=search] {
+    -webkit-appearance: none;
+    border-radius: 30px;
+    outline: none;
+    border: 1px solid #654ea3;
+    width: 40%;
+    padding: 10px;
+}
+.inputSearch {
+    display: flex;
+    justify-content: space-between;
+    margin-left:20px;
+    margin-right:20px;
+    margin-top: 40px;
+}
+a {
+    color: #654ea3;
+}
+li a {
+    color: #fff;
+    margin-left: 20px;
+}
+li a:hover {
+    color: #000
+}
+.item-menu {
+    padding: 5px;
+    background: #654ea3;
+    margin-top: 2px;
+}
+#sidebar {
+    min-width: 200px;
+    background: linear-gradient(to right bottom, #654ea3, #eaafc8);   
+    color: #fff;
+    position: fixed;
+    transition: all 0.3s;
+    z-index: 999;
+    height: 100%;
+}
+
+.mini-navbar .all-content-wrapper {
+    margin-left: 80px;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+#sidebar.active .sidebar-header h3,
+#sidebar.active .CTAs {
+    display: none;
+}
+
+#sidebar.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebar.active ul li .sidebar-right-icon {
+    display: none;
+}
+
+.bar-button-pro {
+    margin: 13px 0px;
+    font-size: 16px;
+    color: #fff;
+}
+
+#sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+.sidebar-header {
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.btn-change {
+    position:absolute; 
+    bottom:0px; 
+    left: 50%;
+    transform: translate(-50%,-50%)
+}
+.btn-custom {
+    padding: 10px 20px ;
+}
+#sidebar.active .sidebar-header .main-logo {
+    display: none;
+}
+
+.main-logo {
+    display:block;
+    width: 55px;
+    height: 55px;
+    margin-left: 25px;
+}
+#sidebar.active .sidebar-header h3 {
+    display: none;
+}
+
+#sidebar.active .sidebar-header p {
+    display: none;
+}
+
+#sidebar ul li a .sidebar-right-icon {
+    float: right;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro {
+    width: 100%;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li {
+    display: block;
+    float: none;
+    position: relative;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li .left-menu-dropdown {
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+    border-radius: 0;
+    border: 0px solid #fff;
+    box-shadow: none;
+    background: #ebebeb;
+}
+
+.left-custom-menu-adp-wrap .dropdown-menu {
+    position: relative;
+    float: none;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li .left-menu-dropdown a:hover {
+    padding: 15px 30px;
+    transition: all .4s ease 0s;
+    background: #fff;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown {
+    opacity: 1;
+    left: 0px;
+    z-index: 9999;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown.chart-left-menu-std {
+    top: 0px;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown.form-left-menu-std {
+    top: 0px;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown.apps-left-menu-std {
+    top: 0px;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown.pages-left-menu-std {
+    top: 0px;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li a {
+    display: block;
+    padding: 15px 20px;
+    color: #444;
+    transition: all .4s ease 0s;
+    font-size: 16px;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li a:hover,
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li a:focus,
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li a:active,
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li a:visited {
+    background: #ebebeb;
+    color: #444;
+}
+
+.left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li .indicator-right-menu {
+    float: right;
+    font-size: 12px;
+}
+
+#sidebar.active .left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li.open .left-menu-dropdown {
+    left: 80px;
+}
+
+#sidebar.active .left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li .mini-dn {
+    display: none;
+}
+
+#sidebar.active .left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li .big-icon {
+    font-size: 20px;
+}
+
+#sidebar.active .left-custom-menu-adp-wrap ul.left-sidebar-menu-pro li>a {
+    padding: 20px 20px;
+}
+
+
+/*  4.1 Left Sidebar switcher
+/*----------------------------------------*/
+
+.menu-switcher-pro {
+    transition: all .4s ease 0s;
+}
+
+.mini-navbar .menu-switcher-pro {
+    transition: all 0.3s;
+}
+
+.menu-switcher-pro button {
+    background: none;
+    border: none;
+}
+
+.menu-switcher-pro button:hover,
+.menu-switcher-pro button:focus,
+.menu-switcher-pro button:active,
+.menu-switcher-pro button:visited {
+    background: none;
+    border: none;
+}
+
+
+/*  6.  breadcrumb
+/*----------------------------------------*/
+
+.breadcome-heading .form-control,
+.sr-input-func .form-control:focus {
+    border: 1px solid #ececec;
+    font-size: 14px;
+    height: 34px;
+    color: #303030;
+    padding-left: 20px;
+    padding-right: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border-radius: 30px;
+    width: 200px;
+}
+
+.breadcome-heading .form-control:focus {
+    border: 1px solid #006DF0;
+}
+
+ul.breadcome-menu {
+    padding-top: 8px;
+}
+
+ul.breadcome-menu {
+    text-align: right;
+}
+
+ul.breadcome-menu li {
+    font-size: 14px;
+    display: inline-block;
+    color: #444;
+}
+
+ul.breadcome-menu li a {
+    color: #444;
+}
+
+ul.breadcome-menu li a:hover {
+    color: #7266BA;
+}
+
+
+/*  12. Student
+/*----------------------------------------*/
+
+.user h2 {
+    font-size: 18px;
+    color: #303030;
+}
+
+.user p.dp,
+.user p.dp-ag {
+    font-size: 14px;
+    color: #303030;
+    margin: 0;
+}
+
+.student-inner-std {
+    height: 420px;
+    text-align: center;
+    background: #fff;
+    -webkit-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
+}
+
+.user {
+    padding: 20px;
+}
+
+.user-img img {
+    width: 50%;
+    border-radius: 100px;
+}
+
+
+/*  20. Custom Scroll
+/*----------------------------------------*/
+
+.comment-scrollbar,
+.timeline-scrollbar,
+.messages-scrollbar,
+.project-list-scrollbar {
+    height: 580px;
+}
+
+.mCSB_outside+.mCSB_scrollTools {
+    right: -15px;
+    margin: 0px 0px;
+}
+
+.message-menu .mCSB_outside+.mCSB_scrollTools,
+.notification-menu .mCSB_outside+.mCSB_scrollTools,
+.left-custom-menu-adp-wrap .mCSB_outside+.mCSB_scrollTools {
+    right: 0px;
+    margin: 0px 0px;
+}
+
+.mCS-light-1.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: #006DF0;
+}
+
+.mCS-light-1.mCSB_scrollTools .mCSB_draggerRail {
+    background-color: #ccc;
+}
+
+
+/*  23. footer
+/*----------------------------------------*/
+
+.footer-copy-right p {
+    margin: 0px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.footer-copy-right a {
+    color: #fff;
+    text-decoration: none;
+}

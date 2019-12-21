@@ -11,6 +11,7 @@ let findUsers = (currentUserId, searchKey) => {
     userFilter.push(currentUserId);
     usersContacted.forEach(user => {
       userFilter.push(user.contactId);
+      userFilter.push(user.userId);
     });
     // console.log(userFilter);
     let contacts = await UserModel.findUserForAdding(userFilter, searchKey);

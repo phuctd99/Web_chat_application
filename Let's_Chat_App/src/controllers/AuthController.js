@@ -3,7 +3,7 @@ import {auth} from "./../services/index";
 import User from '../models/User';
 import bcrypt from 'bcrypt';
 import authService from '../services/AuthService';
-import {successMessage, mailMessage, validationMessage} from "./../../lang/Vie";
+import {successMessage, validationMessage} from "./../../lang/Vie";
 
 let getLoginRegister = (req, res) => {
     return res.render("login-register/master", {
