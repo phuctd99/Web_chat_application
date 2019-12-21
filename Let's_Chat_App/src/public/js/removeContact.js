@@ -25,6 +25,8 @@ function removeContact() {
                 decreaseNotification("count-contacts");
                 //sau nay se xoa user o phan chat
                 socket.emit('remove-contact', {contactId: targetId});
+                $(`#li-${targetId}`).remove();
+                init();
             }
           }
         });
@@ -37,6 +39,8 @@ function removeContact() {
 socket.on('respond-remove-contact', function(user) {
     $("#contacts").find(`ul li[data-uid = ${user.id}]`).remove();
     decreaseNotification("count-contacts");
+    $(`#li-${user.id}`).remove();
+    init();
 });
   
 $(document).ready(function() {

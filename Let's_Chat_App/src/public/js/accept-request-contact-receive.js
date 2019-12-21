@@ -1,34 +1,51 @@
 function acceptRequestContactReceive() {
     $('.user-accept-request-contact-receive').unbind('click').on('click', function() {
       const targetId = $(this).data('uid');
-      
         
       $.ajax({
         url: '/contact/accept-request-contact-receive',
         type: 'put',
         data: { uid: targetId },
         success: function(data) {
-            if (data) {
-              let userInfo = $("#request-contact-received").find(`ul li[data-uid = ${targetId}]`);
-              $(userInfo).find("div.user-accept-request-contact-receive").remove();
-              $(userInfo).find("div.user-remove-request-contact-receive").remove();
-              $(userInfo).find("div.contactPanel").append(`
-                <div class="user-talk" data-uid="${targetId}">
-                    Trò chuyện
-                </div>
-                <div class="user-remove-contact action-danger" data-uid="${targetId}">
-                    Xóa liên hệ
-                </div>
-              `);
-              let userInfoHtml = userInfo.get(0).outerHTML;
-              $("#contacts").find("ul").prepend(userInfoHtml);
-              $(userInfo).remove();
-              decreaseNotification("count-request-contact-received");
-              increaseNotification("count-contacts");
-              decreaseNotificationNavbar("noti_contact_counter", 1); 
+          if (data) {
+            let targetAva = $(`#conReq-${targetId} .contactPanel .user-avatar`).children('img').attr('src');
+            let targetName = $(`#conReq-${targetId} .contactPanel .user-name`).children('p').text();
+            let element = `<li
+            id="li-${targetId}"
+            class="person"
+            data-uid="${targetId}">
+            <div class="left-avatar">
+              <div class="dot"></div>
+              <img src="${targetAva}" alt="" />
+            </div>
+            <span class="name">
+            ${targetName}
+            </span>
+            <span class="time" data-createAt=""></span>
+            <span class="preview"></span>
+            </li>`;
+            $('#contact-list').append(element);
+            focusReceiver(targetId);
+            let userInfo = $("#request-contact-received").find(`ul li[data-uid = ${targetId}]`);
+            $(userInfo).find("div.user-accept-request-contact-receive").remove();
+            $(userInfo).find("div.user-remove-request-contact-receive").remove();
+            $(userInfo).find("div.contactPanel").append(`
+              <div class="user-talk" data-uid="${targetId}">
+                  Trò chuyện
+              </div>
+              <div class="user-remove-contact action-danger" data-uid="${targetId}">
+                  Xóa liên hệ
+              </div>
+            `);
+            let userInfoHtml = userInfo.get(0).outerHTML;
+            $("#contacts").find("ul").prepend(userInfoHtml);
+            $(userInfo).remove();
+            decreaseNotification("count-request-contact-received");
+            increaseNotification("count-contacts");
+            decreaseNotificationNavbar("noti_contact_counter", 1); 
 
-              removeContact();   
-              socket.emit('accept-request-contact-receive', {contactId: targetId});
+            removeContact();   
+            socket.emit('accept-request-contact-receive', {contactId: targetId});
           }
         }
       });
@@ -79,6 +96,22 @@ socket.on('respond-accept-request-contact-receive', function(user) {
       </li>
   `;
   $("#contacts").find("ul").prepend(userInfoHtml);
+  let element = `<li
+  id="li-${user.id}"
+  class="person"
+  data-uid="${user.id}">
+  <div class="left-avatar">
+    <div class="dot"></div>
+    <img src="../../images/users/${user.avatar}" alt="" />
+  </div>
+  <span class="name">
+  ${user.username}
+  </span>
+  <span class="time" data-createAt=""></span>
+  <span class="preview"></span>
+  </li>`;
+  $('#contact-list').append(element);
+  focusReceiver(user.id);
   removeContact();
 });
   

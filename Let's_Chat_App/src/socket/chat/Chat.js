@@ -90,10 +90,13 @@ const chat = (io) => {
             );
           }
         }
-      })
+      });
 
     });
-
+    socket.on('send-image', async data => {
+      console.log('asdf');
+      console.log(data);
+    });
     socket.on('disconnect', () => {
       users = removeSocketId(users, socket.request.user._id, socket.id);
     });
