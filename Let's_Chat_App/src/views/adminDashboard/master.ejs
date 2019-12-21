@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>All User</title>
+    <title>User management</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -57,7 +57,7 @@
             <div class="container-fluid">
                 <div class="inputSearch" >
                     <input type="search" name="search" id="search" placeholder="Search user " onkeyup="myFunction()">
-                    <a href="/" class="btn btn-warning btn-custom">Thoát</a>
+                    <a href="/logout" class="btn btn-warning btn-custom">Thoát</a>
                 </div>
                 <div class="row" id="listUserInfo">
                   <% users.forEach((item) => { %>
@@ -91,7 +91,25 @@
                                         <input type="submit" value="unblock" class="btn btn-success btn-change">
                                         <% } %>
                                     </form>
-                                </div>        
+                                    <form action="/promote-account" method="POST">
+                                        <% if(item.role === "user") { %>
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <input type="submit" value="promote" class="btn btn-success btn-change">
+                                        <% } %>
+                                    </form>
+                                    <form action="/demote-account" method="POST">
+                                        <% if(item.role === "admin") { %>
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <input type="submit" value="demote" class="btn btn-danger btn-change">
+                                        <% } %>
+                                    </form>
+                                    <form action="/delete-account" method="POST">
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <button type="submit" class="delete-account"></button>
+                                            <i class="fa fa-trash delete-icon"></i>
+                                        </button>    
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,15 +124,18 @@
             input = document.getElementById("search");
             filter = input.value.toUpperCase();
             listUserInfo = document.getElementById("listUserInfo");
-            console.log(listUserInfo);
+            // console.log(listUserInfo);
             user = listUserInfo.getElementsByClassName("userItem");
             // console.log(user);
             for (i = 0; i < user.length; i++) {
-                userName = user[i].getElementsByClassName("name")[0];
-                // console.log(email);
-                txtValue = userName.textContent || userName.innerText;
+                email = user[i].getElementsByClassName("email")[0];
 
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                
+                
+                txtValue = email.textContent || email.innerText;
+                txtValue = txtValue.split("@");
+                console.log(txtValue);
+                if (txtValue[0].toUpperCase().indexOf(filter) > -1) {
                     user[i].style.display = "";
                 } else {
                     user[i].style.display = "none";

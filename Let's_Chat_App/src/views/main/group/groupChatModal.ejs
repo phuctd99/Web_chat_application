@@ -69,13 +69,16 @@
                             </li>
                         <% }); %>
                     </ul>
-                    <hr>
-                        <div class="read-more-contacts">
-                            <a href="#" id="read-more-contacts">
-                                    <strong>Xem thêm 10 bạn bè</strong>
-                            </a>
-                        </div>
-                    <hr>
+                    <% if(contacts.length >10 ) { %>
+                        <hr>                             
+                            <div class="read-more-contacts">
+                                <a href="#" id="read-more-contacts">
+                                            
+                                    <strong>Xem thêm 10 bạn bè</strong> 
+                                </a>
+                            </div>
+                        <hr>
+                                <%} %>      
                 </div>
                 <div class="group-btn-info">
                     <input type="button" id="input-btn-add-group" class="btn btn-primary custom-background-btn-primary" name="submit" value="Tạo nhóm">
