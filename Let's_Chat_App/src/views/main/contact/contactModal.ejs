@@ -139,7 +139,7 @@
                             <div class="find-user-bottom">
                                 <ul class="contactList">
                                     <% contactsReviece.forEach(function(user) {  %> 
-                                        <li class="_contactList" data-uid="<%= user._id %>">
+                                        <li id="conReq-<%= user._id %>" class="_contactList" data-uid="<%= user._id %>">
                                                 <div class="contactPanel">
                                                     <div class="user-avatar">
                                                         <img src="../../images/users/<%= user.avatar %>" alt="">

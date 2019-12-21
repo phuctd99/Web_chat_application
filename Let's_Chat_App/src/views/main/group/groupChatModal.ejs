@@ -3,19 +3,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Trò chuyện nhóm</h4>
+                <h4 class="modal-title">Tạo nhóm</h4>
             </div>
             <div class="modal-body">
                 <div>
-                    <a
-                        href="#groupChatInfoModal"
-                        class="create-group-chat"
-                        data-toggle="modal"
-                    >
-                    Xem thông tin nhóm
-                    </a>
+                    <label class="col-md-3 control-label">Tên nhóm:</label>
+                    <div class="col-md-3">
+                        <input id="input-groupname" class="form-control" type="text" name="groupname" value="">
+                    </div>
                 </div>
-                <div class="listAddUserToGroup"></div>
+                <br>
+                <div class="listAddUserToGroup">
+                    <label class="col-md-3 control-label">Thành viên đã thêm:</label>
+                    <br>
+                </div>
+                <br>
                 <div id="find-user-contact" class="tab-pane fade in active">
                     <div class="find-user-top">
                         <div class="input-group col-md-12">
@@ -43,13 +45,13 @@
                 <div class="find-user-bottom">
                     <ul class="contactList" id="group-contact-list">
                         <% contacts.forEach(function(user) {  %> 
-                            <li class="_contactList" data-uid="<%= user._id %>">
+                            <li class="group-contact-list-item" data-uid="<%= user._id %>">
                                 <div class="contactPanel">
                                     <div class="user-avatar">
                                         <img src="../../images/users/<%= user.avatar %>" alt="">
                                     </div>
                                     <div class="user-name" >
-                                        <p id="<%= user._id %>">
+                                        <p>
                                             <%= user.username %>
                                         </p>
                                     </div>
@@ -57,10 +59,10 @@
                                     <div class="user-address">
                                         <span>&nbsp <%= user.address %></span>
                                     </div>
-                                    <div class="group-talk" id="btnadd<%= user._id %>"  onclick="addUser(`<%= user._id %>`)" data-uid="<%= user._id %>">
+                                    <div id="btn-add-member-<%= user._id %>" class="btn-add-member group-talk" data-uid="<%= user._id %>" data-ava="<%= user.avatar %>" data-username="<%= user.username %>">
                                         Thêm vào nhóm
                                     </div>
-                                    <div style="display:none;" class="group-talk" id="btndrop<%= user._id %>" onclick="dropUser(`<%= user._id %>`)" data-uid="<%= user._id %>">
+                                    <div id="btn-drop-member-<%= user._id %>" style="display:none;" class="btn-drop-member group-talk" data-uid="<%= user._id %>">
                                         Bỏ thêm
                                     </div>
                                 </div>
@@ -79,6 +81,7 @@
                     <input type="button" id="input-btn-add-group" class="btn btn-primary custom-background-btn-primary" name="submit" value="Tạo nhóm">
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

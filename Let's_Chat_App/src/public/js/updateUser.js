@@ -345,23 +345,3 @@ $(document).ready(function() {
     $('#input-change-confirm-new-password').val(null);
   });
 });
-
-function addUser(id) {
-    var username = $(`#${id}`)[0].innerHTML.trim();
-    var idFake = 1 + id;
-    let userAddToGroup = `<span class="sp-group">${username}<button class="btn-drop" id=${idFake}>x</button></span>`
-    $('.listAddUserToGroup').append(userAddToGroup);
-    $(`#${idFake}`).click(function(){
-      $(`#${idFake}`).parent().remove();
-      $(`#btnadd${id}`).css('display','inline-block');
-      $(`#btndrop${id}`).css('display','none');
-    });
-    $(`#btnadd${id}`).css('display','none');
-    $(`#btndrop${id}`).css('display','inline-block');
-}
-function dropUser(id) {
-  var idFake = 1 + id;
-  $(`#${idFake}`).parent().remove();
-  $(`#btnadd${id}`).css('display','inline-block');
-  $(`#btndrop${id}`).css('display','none');
-}
