@@ -12,14 +12,34 @@ function appendMessagesToView(messages){
     let messageElement = '';
     if (message.groupId){
       if (senderId == message.senderId._id){
-        messageElement = 
-        `<div class="line-chat">
-          <div id="message" class="bubble me">
-            ${message.text}
+        if (message.file){
+          messageElement = `
+          <div class="line-chat">
+          <div id="message" id class="bubble me bubble-image-file">
+            <img style='display:block; width:100px;height:100px;' src="${message.file.data}" />
           </div>
-        </div>`;
+          <div class="line-chat">`;
+        }else{
+          messageElement = 
+          `<div class="line-chat">
+            <div id="message" class="bubble me">
+              ${message.text}
+            </div>
+          </div>`;
+        }
       } else {
-        messageElement = `<div class="line-chat">
+        if (message.file){
+          messageElement = `<div class="line-chat">
+        <div><tag>${message.senderId.username}</tag></div>
+      <div class="avatar-of-user-chatting">
+        <img src="../../images/users/${message.senderId.avatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you bubble-image-file">
+      <img style='display:block; width:100px;height:100px;' src="${message.file.data}" />
+      </div>
+    </div>`;
+        }else{
+          messageElement = `<div class="line-chat">
         <div><tag>${message.senderId.username}</tag></div>
       <div class="avatar-of-user-chatting">
         <img src="../../images/users/${message.senderId.avatar}" alt="" />
@@ -28,15 +48,35 @@ function appendMessagesToView(messages){
         ${message.text}
       </div>
     </div>`;
+        }
       }
     }else if (senderId == message.senderId && receiverId == message.receiverId){
-      messageElement = `<div class="line-chat">
-      <div id="message" class="bubble me">
+      if (message.file){
+        messageElement = `
+          <div class="line-chat">
+          <div class="bubble me bubble-image-file">
+            <img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />
+          </div>
+          <div class="line-chat">`;
+      }else{
+        messageElement = `<div class="line-chat">
+        <div id="message" class="bubble me">
         ${message.text}
+        </div>
+        </div>`;
+      }
+    } else if (senderId == message.receiverId && receiverId == message.senderId) {
+      if (message.file){
+        messageElement = `<div class="line-chat">
+      <div class="avatar-of-user-chatting">
+        <img src="${receiverAvatar}" alt="" />
+      </div>
+      <div id="message" class="bubble you">
+      <img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />
       </div>
     </div>`;
-    } else if (senderId == message.receiverId && receiverId == message.senderId) {
-      messageElement = `<div class="line-chat">
+      }else{
+        messageElement = `<div class="line-chat">
       <div class="avatar-of-user-chatting">
         <img src="${receiverAvatar}" alt="" />
       </div>
@@ -44,6 +84,7 @@ function appendMessagesToView(messages){
         ${message.text}
       </div>
     </div>`;
+      }
     }
     $('#chat-field').append(messageElement);
     $('#chat-field')
@@ -129,7 +170,7 @@ function onEnter() {
       createdAt: new Date().getTime(),
       senderId: senderId,
       receiverId: receiverId,
-      messageContent: message
+      text: message
     };
     socket.emit('send-message', data);
   }else if (message.length > 0 && messageType == 'group') {
@@ -151,9 +192,15 @@ function onEnter() {
 function updateSenderMessageBox() {
   socket.on('update-sender-message-box', function(message) {
     allMessages[receiverId].push(message);
+    let messageContent;
+    if (message.file){
+      messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+    }else{
+      messageContent = message.text;
+    }
     const messageElement = `<div class="line-chat">
 		<div id="message" class="bubble me">
-			${message.text}
+			${messageContent}
 		</div>
 	</div>`;
     $('#chat-field').append(messageElement);
@@ -166,7 +213,13 @@ function updateSenderMessageBox() {
     const receiverLeftTag = $(`#li-${receiverId}`).prop('outerHTML');
     $(`#li-${receiverId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
-    $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + message.text);
+    let messageInTag;
+    if (message.file){
+      messageInTag = 'đã gửi ảnh';
+    }else{
+      messageInTag = message.text;
+    }
+    $(`#li-${receiverId}`).find('span.preview').text('Bạn: ' + messageInTag);
     $(`#li-${receiverId}`).find('span.time').attr('data-createAt', message.createdAt);
     reCalculateTimeAgo();
   });
@@ -180,12 +233,18 @@ function receiveMessage() {
       getMessages();
     }
     if (message.senderId == receiverId){
+      let messageContent;
+      if (message.file){
+        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+      }else{
+        messageContent = message.text;
+      }
       const messageElement = `<div class="line-chat">
       <div class="avatar-of-user-chatting">
         <img src="${receiverAvatar}" alt="" />
       </div>
       <div id="message" class="bubble you">
-        ${message.text}
+        ${messageContent}
       </div>
     </div>`;
       $('#chat-field').append(messageElement);
@@ -198,24 +257,36 @@ function receiveMessage() {
     const receiverLeftTag = $(`#li-${message.senderId}`).prop('outerHTML');
     $(`#li-${message.senderId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
-    $(`#li-${message.senderId}`).find('span.preview').text(message.text);
+    let messageInTag;
+    if (message.file){
+      messageInTag = 'đã gửi ảnh';
+    }else{
+      messageInTag = message.text;
+    }
+    $(`#li-${message.senderId}`).find('span.preview').text(messageInTag);
     $(`#li-${message.senderId}`).find('span.time').attr('data-createAt', message.createdAt);
     reCalculateTimeAgo();
   });
-  socket.on('receive-group-message', function(data){
-    if (allMessages[data.groupId]) {
-      allMessages[data.groupId].push(data);
+  socket.on('receive-group-message', function(message){
+    if (allMessages[message.groupId]) {
+      allMessages[message.groupId].push(message);
     } else {
       getMessages();
     }
-    if (data.groupId == receiverId){
+    if (message.groupId == receiverId){
+      let messageContent;
+      if (message.file){
+        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+      }else{
+        messageContent = message.text;
+      }
       const messageElement = `<div class="line-chat">
-      <div><tag>${data.senderId.username}</tag></div>
+      <div><tag>${message.senderId.username}</tag></div>
       <div class="avatar-of-user-chatting">
-        <img src="../../images/users/${data.senderId.avatar}" alt="" />
+        <img src="../../images/users/${message.senderId.avatar}" alt="" />
       </div>
       <div id="message" class="bubble you">
-        ${data.text}
+        ${messageContent}
       </div>
     </div>`;
       $('#chat-field').append(messageElement);
@@ -225,11 +296,17 @@ function receiveMessage() {
           scrollTop: $('#chat-field')[0].scrollHeight
         });
     }
-    const receiverLeftTag = $(`#li-${data.groupId}`).prop('outerHTML');
-    $(`#li-${data.groupId}`).remove();
+    const receiverLeftTag = $(`#li-${message.groupId}`).prop('outerHTML');
+    $(`#li-${message.groupId}`).remove();
     $('#contact-list').prepend(receiverLeftTag);
-    $(`#li-${data.groupId}`).find('span.preview').text(`${data.senderId.username}: ${data.text}`);
-    $(`#li-${data.groupId}`).find('span.time').attr('data-createAt', data.createdAt);
+    let messageInTag;
+    if (message.file){
+      messageInTag = 'đã gửi ảnh';
+    }else{
+      messageInTag = message.text;
+    }
+    $(`#li-${message.groupId}`).find('span.preview').text(`${message.senderId.username}: ${messageInTag}`);
+    $(`#li-${message.groupId}`).find('span.time').attr('data-createAt', message.createdAt);
     reCalculateTimeAgo();
   });
 }
@@ -387,23 +464,39 @@ function sendImage(){
       $(this).val(null);
       return false;
     }
-    let messageData = new FormData();
-    // let fileReader = new FileReader();
-    // fileReader.readAsDataURL(imageData);
-    // console.log(fileReader);
-    // fileReader.onload = function(element){
-    //   console.log('abc', element.target.result);
-    // }
-    
-    if (messageType == 'person'){
-      messageData.append('image', imageData);
-      messageData.append('receiverId', receiverId);
-      socket.emit('send-image', messageData);
-    }else if (messageType == 'group'){
-      messageData.append('image', imageData);
-      messageData.append('groupId', receiverId);
-      socket.emit('send-image-to-group', messageData);
-    } 
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(imageData);
+    fileReader.onload = function(element){
+      var image = new Image();
+      image.src = element.target.result;
+      if (messageType == 'person'){
+        socket.emit('send-message', {
+          file: {
+            data: element.target.result,
+            contentType: 'image',
+            filename: imageData.filename
+          },
+          createdAt: new Date().getTime(),
+          senderId: senderId,
+          receiverId: receiverId
+        });
+      }else if (messageType == 'group'){
+        socket.emit('send-group-message', {
+          file: {
+            data: element.target.result,
+            contentType: 'image',
+            filename: imageData.filename
+          },
+          createdAt: new Date().getTime(),
+          senderId: {
+            _id: senderId,
+            avatar: senderAvatar,
+            username: senderName
+          },
+          groupId: receiverId
+        });
+      } 
+    }
   });
 }
 
