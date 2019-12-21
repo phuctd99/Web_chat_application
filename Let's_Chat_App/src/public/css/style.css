@@ -748,6 +748,7 @@ label:focus,
 
 /* group */
 .left .people .group {
+  min-height: 70px;
   position: relative;
   width: 100%;
   padding: 12px 10% 16px;
@@ -1317,4 +1318,15 @@ group modal
   left:4px;
   top:6px;
   background: #38ECDF;
+}
+.add-user-to-group{
+  width: 24px;
+  height: 24px;
+  border-radius: 10px;
+  border: none;
+  position:absolute;
+  left:4px;
+  top:34px;
+  background: red;
+  color: white;
 }
