@@ -40,7 +40,7 @@ socket.on('respond-add-new-contact-sent', function(user) {
     increaseNotificationNavbar('noti_contact_counter', 1);
     increaseNotificationNavbar('noti_counter', 1);
 
-  let userInfoHtml = `<li class="_contactList" data-uid="${user.id}">
+  let userInfoHtml = `<li id="conReq-${user.id}" class="_contactList" data-uid="${user.id}">
   <div class="contactPanel">
       <div class="user-avatar">
           <img src="../../images/users/${user.avatar}" alt="">

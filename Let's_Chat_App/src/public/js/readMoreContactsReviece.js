@@ -8,7 +8,7 @@ $(document).ready(function(){
                 return false;
             }
             newContactUsers.forEach(function(user){
-                $('#request-contact-received').find("ul").append(`<li class="_contactList" data-uid="${user._id}">
+                $('#request-contact-received').find("ul").append(`<li id="conReq-${user._id} class="_contactList" data-uid="${user._id}">
                 <div class="contactPanel">
                     <div class="user-avatar">
                         <img src="../../images/users/${user.avatar}" alt="">
