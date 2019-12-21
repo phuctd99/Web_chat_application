@@ -5,7 +5,7 @@ import passport from "passport";
 import initPassportLocal from "./../controllers/LoginController";
 import initPassportFacebook from "../controllers/passportController/facebook";
 import initPassportGoogle from "../controllers/passportController/google";
-import admin from "../controllers/adminController"
+import admin from "../controllers/AdminController"
 
 
 initPassportLocal();
@@ -20,6 +20,12 @@ let initRoutes = (app) => {
     router.post('/block-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.blockAccount);
 
     router.post('/unblock-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.unblockAccount);
+    
+    router.post('/promote-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.promoteAccount);
+
+    router.post('/demote-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.demoteAccount);
+
+    router.post('/delete-account', auth.checkLoggedIn, admin.checkIsAdmin, admin.deleteAccount);
     
 
     router.post('/forgot-password', auth.checkLoggedOut, auth.forgotPassword);

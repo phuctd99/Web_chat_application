@@ -261,11 +261,13 @@ li a:hover {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+.changeInfo {
+    display:flex;
+    justify-content:space-evenly;
+}
 .btn-change {
-    position:absolute; 
-    bottom:0px; 
-    left: 50%;
-    transform: translate(-50%,-50%)
+    width: 100px;  
 }
 .btn-custom {
     padding: 10px 20px ;
@@ -474,6 +476,7 @@ ul.breadcome-menu li a:hover {
     -webkit-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
+    position: relative;
 }
 
 .user {
@@ -481,10 +484,27 @@ ul.breadcome-menu li a:hover {
 }
 
 .user-img img {
+    margin-top: 5px;
     width: 50%;
-    border-radius: 100px;
+    border-radius: 50%;
+    height: 135px;
 }
 
+.delete-account {
+    position: absolute;
+    top: 10px;
+    padding: 15px;
+    border-radius: 50%;
+    border: solid 1px #d43f3a;
+    background-color:#d43f3a;
+    right: 10px;
+}
+.delete-icon {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    color: #fff;
+}
 
 /*  20. Custom Scroll
 /*----------------------------------------*/
