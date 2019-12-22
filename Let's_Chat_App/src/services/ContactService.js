@@ -2,7 +2,7 @@ import ContactModel from '../models/Contact';
 import UserModel from '../models/User';
 import NotificationModel from '../models/Notification';
 
-const LIMIT_NUMBER =10;
+const LIMIT_NUMBER = 10;
 let findUsers = (currentUserId, searchKey) => {
   return new Promise(async (resolve, reject) => {
     // console.log(currentUserId);

@@ -12,13 +12,14 @@
                             Danh bạ 
                             <% if(countAllContacts > 0){ %>
                                 <span class="show-number-contacts count-contacts">
-                                    <%= countAllContacts - 1%>
+                                    <%= countAllContacts %>
                                 </span>
                             <%}else{ %>
                                 <span class="show-number-contacts count-contacts display-none">
                                     </span>
                                 
                             <%} %>
+                            
                             
                         </a></li>
                         <li><a data-toggle="tab" id="link-request-contact-sent" href="#request-contact-sent">
@@ -91,12 +92,12 @@
                                         </li>
                                     <% }); %>
                                 </ul>
-                                <% if(contacts.length >=10 ) { %>
+                                <% if(countAllContacts > 10 ) { %>
                                 <hr>                             
                                     <div class="read-more-contacts">
                                         <a href="#" id="read-more-contacts">
                                             
-                                                <strong>Xem thêm 10 bạn bè</strong> 
+                                                <strong>Xem thêm</strong> 
                                         </a>
                                     </div>
                                 <hr>
@@ -129,11 +130,11 @@
                                     <% }); %>
                                     
                                 </ul>
-                                <% if(contactsSent.length >=10 ) { %>
+                                <% if(countAllContactsSent > 10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts-sent">
                                     <a href="#" id="read-more-contacts-sent">
-                                            <strong>Xem thêm 10 người khác</strong>
+                                            <strong>Xem thêm</strong>
                                     </a>
                                 </div>
                                 <hr>
@@ -170,11 +171,11 @@
                                     <% }); %>
                                     
                                 </ul>
-                                <% if(contactsReviece.length >=10 ) { %>
+                                <% if(countAllContactsReviece > 10 ) { %>
                                 <hr>
                                 <div class="read-more-contacts">
                                     <a href="#" id="read-more-contacts-reviece">
-                                            <strong>Xem thêm 10 người khác</strong>
+                                            <strong>Xem thêm</strong>
                                     </a>
                                 </div>
                                 <hr>
