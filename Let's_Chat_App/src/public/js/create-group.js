@@ -96,7 +96,8 @@ function afterSuccessfullyCreateGroup(){
     </span>
     <span class="time" data-createAt=""></span>
     <span class="preview"></span>
-    <button class="get-group-info-btn" data-gid="${group._id}">&#9432</button>
+    <button class="get-group-info-btn" data-gid="${group._id}"><i class="fa fa-cog"></i></button>
+    <button class="add-user-to-group"  data-gid="${group._id}"><i class="fa fa-plus-circle"></i></button>
     </li>`;
     $('#contact-list').append(element);
   });
