@@ -11,7 +11,7 @@ $(document).ready(function(){
                 $('#contacts').find("ul").append(`<li class="_contactList" data-uid="${user._id}">
                 <div class="contactPanel">
                     <div class="user-avatar">
-                        <img src="../../images/users/${user.avatar} %>" alt="">
+                        <img src="../../images/users/${user.avatar}" alt="">
                     </div>
                     <div class="user-name">
                         <p>

@@ -139,18 +139,19 @@ ContactSchema.statics = {
     readMoreContacts(userId,skip,limit){
       return this.find({
         $and: [
-
-          {"userId": userId},
-          {"status": true}
-
-        ]
+          {$or: [
+            {"userId": userId},
+            {"contactId": userId}
+          ]},
+          {"status": true} 
+      ]
       }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
     },
     readMoreContactsSent(userId,skip,limit){
       return this.find({
         $and: [
           {"userId": userId},
-          {"status": true}
+          {"status": false}
 
         ]
       }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
@@ -158,8 +159,8 @@ ContactSchema.statics = {
     readMoreContactsReviece(userId,skip,limit){
       return this.find({
         $and: [
-          {"userId": userId},
-          {"status": true}
+          {"contactId": userId},
+          {"status": false}
 
         ]
       }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();

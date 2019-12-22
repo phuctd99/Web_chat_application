@@ -129,7 +129,7 @@ label:focus,
 .contactList{
   overflow-y: scroll;
   overflow-x: unset;
-  max-height: 450px;
+  max-height: 390px;
 }
 .contactList > li {
   list-style-type: none;
