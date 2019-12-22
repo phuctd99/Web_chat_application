@@ -4,8 +4,7 @@ let managerOfGroup = false;
 function getGroupInfo(){
   $(document).on('click', '.get-group-info-btn', function(){
     const groupId = $(this).data('gid');
-    $.get(`get-group?gid=${groupId}`, function(data, status){
-      console.log(data);
+    $.get(`/get-group?gid=${groupId}`, function(data, status){
       $('#input-change-groupname').val(data.group.name);
       $('#quantity-of-group-members').text(data.group.members.length);
       $('#groupinfo-contact-list').empty();
@@ -34,7 +33,7 @@ function getGroupInfo(){
           address = 'Chưa có'
         }
         let element = `
-        <li id="group-member-${member._id}" class="_contactList" data-uid="${member._id}">
+        <li id="group-member-${member._id}" class="group-member-item" data-uid="${member._id}">
           <div class="contactPanel">
             <div class="user-avatar">
               <img src="../../images/users/${member.avatar}" alt="">

@@ -91,7 +91,7 @@ let initRoutes = (app) => {
         contact.acceptRequestContactReceive
     );  
 
-    router.get('/get-all-contacts', contact.getAllContacts);
+    router.get('/get-all-contacts', auth.checkLoggedIn, contact.getAllContacts);
     
     router.get('/', auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
@@ -108,18 +108,19 @@ let initRoutes = (app) => {
         userValid.updatePassword,
         user.updatePassword
     );
-    router.get('/get-messages', message.getAllMessages);
+    router.get('/get-messages', auth.checkLoggedIn, message.getAllMessages);
 
-    router.post('/create-group', group.createGroup);
+    router.post('/create-group', auth.checkLoggedIn, group.createGroup);
 
-    router.post('/add-member', group.addMember);
+    router.post('/add-member', auth.checkLoggedIn, group.addMember);
 
-    router.post('/kick-member', group.kickMember);
+    router.post('/kick-member', auth.checkLoggedIn, group.kickMember);
 
-    router.post('/authorize-group-manager', group.authorizeGroupManager)
+    router.post('/authorize-group-manager', group.authorizeGroupManager);
 
-    router.get('/get-group', group.getGroupById);
+    router.get('/get-group', auth.checkLoggedIn, group.getGroupById);
 
+    router.get('/friend-not-in-group', auth.checkLoggedIn, group.getFriendsNotInGroup);
     return app.use('/', router);
 };
 
