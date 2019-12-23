@@ -120,6 +120,8 @@ let initRoutes = (app) => {
 
     router.get('/get-group', auth.checkLoggedIn, group.getGroupById);
 
+    router.post('/change-group-name', auth.checkLoggedIn, group.changeGroupName);
+
     router.get('/friend-not-in-group', auth.checkLoggedIn, group.getFriendsNotInGroup);
     return app.use('/', router);
 };

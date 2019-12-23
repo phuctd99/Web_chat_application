@@ -584,11 +584,11 @@ label:focus,
   background-color: #bbbbbb;
   border: 2px solid #fff;
   border-radius: 50%;
-  height: 11px;
+  height: 15px;
   left: 30px;
   position: absolute;
   margin-top: 30px;
-  width: 11px;
+  width: 15px;
   z-index: 1;
 }
 

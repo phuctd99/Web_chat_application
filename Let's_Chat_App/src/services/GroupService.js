@@ -87,6 +87,17 @@ const getFriendsNotInGroup = (groupId, userId) => {
   });
 }
 
+const changeGroupName = (groupId, newName) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await ChatGroupModel.changeGroupName(groupId, newName);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 module.exports = {
   getAllGroupById: getAllGroupById,
   createGroup: createGroup,
@@ -94,5 +105,6 @@ module.exports = {
   kickMember: kickMember,
   getGroupAndMembersByGroupId: getGroupAndMembersByGroupId,
   authorizeGroupManager: authorizeGroupManager,
-  getFriendsNotInGroup: getFriendsNotInGroup
+  getFriendsNotInGroup: getFriendsNotInGroup,
+  changeGroupName: changeGroupName
 }
