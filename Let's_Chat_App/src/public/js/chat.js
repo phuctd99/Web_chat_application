@@ -8,6 +8,7 @@ let allMessages = [];
 let typingMessages = [];
 
 function appendMessagesToView(messages){
+  $('.all-images').empty();
   messages.forEach(function(message){
     let messageElement = '';
     if (message.groupId){
@@ -92,6 +93,9 @@ function appendMessagesToView(messages){
       .animate({
         scrollTop: $('#chat-field')[0].scrollHeight
       });
+    if (message.file){
+      $('.all-images').append(`<img src="${message.file.data}">`);
+    }
   });
 }
 
@@ -192,6 +196,9 @@ function onEnter() {
 function updateSenderMessageBox() {
   socket.on('update-sender-message-box', function(message) {
     allMessages[receiverId].push(message);
+    if (message.file){
+      $('.all-images').append(`<img src="${message.file.data}">`);
+    }
     let messageContent;
     if (message.file){
       messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
@@ -229,6 +236,9 @@ function receiveMessage() {
   socket.on('receive-message', function(message) {
     if (allMessages[message.senderId]) {
       allMessages[message.senderId].push(message);
+      if (message.file){
+        $('.all-images').append(`<img src="${message.file.data}">`);
+      }
     } else {
       getMessages();
     }
@@ -270,6 +280,9 @@ function receiveMessage() {
   socket.on('receive-group-message', function(message){
     if (allMessages[message.groupId]) {
       allMessages[message.groupId].push(message);
+      if (message.file){
+        $('.all-images').append(`<img src="${message.file.data}">`);
+      }
     } else {
       getMessages();
     }
