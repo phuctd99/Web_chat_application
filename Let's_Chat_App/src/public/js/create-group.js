@@ -74,15 +74,17 @@ function createGroup(){
       members: members
     }
     socket.emit('create-group', group);
-    $('#groupChatModal').modal('toggle');
-    members = [$('#chatInputField').data('uid')];
-    $('#input-groupname').val('');
-    $('.listAddUserToGroup-item').remove();
   });
 }
 
 function afterSuccessfullyCreateGroup(){
   socket.on('response-group-creation', function(group){
+    $('#groupChatModal').modal('toggle');
+    members = [$('#chatInputField').data('uid')];
+    $('#input-groupname').val('');
+    $('.listAddUserToGroup-item').remove();
+    $('.btn-add-member').show();
+    $('.btn-drop-member').hide();
     let element = `<li
     id="li-${group._id}"
     class="group"
@@ -103,9 +105,23 @@ function afterSuccessfullyCreateGroup(){
   });
 }
 
+function searchFriendToAddToCreateGroup(){
+  $('#input-find-users-in-contact').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('#group-contact-list li').hide().filter(function () {
+        return $(this).find('.user-name').text().toLowerCase().indexOf($('#input-find-users-in-contact').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('#group-contact-list li').show();
+    }
+  });
+}
+
 $(document).ready(function(){
   addMemberToCreate();
   dropMemberToCreate();
   createGroup();
   afterSuccessfullyCreateGroup();
+  searchFriendToAddToCreateGroup();
 });
