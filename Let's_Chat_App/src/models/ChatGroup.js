@@ -80,6 +80,14 @@ ChatGroupSchema.statics = {
 				$push: { userId: userId }
 			}
 		).exec();
+	},
+	changeGroupName(groupId, newName){
+		this.update(
+			{ _id: groupId },
+			{ 
+				$set: { name: newName }
+			}
+		).exec();
 	}
 };
 

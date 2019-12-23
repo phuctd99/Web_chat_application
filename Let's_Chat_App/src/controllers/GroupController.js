@@ -89,11 +89,28 @@ const getFriendsNotInGroup = async (req, res) => {
   })
 }
 
+const changeGroupName = async (req, res) => {
+  const newName = req.body.newName;
+  const groupId = req.body.groupId;
+  const result = await group.changeGroupName(groupId, newName);
+  if (result) {
+    return res.json({
+      status: 'success',
+    });
+  } else {
+    return res.json({
+      status: 'error',
+      message: 'Lỗi'
+    });
+  }
+};
+
 module.exports = {
   getGroupById: getGroupById,
   createGroup: createGroup,
   addMember : addMember,
   kickMember: kickMember,
   authorizeGroupManager: authorizeGroupManager,
-  getFriendsNotInGroup: getFriendsNotInGroup
+  getFriendsNotInGroup: getFriendsNotInGroup,
+  changeGroupName: changeGroupName
 };

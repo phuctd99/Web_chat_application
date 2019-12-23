@@ -385,7 +385,6 @@ function getAllContact() {
           class="group"
           data-uid="${item._id}">
           <div class="left-avatar">
-            <div class="dot"></div>
             <img src="../../images/users/group.png" alt="" />
           </div>
           <span class="name">

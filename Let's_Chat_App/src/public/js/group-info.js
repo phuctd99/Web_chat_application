@@ -1,11 +1,13 @@
 const user_id = $('#chatInputField').data('uid');
 let managerOfGroup = false;
+let oldName = null;
 
 function getGroupInfo(){
   $(document).on('click', '.get-group-info-btn', function(){
-    const groupId = $(this).data('gid');
+    groupId = $(this).data('gid');
     $.get(`/get-group?gid=${groupId}`, function(data, status){
       $('#input-change-groupname').val(data.group.name);
+      oldName = data.group.name;
       $('#quantity-of-group-members').text(data.group.members.length);
       $('#groupinfo-contact-list').empty();
       if (data.group.userId.includes(user_id)){
@@ -83,7 +85,28 @@ function searchMemberInGroup(){
   });
 }
 
+function changeGroupName(){
+  $('#input-btn-update-group').on('click', function(){
+    let newName = $('#input-change-groupname').val();
+    if (newName !== oldName){
+      $.post('/change-group-name',{
+        newName: newName,
+        groupId: groupId
+      }, function(data){
+        if (data.status === 'success'){
+          oldName = newName;
+        $(`#li-${groupId}`).find('span.name').text(newName);
+        }
+      });
+    }
+  });
+  $('#input-btn-cancel-update-group').on('click', function(){
+    $('#input-change-groupname').val(oldName);
+  });
+}
+
 $(document).ready(function(){
   getGroupInfo();
   searchMemberInGroup();
+  changeGroupName();
 });
