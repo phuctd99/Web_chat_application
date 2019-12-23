@@ -86,10 +86,10 @@ label:focus,
 }
 
 .modal-content {
-  height: 100% !important;
+  min-height: 550px;
+  padding-bottom: 10px;
   overflow: hidden;
 }
-
 .nav-tabs > li > a {
   color: #555;
 }
@@ -135,13 +135,13 @@ label:focus,
   list-style-type: none;
   position: relative;
   margin: 10px;
-  background: #fff;
-  border: 1px solid #fff;
-  border-radius: 3px;
+  border: 2px solid #eaafc8;
+  border-radius: 5px;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .contactPanel {
+  background: transparent;
   max-width: 100%;
   height: auto;
   margin: 5px 0px 0px 5px;
@@ -584,11 +584,11 @@ label:focus,
   background-color: #bbbbbb;
   border: 2px solid #fff;
   border-radius: 50%;
-  height: 11px;
+  height: 15px;
   left: 30px;
   position: absolute;
   margin-top: 30px;
-  width: 11px;
+  width: 15px;
   z-index: 1;
 }
 
@@ -669,7 +669,7 @@ label:focus,
 
 .left .people {
   margin: 10px;
-  max-height: 480px;
+  max-height: 80%;
   /* width: calc(100% + 2px); */
 }
 
@@ -735,7 +735,6 @@ label:focus,
 .left .people .person:hover {
   background-color: #eceff1;
 }
-
 .left .people .person.active span,
 .left .people .person:hover span {
   background: transparent;
@@ -1283,13 +1282,19 @@ group modal
 }
 .btn-drop{
   width: 20px;
-  height: 20px;
-  margin-left: 8px;
-  border-radius: 20px;
-  color: #ffffff;
-  font-weight: bold;
-  background-color: red;
-  border: none;
+    height: 20px;
+    margin-left: 8px;
+    border-radius: 20px;
+    color: #654ea3;
+    font-weight: bold;
+    background-color: white;
+    border: 2px solid #654ea3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0px;
+}
+._contactList{
+  background-image: url("../images/background/pic.png");
+  background-size: 100% 100%;
 }
 .sp-group{
   margin-left: 4px;
@@ -1299,11 +1304,12 @@ group modal
   border-radius: 20px;
 }
 .add-user-item{
-  min-height: 60px;
-  background: rgb(230, 230, 230);
-  margin-right: 4px;
-  border-radius: 8px;
-  width: fit-content;
+    border: 2px solid #654ea3;
+    min-height: 54px;
+    background: #eaafc8;
+    margin-right: 4px;
+    border-radius: 25px;
+    width: fit-content;
 }
 .listAddUserToGroup{
   overflow-y: scroll;

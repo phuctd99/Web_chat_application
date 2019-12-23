@@ -1,5 +1,6 @@
 import ChatGroupModel from '../models/ChatGroup';
-import UserModel from '../models/User'
+import UserModel from '../models/User';
+import Contact from './ContactService';
 
 const getAllGroupById = userId => {
   return new Promise(async (resolve, reject) => {
@@ -23,10 +24,13 @@ const createGroup = group => {
   });
 }
 
-const addMember = (groupId, userId) => {
+const addMember = (groupId, userId, role) => {
   return new Promise(async (resolve, reject) => {
     try {
       await ChatGroupModel.addMember(groupId, userId);
+      if (role === 'admin'){
+      await ChatGroupModel.authorizeGroupManager(groupId, userId);
+      }
       resolve(true);
     } catch (error) {
       reject(error);
@@ -68,11 +72,39 @@ const authorizeGroupManager = (groupId, userId) => {
   });
 }
 
+const getFriendsNotInGroup = (groupId, userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const friends = await Contact.getContacts(userId);
+      const groupMembers = await ChatGroupModel.getMembers(groupId);
+      const result = friends.filter(friend => {
+        return !groupMembers.members.includes(friend._id);
+      });
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+const changeGroupName = (groupId, newName) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await ChatGroupModel.changeGroupName(groupId, newName);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 module.exports = {
   getAllGroupById: getAllGroupById,
   createGroup: createGroup,
   addMember: addMember,
   kickMember: kickMember,
   getGroupAndMembersByGroupId: getGroupAndMembersByGroupId,
-  authorizeGroupManager: authorizeGroupManager
+  authorizeGroupManager: authorizeGroupManager,
+  getFriendsNotInGroup: getFriendsNotInGroup,
+  changeGroupName: changeGroupName
 }

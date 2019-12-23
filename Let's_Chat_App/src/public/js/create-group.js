@@ -13,7 +13,7 @@ function addMemberToCreate(){
     let listAddMemberItem = `
     <div id="listAddUserToGroup-${id}" class="listAddUserToGroup-item">
       <div class="contactPanel add-user-item">
-        <button class="btn-drop btn-drop-member" data-uid="${id}">x</button>
+        <button class="btn-drop btn-drop-member" data-uid="${id}"><i class="fa fa-times"></i></button>
         <div class="user-avatar">
             <img src="../../images/users/${$(this).data('ava')}" alt="">
         </div>
@@ -74,21 +74,22 @@ function createGroup(){
       members: members
     }
     socket.emit('create-group', group);
-    $('#groupChatModal').modal('toggle');
-    members = [$('#chatInputField').data('uid')];
-    $('#input-groupname').val('');
-    $('.listAddUserToGroup-item').remove();
   });
 }
 
 function afterSuccessfullyCreateGroup(){
   socket.on('response-group-creation', function(group){
+    $('#groupChatModal').modal('toggle');
+    members = [$('#chatInputField').data('uid')];
+    $('#input-groupname').val('');
+    $('.listAddUserToGroup-item').remove();
+    $('.btn-add-member').show();
+    $('.btn-drop-member').hide();
     let element = `<li
     id="li-${group._id}"
     class="group"
     data-uid="${group._id}">
     <div class="left-avatar">
-      <div class="dot"></div>
       <img src="../../images/users/group.png" alt="" />
     </div>
     <span class="name">
@@ -96,9 +97,23 @@ function afterSuccessfullyCreateGroup(){
     </span>
     <span class="time" data-createAt=""></span>
     <span class="preview"></span>
-    <button class="get-group-info-btn" data-gid="${group._id}">&#9432</button>
+    <button class="get-group-info-btn" data-gid="${group._id}"><i class="fa fa-cog"></i></button>
+    <button class="add-user-to-group"  data-gid="${group._id}"><i class="fa fa-plus-circle"></i></button>
     </li>`;
     $('#contact-list').append(element);
+  });
+}
+
+function searchFriendToAddToCreateGroup(){
+  $('#input-find-users-in-contact').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('#group-contact-list li').hide().filter(function () {
+        return $(this).find('.user-name').text().toLowerCase().indexOf($('#input-find-users-in-contact').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('#group-contact-list li').show();
+    }
   });
 }
 
@@ -107,4 +122,5 @@ $(document).ready(function(){
   dropMemberToCreate();
   createGroup();
   afterSuccessfullyCreateGroup();
+  searchFriendToAddToCreateGroup();
 });

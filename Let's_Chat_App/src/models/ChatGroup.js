@@ -36,7 +36,7 @@ ChatGroupSchema.statics = {
 		return this.update(
 			{ _id: groupId },
 			{ 
-				$pull: { members: userId}
+				$pull: { members: userId, userId: userId }
 			}
 		).exec();
 	},
@@ -78,6 +78,14 @@ ChatGroupSchema.statics = {
 			{ _id: groupId },
 			{ 
 				$push: { userId: userId }
+			}
+		).exec();
+	},
+	changeGroupName(groupId, newName){
+		this.update(
+			{ _id: groupId },
+			{ 
+				$set: { name: newName }
 			}
 		).exec();
 	}

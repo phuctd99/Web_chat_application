@@ -34,7 +34,8 @@ const createGroup = async (req, res) => {
 const addMember = async (req, res) => {
   const groupId = req.body.groupId;
   const userId = req.body.userId;
-  const result = await group.addMember(groupId, userId);
+  const role = req.body.userRole;
+  const result = await group.addMember(groupId, userId, role);
   if (result) {
     return res.json({
       status: 'success',
@@ -79,10 +80,37 @@ const authorizeGroupManager = async (req, res) => {
   }
 }
 
+const getFriendsNotInGroup = async (req, res) => {
+  const groupId = req.query.gid;
+  const userId = req.query.uid;
+  const result = await group.getFriendsNotInGroup(groupId, userId);
+  return res.json({
+    result: result
+  })
+}
+
+const changeGroupName = async (req, res) => {
+  const newName = req.body.newName;
+  const groupId = req.body.groupId;
+  const result = await group.changeGroupName(groupId, newName);
+  if (result) {
+    return res.json({
+      status: 'success',
+    });
+  } else {
+    return res.json({
+      status: 'error',
+      message: 'Lỗi'
+    });
+  }
+};
+
 module.exports = {
   getGroupById: getGroupById,
   createGroup: createGroup,
   addMember : addMember,
   kickMember: kickMember,
-  authorizeGroupManager: authorizeGroupManager
+  authorizeGroupManager: authorizeGroupManager,
+  getFriendsNotInGroup: getFriendsNotInGroup,
+  changeGroupName: changeGroupName
 };
