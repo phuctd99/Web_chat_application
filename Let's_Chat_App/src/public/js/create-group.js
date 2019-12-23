@@ -13,7 +13,7 @@ function addMemberToCreate(){
     let listAddMemberItem = `
     <div id="listAddUserToGroup-${id}" class="listAddUserToGroup-item">
       <div class="contactPanel add-user-item">
-        <button class="btn-drop btn-drop-member" data-uid="${id}">x</button>
+        <button class="btn-drop btn-drop-member" data-uid="${id}"><i class="fa fa-times"></i></button>
         <div class="user-avatar">
             <img src="../../images/users/${$(this).data('ava')}" alt="">
         </div>
