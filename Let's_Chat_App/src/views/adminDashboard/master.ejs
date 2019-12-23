@@ -69,13 +69,13 @@
                             <div class="user">
                                 <h2><b>Name : </b><span class="name"><%= item.username %></span></h2>
                                 <p><b>Active : </b><%= item.local.isActive %></p>
-                                <p><b>Email : </b><span class="email"><%= item.local.email %></span></p>
+                                <p><b>Email : </b><span class="email"><%= item.local.email %><%= item.facebook.email %><%= item.google.email %></span></p>
                                 <p><b>Gender : </b><%= item.gender %></p>
                                 <% if(item.phone !== null) { %>
                                 <p><b> Phone : </b><%= item.phone %></p>
                                 <% } %>
                                 <% if(item.address !== null) { %>
-                                <p><b>Address : </b>Address : </p>
+                                <p><b>Address : </b><%= item.address %></p>
                                 <% } %>
                                 <p><b>Role : </b><%= item.role %></p>
                                 <div class="changeInfo">

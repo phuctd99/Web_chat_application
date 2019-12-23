@@ -215,7 +215,7 @@ function updateSenderMessageBox() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
@@ -259,7 +259,7 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
@@ -301,7 +301,7 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
@@ -385,7 +385,6 @@ function getAllContact() {
           class="group"
           data-uid="${item._id}">
           <div class="left-avatar">
-            <div class="dot"></div>
             <img src="../../images/users/group.png" alt="" />
           </div>
           <span class="name">
@@ -408,8 +407,8 @@ function getAllContact() {
         if (item.latestMessage) {
           element += `${item.latestMessage.content}`;
         }
-        element += `</span><button class="get-group-info-btn" data-gid="${item._id}"><i class="fa fa-cog"></i></button></span>`;
-        element += `</span><button class="add-user-to-group"  data-gid="${item._id}"><i class="fa fa-plus-circle"></i></button></span>`;
+        element += `</span><button class="get-group-info-btn" data-gid="${item._id}"><i class="fa fa-cog"></i></button>`;
+        element += `<button class="add-user-to-group"  data-gid="${item._id}"><i class="fa fa-plus-circle"></i></button></li>`;
       }
       $('#contact-list').append(element);
     });

@@ -20,7 +20,7 @@ const chat = (io) => {
       if (data.file){
         latestMessageContent = 'gửi một ảnh';
       }else{
-        latestMessageContent = data.messageContent;
+        latestMessageContent = data.text;
       }
       const latestMessage = {
         sender: data.senderId,
@@ -50,79 +50,50 @@ const chat = (io) => {
       }
     });
     socket.on('send-group-message', async data => {
-      // save message on db
-      await Message.saveMessage(data);
-
-      // save latset contact
-      let latestMessageContent;
-      if (data.file){
-        latestMessageContent = 'gửi một ảnh';
-      }else{
-        latestMessageContent = data.messageContent;
-      }
-      const latestMessage = {
-        sender: data.senderId._id,
-        content: latestMessageContent,
-        createdAt: data.createdAt
-      }
-      await Group.updateTheLatestMessage(data.groupId, latestMessage);
-
-      // send message to sender
-      emitData(
-        users,
-        data.senderId._id,
-        io,
-        'update-sender-message-box',
-        data
-      );
-
-      //send message to members
       const memberIds = await Group.getMembers(data.groupId);
-      memberIds.members.forEach(memberId => {
-        if (memberId !== data.senderId._id){
-          if (users[memberId]) {
-            emitData(
-              users,
-              memberId,
-              io,
-              'receive-group-message',
-              data
-            );
-          }
+      if (memberIds.members.includes(data.senderId._id)){
+        // save message on db
+        await Message.saveMessage(data);
+
+        // save latset contact
+        let latestMessageContent;
+        if (data.file){
+          latestMessageContent = 'gửi một ảnh';
+        }else{
+          latestMessageContent = data.messageContent;
         }
-      });
+        const latestMessage = {
+          sender: data.senderId._id,
+          content: latestMessageContent,
+          createdAt: data.createdAt
+        }
+        await Group.updateTheLatestMessage(data.groupId, latestMessage);
 
+        // send message to sender
+        emitData(
+          users,
+          data.senderId._id,
+          io,
+          'update-sender-message-box',
+          data
+        );
+
+        //send message to members
+        memberIds.members.forEach(memberId => {
+          if (memberId !== data.senderId._id){
+            if (users[memberId]) {
+              emitData(
+                users,
+                memberId,
+                io,
+                'receive-group-message',
+                data
+              );
+            }
+          }
+        });
+      }
     });
-    // socket.on('send-image', async data => {
-    //   // save on db
-    //   await Message.saveMessage(data);
-    //   // update newest message
-    //   const latestMessage = {
-    //     sender: data.senderId,
-    //     content: 'gửi một ảnh',
-    //     createdAt: data.createdAt
-    //   }
-    //   await Contact.updateTheLatestMessage(data.senderId, data.receiverId, latestMessage);
-    //   // real-time
-    //   emitData(
-    //     users,
-    //     data.senderId,
-    //     io,
-    //     'response-send-image-sender',
-    //     data
-    //   );
-
-    //   // send message to receiver if online
-    //   if (users[data.receiverId]) {
-    //     emitData(
-    //       users,
-    //       data.receiverId,
-    //       io,
-    //       'response-send-image-receiver',
-    //       data
-    //     );
-    //   }
-    // });
     socket.on('disconnect', () => {
       users = removeSocketId(users, socket.request.user._id, socket.id);
     });

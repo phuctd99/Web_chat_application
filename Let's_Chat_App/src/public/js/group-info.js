@@ -1,12 +1,13 @@
 const user_id = $('#chatInputField').data('uid');
 let managerOfGroup = false;
+let oldName = null;
 
 function getGroupInfo(){
   $(document).on('click', '.get-group-info-btn', function(){
-    const groupId = $(this).data('gid');
-    $.get(`get-group?gid=${groupId}`, function(data, status){
-      console.log(data);
+    groupId = $(this).data('gid');
+    $.get(`/get-group?gid=${groupId}`, function(data, status){
       $('#input-change-groupname').val(data.group.name);
+      oldName = data.group.name;
       $('#quantity-of-group-members').text(data.group.members.length);
       $('#groupinfo-contact-list').empty();
       if (data.group.userId.includes(user_id)){
@@ -34,7 +35,7 @@ function getGroupInfo(){
           address = 'Chưa có'
         }
         let element = `
-        <li id="group-member-${member._id}" class="_contactList" data-uid="${member._id}">
+        <li id="group-member-${member._id}" class="group-member-item" data-uid="${member._id}">
           <div class="contactPanel">
             <div class="user-avatar">
               <img src="../../images/users/${member.avatar}" alt="">
@@ -71,6 +72,41 @@ function getGroupInfo(){
   })
 };
 
+function searchMemberInGroup(){
+  $('#input-find-users-in-group').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('#groupinfo-contact-list li').hide().filter(function () {
+        return $(this).find('.user-name').text().toLowerCase().indexOf($('#input-find-users-in-group').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('#groupinfo-contact-list li').show();
+    }
+  });
+}
+
+function changeGroupName(){
+  $('#input-btn-update-group').on('click', function(){
+    let newName = $('#input-change-groupname').val();
+    if (newName !== oldName){
+      $.post('/change-group-name',{
+        newName: newName,
+        groupId: groupId
+      }, function(data){
+        if (data.status === 'success'){
+          oldName = newName;
+        $(`#li-${groupId}`).find('span.name').text(newName);
+        }
+      });
+    }
+  });
+  $('#input-btn-cancel-update-group').on('click', function(){
+    $('#input-change-groupname').val(oldName);
+  });
+}
+
 $(document).ready(function(){
   getGroupInfo();
+  searchMemberInGroup();
+  changeGroupName();
 });

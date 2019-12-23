@@ -1,12 +1,12 @@
 export DB_CONNECTION=mongodb
 export DB_HOST=localhost
 export DB_PORT=27017
-export DB_NAME=node_app_chat
+export DB_NAME=webchat
 export DB_USERNAME=""
 export DB_PASSWORD=""
 
 export APP_HOST=localhost
-export APP_PORT=8080
+export APP_PORT=3299
 
 export MAIL_USER=tungvu31081@gmail.com
 export MAIL_PASSWORD=tung31899
