@@ -69,7 +69,6 @@ function openAddMemberModal(){
           </li>`;
           $('#group-contact-list-to-add').append(element);
       });
-      $('#quantity-of-addable-friend').text(`${data.result.length}`);
     })
     $('#groupAddUserModal').modal('toggle');
   });
@@ -87,9 +86,21 @@ function addMember(){
       if (data.status === 'success'){
         $(`#group-contact-list-to-add-${id}`).remove();
         $('#quantity-of-group-members').text( +$('#quantity-of-group-members').text() + 1);
-        $('#quantity-of-addable-friend').text($('#quantity-of-addable-friend').text() - 1);
       }
     })
+  });
+}
+
+function searchFriendToAddToGroup(){
+  $('#input-find-users-in-contact-to-add').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('#group-contact-list-to-add li').hide().filter(function () {
+        return $(this).find('.user-name').text().toLowerCase().indexOf($('#input-find-users-in-contact-to-add').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('#group-contact-list-to-add li').show();
+    }
   });
 }
 
@@ -98,4 +109,5 @@ $(document).ready(function(){
   authorizeGroupManager();
   openAddMemberModal();
   addMember();
+  searchFriendToAddToGroup();
 });

@@ -70,6 +70,20 @@ function getGroupInfo(){
   })
 };
 
+function searchMemberInGroup(){
+  $('#input-find-users-in-group').on("keyup", function () {
+    if (this.value.length > 0) {   
+      $('#groupinfo-contact-list li').hide().filter(function () {
+        return $(this).find('.user-name').text().toLowerCase().indexOf($('#input-find-users-in-group').val().toLowerCase()) != -1;
+      }).show(); 
+    }  
+    else { 
+      $('#groupinfo-contact-list li').show();
+    }
+  });
+}
+
 $(document).ready(function(){
   getGroupInfo();
+  searchMemberInGroup();
 });

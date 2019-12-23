@@ -20,7 +20,7 @@ const chat = (io) => {
       if (data.file){
         latestMessageContent = 'gửi một ảnh';
       }else{
-        latestMessageContent = data.messageContent;
+        latestMessageContent = data.text;
       }
       const latestMessage = {
         sender: data.senderId,

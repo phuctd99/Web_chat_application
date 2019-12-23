@@ -215,7 +215,7 @@ function updateSenderMessageBox() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
@@ -259,7 +259,7 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
@@ -301,7 +301,7 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'đã gửi ảnh';
+      messageInTag = 'gửi một ảnh';
     }else{
       messageInTag = message.text;
     }
