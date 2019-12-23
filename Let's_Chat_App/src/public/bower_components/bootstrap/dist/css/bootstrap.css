@@ -4016,7 +4016,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eaafc8;
 }
 .nav-tabs > li {
   float: left;
@@ -4037,7 +4037,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #555;
   cursor: default;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 2px solid #eaafc8;
   border-bottom-color: transparent;
 }
 .nav-tabs.nav-justified {
