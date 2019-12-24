@@ -27,7 +27,7 @@ let resetPassword = async(req, res) => {
     let rePassword = req.body.rePassword;
     let salt = bcrypt.genSaltSync(7);
     try {
-        if(password !== rePassword) {
+        if(password !== rePassword || password==="" && rePassword==="") {
             req.flash("errors",validationMessage.confirmedPassword_incorrect);
             return res.redirect(`/reset-password/${id}`)
         }

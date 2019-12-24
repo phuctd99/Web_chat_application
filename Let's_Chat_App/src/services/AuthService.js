@@ -56,7 +56,7 @@ let verifyAccount = (token) => {
 
 let resetPassword =  (email, id) => {
     return new Promise( (resolve, reject) => {
-    let linkResetPassword = `http://localhost:30000/reset-password/${id}`
+    let linkResetPassword = `http://localhost:${process.env.APP_PORT}/reset-password/${id}`
     console.log(linkResetPassword)
     mailer(email, mailMessage.subjectToResetPassword, mailMessage.templateToResetPassword(linkResetPassword))
         .then(success => {

@@ -470,8 +470,8 @@ ul.breadcome-menu li a:hover {
 }
 
 .student-inner-std {
-    height: 420px;
-    text-align: center;
+    height: 480px;
+    /* text-align: center; */
     background: #fff;
     -webkit-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.75);
@@ -482,14 +482,21 @@ ul.breadcome-menu li a:hover {
 .user {
     padding: 20px;
 }
-
+.user h2 {
+    text-align: center;
+    margin-bottom: 19px;
+}
 .user-img img {
     margin-top: 5px;
-    width: 50%;
+    width: 45%;
     border-radius: 50%;
-    height: 135px;
 }
-
+.user-img {
+   text-align: center;
+}
+.user p {
+    margin-left: 30px;
+}
 .delete-account {
     position: absolute;
     top: 10px;
@@ -504,6 +511,7 @@ ul.breadcome-menu li a:hover {
     position: absolute;
     top: 20px;
     color: #fff;
+    right: 19px;
 }
 
 /*  20. Custom Scroll
