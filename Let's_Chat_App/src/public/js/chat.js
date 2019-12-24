@@ -8,83 +8,56 @@ let allMessages = [];
 let typingMessages = [];
 
 function appendMessagesToView(messages){
+  $('.all-images').empty();
+  $('#list-attachs').empty();
   messages.forEach(function(message){
     let messageElement = '';
+    let messageContent = null;
+    if (message.file){
+      if (message.file.contentType === 'image'){
+        $('.all-images').append(`<img src="${message.file.data}">`);
+        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+      }else if (message.file.contentType === 'file'){
+        messageContent = `<a download="${message.file.filename}" href="${message.file.data}">${message.file.filename}</a>`;
+        $('#list-attachs').append(`<li>${messageContent}</li>`);
+      }
+    }else{
+      messageContent = message.text;
+    }
     if (message.groupId){
       if (senderId == message.senderId._id){
-        if (message.file){
-          messageElement = `
-          <div class="line-chat">
-          <div id="message" id class="bubble me bubble-image-file">
-            <img style='display:block; width:100px;height:100px;' src="${message.file.data}" />
+        messageElement = 
+        `<div class="line-chat">
+          <div id="message" class="bubble me">
+            ${messageContent}
           </div>
-          <div class="line-chat">`;
-        }else{
-          messageElement = 
-          `<div class="line-chat">
-            <div id="message" class="bubble me">
-              ${message.text}
-            </div>
-          </div>`;
-        }
+        </div>`;
       } else {
-        if (message.file){
-          messageElement = `<div class="line-chat">
+        messageElement = `<div class="line-chat">
         <div><tag>${message.senderId.username}</tag></div>
-      <div class="avatar-of-user-chatting">
+        <div class="avatar-of-user-chatting">
         <img src="../../images/users/${message.senderId.avatar}" alt="" />
-      </div>
-      <div id="message" class="bubble you bubble-image-file">
-      <img style='display:block; width:100px;height:100px;' src="${message.file.data}" />
-      </div>
-    </div>`;
-        }else{
-          messageElement = `<div class="line-chat">
-        <div><tag>${message.senderId.username}</tag></div>
-      <div class="avatar-of-user-chatting">
-        <img src="../../images/users/${message.senderId.avatar}" alt="" />
-      </div>
-      <div id="message" class="bubble you">
-        ${message.text}
-      </div>
-    </div>`;
-        }
+        </div>
+        <div id="message" class="bubble you">
+        ${messageContent}
+        </div>
+        </div>`;  
       }
     }else if (senderId == message.senderId && receiverId == message.receiverId){
-      if (message.file){
-        messageElement = `
-          <div class="line-chat">
-          <div class="bubble me bubble-image-file">
-            <img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />
-          </div>
-          <div class="line-chat">`;
-      }else{
-        messageElement = `<div class="line-chat">
-        <div id="message" class="bubble me">
-        ${message.text}
-        </div>
-        </div>`;
-      }
-    } else if (senderId == message.receiverId && receiverId == message.senderId) {
-      if (message.file){
-        messageElement = `<div class="line-chat">
+      messageElement = `<div class="line-chat">
+      <div id="message" class="bubble me">
+      ${messageContent}
+      </div>
+      </div>`; 
+    } else if (senderId == message.receiverId && receiverId == message.senderId) {     
+      messageElement = `<div class="line-chat">
       <div class="avatar-of-user-chatting">
         <img src="${receiverAvatar}" alt="" />
       </div>
       <div id="message" class="bubble you">
-      <img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />
+        ${messageContent}
       </div>
-    </div>`;
-      }else{
-        messageElement = `<div class="line-chat">
-      <div class="avatar-of-user-chatting">
-        <img src="${receiverAvatar}" alt="" />
-      </div>
-      <div id="message" class="bubble you">
-        ${message.text}
-      </div>
-    </div>`;
-      }
+      </div>`;
     }
     $('#chat-field').append(messageElement);
     $('#chat-field')
@@ -194,7 +167,13 @@ function updateSenderMessageBox() {
     allMessages[receiverId].push(message);
     let messageContent;
     if (message.file){
-      messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+      if (message.file.contentType === 'image'){
+        $('.all-images').append(`<img src="${message.file.data}">`);
+        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+      }else if (message.file.contentType === 'file'){
+        messageContent = `<a download="${message.file.filename}" href="${message.file.data}">${message.file.filename}</a>`;
+        $('#list-attachs').append(`<li>${messageContent}</li>`);
+      }
     }else{
       messageContent = message.text;
     }
@@ -215,7 +194,11 @@ function updateSenderMessageBox() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'gửi một ảnh';
+      if (message.file.contentType === 'image'){
+        messageInTag = 'gửi một ảnh';
+      }else if (message.file.contentType === 'file'){
+        messageInTag = 'gửi một tệp';
+      }
     }else{
       messageInTag = message.text;
     }
@@ -235,7 +218,13 @@ function receiveMessage() {
     if (message.senderId == receiverId){
       let messageContent;
       if (message.file){
-        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+        if (message.file.contentType === 'image'){
+          $('.all-images').append(`<img src="${message.file.data}">`);
+          messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+        }else if (message.file.contentType === 'file'){
+          messageContent = `<a download="${message.file.filename}" href="${message.file.data}">${message.file.filename}</a>`;
+          $('#list-attachs').append(`<li>${messageContent}</li>`);
+        }
       }else{
         messageContent = message.text;
       }
@@ -259,7 +248,11 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'gửi một ảnh';
+      if (message.file.contentType === 'image'){
+        messageInTag = 'gửi một ảnh';
+      }else if (message.file.contentType === 'file'){
+        messageInTag = 'gửi một tệp';
+      }
     }else{
       messageInTag = message.text;
     }
@@ -276,7 +269,13 @@ function receiveMessage() {
     if (message.groupId == receiverId){
       let messageContent;
       if (message.file){
-        messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+        if (message.file.contentType === 'image'){
+          $('.all-images').append(`<img src="${message.file.data}">`);
+          messageContent = `<img style="display:block; width:100px;height:100px;" class="" src="${message.file.data}" />`;
+        }else if (message.file.contentType === 'file'){
+          messageContent = `<a download="${message.file.filename}" href="${message.file.data}">${message.file.filename}</a>`;
+          $('#list-attachs').append(`<li>${messageContent}</li>`);
+        }
       }else{
         messageContent = message.text;
       }
@@ -301,7 +300,11 @@ function receiveMessage() {
     $('#contact-list').prepend(receiverLeftTag);
     let messageInTag;
     if (message.file){
-      messageInTag = 'gửi một ảnh';
+      if (message.file.contentType === 'image'){
+        messageInTag = 'gửi một ảnh';
+      }else if (message.file.contentType === 'file'){
+        messageInTag = 'gửi một tệp';
+      }
     }else{
       messageInTag = message.text;
     }
@@ -473,7 +476,7 @@ function sendImage(){
           file: {
             data: element.target.result,
             contentType: 'image',
-            filename: imageData.filename
+            filename: imageData.name
           },
           createdAt: new Date().getTime(),
           senderId: senderId,
@@ -484,7 +487,7 @@ function sendImage(){
           file: {
             data: element.target.result,
             contentType: 'image',
-            filename: imageData.filename
+            filename: imageData.name
           },
           createdAt: new Date().getTime(),
           senderId: {
@@ -496,6 +499,61 @@ function sendImage(){
         });
       } 
     }
+    $(this).val(null);
+  });
+}
+
+// send file
+function sendFile(){
+  $('#attach-chat').bind('change', function() {
+    const fileData = $(this).prop('files')[0];
+    const match = ['image/png', 'image/jpg', 'image/jpeg'];
+    const limit = 10*1048576; // 10 MB
+
+    if ($.inArray(fileData.type, match) > -1) {
+      alertify.notify('Kiểu file không hợp lệ!', 'error', 6);
+      $(this).val(null);
+      return false;
+    }
+    if (fileData.size > limit) {
+      alertify.notify('Dung lượng ảnh tối đa 10 MB!', 'error', 6);
+      $(this).val(null);
+      return false;
+    }
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(fileData);
+    fileReader.onload = function(element){
+      var image = new Image();
+      image.src = element.target.result;
+      if (messageType == 'person'){
+        socket.emit('send-message', {
+          file: {
+            data: element.target.result,
+            contentType: 'file',
+            filename: fileData.name
+          },
+          createdAt: new Date().getTime(),
+          senderId: senderId,
+          receiverId: receiverId
+        });
+      }else if (messageType == 'group'){
+        socket.emit('send-group-message', {
+          file: {
+            data: element.target.result,
+            contentType: 'file',
+            filename: fileData.name
+          },
+          createdAt: new Date().getTime(),
+          senderId: {
+            _id: senderId,
+            avatar: senderAvatar,
+            username: senderName
+          },
+          groupId: receiverId
+        });
+      } 
+    }
+    $(this).val(null);    
   });
 }
 
@@ -508,4 +566,5 @@ $(document).ready(function() {
   receiveMessage();
   findConversationBySearchBox();
   sendImage();
+  sendFile();
 });
