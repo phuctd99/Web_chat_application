@@ -18,7 +18,11 @@ const chat = (io) => {
       // save latset message
       let latestMessageContent;
       if (data.file){
-        latestMessageContent = 'gửi một ảnh';
+        if (data.file.contentType === 'image'){
+          latestMessageContent = 'gửi một ảnh';
+        }else if (data.file.contentType === 'file'){
+          latestMessageContent = 'gửi một tệp';
+        }
       }else{
         latestMessageContent = data.text;
       }
@@ -58,9 +62,13 @@ const chat = (io) => {
         // save latset contact
         let latestMessageContent;
         if (data.file){
-          latestMessageContent = 'gửi một ảnh';
+          if (data.file.contentType === 'image'){
+            latestMessageContent = 'gửi một ảnh';
+          }else if (data.file.contentType === 'file'){
+            latestMessageContent = 'gửi một tệp';
+          }
         }else{
-          latestMessageContent = data.messageContent;
+          latestMessageContent = data.text;
         }
         const latestMessage = {
           sender: data.senderId._id,
