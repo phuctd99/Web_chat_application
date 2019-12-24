@@ -581,7 +581,7 @@ label:focus,
 }
 
 .dot {
-  background-color: #bbbbbb;
+  /* background-color: #bbbbbb;
   border: 2px solid #fff;
   border-radius: 50%;
   height: 15px;
@@ -589,7 +589,8 @@ label:focus,
   position: absolute;
   margin-top: 30px;
   width: 15px;
-  z-index: 1;
+  z-index: 1; */
+  display: none;
 }
 
 .online {
@@ -1258,6 +1259,8 @@ label:focus,
   height: 100%;
   width: auto;
   border-radius: 50%;
+  max-width: 50px;
+  max-height: 50px;
 }
 .line-chat{
   display: flow-root;
