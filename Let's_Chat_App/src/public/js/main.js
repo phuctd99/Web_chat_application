@@ -130,7 +130,18 @@ function flashMasterNotify() {
   }
 }
 
+function onlineOffline(){
+  socket.emit('online', {id: $('#chatInputField').data('uid')});
+  socket.on('notify-online-offline', function(data){
+    if (data.status === 'online'){
+      $(`#li-${data.id}`).find('.dot').hide();
+    }
+  });
+}
+
 $(document).ready(function() {
+  // online
+  onlineOffline();
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
 

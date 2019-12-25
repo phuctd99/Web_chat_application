@@ -11,6 +11,32 @@ const chat = (io) => {
   let users = {};
   io.on('connection', socket => {
     users = pushSocketId(users, socket.request.user._id, socket.id);
+    socket.on('online', async data => {
+      if (users[data.id].length == 1){
+        let usersContacted = await Contact.findAllUserById(data.id);
+        let userFilter = [];
+        usersContacted.forEach(user => {
+          if (user.userId == data.id){
+            userFilter.push(user.contactId);
+          }else if (user.contactId == data.id){
+            userFilter.push(user.userId);
+          }
+        });
+        userFilter.forEach(user => {
+          if (users[user]){
+            emitData(
+              users,
+              user,
+              io,
+              'notify-online-offline',
+              { id: user,
+                status: 'online'
+              }
+            );
+          }
+        })
+      }
+    });
     socket.on('send-message',async data => {
       // save message on db
       await Message.saveMessage(data);

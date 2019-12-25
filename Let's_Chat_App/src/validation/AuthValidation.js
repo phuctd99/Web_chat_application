@@ -8,7 +8,7 @@ let register = [
     check('gender', validationMessage.gender_incorrect)
         .isIn(['female', 'male']),
     check('password', validationMessage.password_incorrect)
-        .isLength({min: 1}),
+        .isLength({min: 8}),
         // .matches(/^(?=.*[a-z|A-Z])(?=.*\d)[a-z|A-Z\d]{8,}$/),
     check('password_confirmation', validationMessage.confirmedPassword_incorrect)
         .custom((value, {req}) => {
