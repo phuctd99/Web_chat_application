@@ -10,8 +10,11 @@ let findUsers = (currentUserId, searchKey) => {
     let userFilter = [];
     userFilter.push(currentUserId);
     usersContacted.forEach(user => {
-      userFilter.push(user.contactId);
-      userFilter.push(user.userId);
+      if (user.userId == currentUserId){
+        userFilter.push(user.contactId);
+      }else if (user.contactId == currentUserId){
+        userFilter.push(user.userId);
+      }
     });
     // console.log(userFilter);
     let contacts = await UserModel.findUserForAdding(userFilter, searchKey);

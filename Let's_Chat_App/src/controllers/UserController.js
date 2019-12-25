@@ -39,7 +39,10 @@ let updateAvatar = (req, res) => {
       let update = await user.updateUser(req.user._id, updateUserItem);
 
       // remove old avatar
-      await fsExtra.remove(`${app.avatar_directiory}/${update.avatar}`);
+      console.log(update.avatar);
+      if (update.avatar !== 'ava.png'){
+        await fsExtra.remove(`${app.avatar_directiory}/${update.avatar}`);
+      }
       let result = {
         message: successMessage.info_updated,
         imageSrc: `/images/users/${req.file.filename}`

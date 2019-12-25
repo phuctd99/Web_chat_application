@@ -3,6 +3,7 @@ function findUsers(element) {
     let keyword = $('#input-find-users-contact').val();
     if (!keyword.length) {
       alertify.notify('Bạn chưa nhập nội dung tìm kiếm!', 'error', 7);
+      $('.contactList').empty();
       return false;
     }
     $.get(`/contact/find-users/${keyword}`, data => {

@@ -8,7 +8,7 @@ function increaseNotification(classname) {
         .html('');
     } else {
       $(`.${classname}`)
-        .css('display', 'inline-block')
+        .css('display', 'none')
         .html(currentValue);
     }
   }
@@ -24,7 +24,7 @@ function increaseNotification(classname) {
             .html('');
         } else {
           $(`.${classname}`)
-            .css('display', 'inline-block')
+            .css('display', 'none')
             .html(currentValue);
         }
       }
