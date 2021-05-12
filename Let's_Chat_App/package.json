@@ -23,7 +23,7 @@
     "fs-extra": "^7.0.1",
     "mongoose": "^5.7.8",
     "multer": "^1.4.1",
-    "nodemailer": "^4.4.2",
+    "nodemailer": "^6.4.16",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
